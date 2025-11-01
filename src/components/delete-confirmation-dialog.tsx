@@ -16,16 +16,18 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface DeleteConfirmationDialogProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onConfirm: () => void;
+  onCancel: () => void;
   title: string;
   description: string;
+  open?: boolean;
 }
 
-export function DeleteConfirmationDialog({ children, onConfirm, title, description }: DeleteConfirmationDialogProps) {
+export function DeleteConfirmationDialog({ children, onConfirm, onCancel, title, description, open }: DeleteConfirmationDialogProps) {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+    <AlertDialog open={open}>
+      {children && <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
@@ -34,7 +36,7 @@ export function DeleteConfirmationDialog({ children, onConfirm, title, descripti
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel onClick={onCancel}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"

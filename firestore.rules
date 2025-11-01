@@ -35,6 +35,11 @@ service cloud.firestore {
       allow update: if isSuperAdmin() || (isAdmin() && (resource.data.role == 'member' || resource.data.role == 'user')) || (isAuthenticated() && request.auth.token.email == email);
     }
     
+    match /alumni/{alumnusId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
     // Rules for the 'projects' and 'resources' collections
     match /{collection}/{docId} {
       // Allow anyone (even unauthenticated users) to read documents that are 'approved'

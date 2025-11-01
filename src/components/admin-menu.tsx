@@ -69,6 +69,20 @@ export function AdminMenu() {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
+              tooltip="Alumni"
+              isActive={
+                pathname === "/dashboard/admin" && adminTab === "alumni"
+              }
+            >
+              <Link href="/dashboard/admin?tab=alumni">
+                <Users />
+                Alumni
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
               tooltip="Projects"
               isActive={
                 pathname === "/dashboard/admin" && adminTab === "projects"
@@ -108,6 +122,7 @@ export function AdminMenu() {
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
+
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild

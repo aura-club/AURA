@@ -1,6 +1,7 @@
 
 "use client";
 
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -13,7 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Check, X, FileText, Calendar, Newspaper, Users, Library, FolderKanban, GitPullRequest, UserCog, PlusCircle, Edit } from "lucide-react";
+import { DeleteConfirmationDialog } from "@/components/delete-confirmation-dialog";
+import { Check, X, FileText, Calendar, Newspaper, Users, Library, FolderKanban, GitPullRequest, UserCog, PlusCircle, Edit, Trash2 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { ProjectReviewDialog } from "@/components/project-review-dialog";
@@ -21,8 +23,12 @@ import { ResourceReviewDialog } from "@/components/resource-review-dialog";
 import { OpportunityReviewDialog } from "@/components/opportunity-review-dialog";
 import { BlogPostReviewDialog } from "@/components/blog-post-review-dialog";
 import { useSearchParams } from "next/navigation";
-import type { SubmissionStatus } from "@/hooks/use-auth";
+import type { SubmissionStatus, Alumnus } from "@/hooks/use-auth";
 import { EditLeaderDialog } from "@/components/edit-leader-dialog";
+import { EditAlumnusDialog } from "@/components/edit-alumnus-dialog";
+import { AlumniOpportunityReviewDialog } from "@/components/alumni-opportunity-review-dialog";
+import { AddAlumniOpportunityDialog } from "@/components/add-alumni-opportunity-dialog";
+import { EditAlumniOpportunityDialog } from "@/components/edit-alumni-opportunity-dialog";
 import Image from "next/image";
 import { UpdateRoleSelect } from "@/components/update-role-select";
 
@@ -34,10 +40,11 @@ const statusColors: { [key in SubmissionStatus]: "default" | "secondary" | "dest
 };
 
 export default function AdminPage() {
-  const { user: currentUser, users, projects, resources, opportunities, blogPosts, leadership, approveUser, denyUser, toggleUploadPermission, approveProject, rejectProject, approveResource, rejectResource, approveOpportunity, rejectOpportunity, approveBlogPost, rejectBlogPost, toggleLeaderVisibility } = useAuth();
+  const { user: currentUser, users, projects, resources, opportunities, blogPosts, leadership, alumni, alumniOpportunities, approveUser, denyUser, toggleUploadPermission, approveProject, rejectProject, approveResource, rejectResource, approveOpportunity, rejectOpportunity, approveBlogPost, rejectBlogPost, toggleLeaderVisibility, approveAlumniOpportunity, rejectAlumniOpportunity, deleteAlumnus, deleteAlumniOpportunity, updateAlumniOpportunity } = useAuth();
   const { toast } = useToast();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get('tab') || 'requests';
+  const [alumnusToDelete, setAlumnusToDelete] = useState<Alumnus | null>(null);
 
   const handleApproveUser = (email: string) => {
     approveUser(email);
@@ -93,6 +100,21 @@ export default function AdminPage() {
     rejectBlogPost(id, reason);
     toast({ title: "Blog Post Rejected", description: "The post has been rejected and will not be displayed." });
   };
+
+
+
+  const handleDeleteAlumnus = async (alumnusToDelete: Alumnus) => {
+    try {
+      await deleteAlumnus(alumnusToDelete.id);
+      toast({ title: "Alumnus Deleted", description: `The alumnus "${alumnusToDelete.name}" has been successfully deleted.` });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Deletion Failed",
+        description: error.message || `Could not delete ${alumnusToDelete.name}. Please try again.`,
+      });
+    }
+  };
   
   const handleToggleLeaderVisibility = async (id: string, isVisible: boolean) => {
     try {
@@ -114,6 +136,7 @@ export default function AdminPage() {
   const pendingResources = resources.filter(r => r.status === 'pending');
   const pendingOpportunities = opportunities.filter(o => o.status === 'pending');
   const pendingBlogPosts = blogPosts.filter(b => b.status === 'pending');
+  const pendingAlumniOpportunities = alumniOpportunities.filter(o => o.status === 'pending');
 
   const renderContent = () => {
     switch(activeTab) {
@@ -276,6 +299,120 @@ export default function AdminPage() {
             </Card>
           </>
         )
+      case 'alumni':
+        return (
+          <>
+            <div className="mb-8">
+              <h1 className="font-headline text-3xl font-bold flex items-center gap-3"><Users className="h-8 w-8"/>Alumni Management</h1>
+              <p className="text-muted-foreground mt-2">Add, edit, or remove alumni and manage alumni opportunities.</p>
+            </div>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle>Alumni</CardTitle>
+                    <CardDescription>Total alumni: {alumni.length}</CardDescription>
+                  </div>
+                   <EditAlumnusDialog>
+                      <Button><PlusCircle className="mr-2 h-4 w-4" /> Add Alumnus</Button>
+                   </EditAlumnusDialog>
+              </CardHeader>
+              <CardContent>
+                 {alumni.length > 0 ? (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Photo</TableHead>
+                          <TableHead>Name</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Graduation Year</TableHead>
+                          <TableHead>Company</TableHead>
+                          <TableHead className="text-right">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {alumni.map((alumnus) => (
+                          <TableRow key={alumnus.id}>
+                            <TableCell>
+                              <Image 
+                                src={alumnus.photoURL || 'https://placehold.co/40x40.png'} 
+                                alt={alumnus.name} 
+                                width={40} height={40} 
+                                className="rounded-full h-10 w-10 object-cover" 
+                              />
+                            </TableCell>
+                            <TableCell className="font-medium">{alumnus.name}</TableCell>
+                            <TableCell>{alumnus.email}</TableCell>
+                            <TableCell>{alumnus.graduationYear}</TableCell>
+                            <TableCell>{alumnus.company}</TableCell>
+                             <TableCell className="text-right space-x-2">
+                                <EditAlumnusDialog alumnus={alumnus}>
+                                    <Button variant="outline" size="icon"><Edit className="h-4 w-4" /></Button>
+                                </EditAlumnusDialog>
+                                <Button variant="destructive" size="icon" onClick={() => setAlumnusToDelete(alumnus)}><Trash2 className="h-4 w-4" /></Button>
+                             </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                 ) : (
+                    <p className="text-sm text-muted-foreground text-center py-4">No alumni defined yet. Click "Add Alumnus" to begin.</p>
+                 )}
+              </CardContent>
+            </Card>
+            {alumnusToDelete && (
+              <DeleteConfirmationDialog
+                open={alumnusToDelete !== null}
+                onConfirm={async () => {
+                  await handleDeleteAlumnus(alumnusToDelete);
+                  setAlumnusToDelete(null);
+                }}
+                onCancel={() => setAlumnusToDelete(null)}
+                title="Are you sure you want to delete this alumnus?"
+                description={`This will permanently delete ${alumnusToDelete.name}. This action cannot be undone.`}
+              />
+            )}
+            <Card className="mt-8">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Alumni Opportunities</CardTitle>
+                  <CardDescription>Total opportunities: {alumniOpportunities.length}</CardDescription>
+                </div>
+                <AddAlumniOpportunityDialog>
+                  <Button><PlusCircle className="mr-2 h-4 w-4" /> Add Opportunity</Button>
+                </AddAlumniOpportunityDialog>
+              </CardHeader>
+              <CardContent>
+                {alumniOpportunities.length > 0 ? (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Title</TableHead>
+                        <TableHead className="hidden md:table-cell">Author</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {alumniOpportunities.map((opportunity) => (
+                        <TableRow key={opportunity.id}>
+                          <TableCell className="font-medium">{opportunity.title}</TableCell>
+                          <TableCell className="hidden md:table-cell">{opportunity.authorName}</TableCell>
+                          <TableCell className="text-right space-x-2">
+                            <EditAlumniOpportunityDialog opportunity={opportunity}>
+                              <Button variant="outline" size="icon"><Edit className="h-4 w-4" /></Button>
+                            </EditAlumniOpportunityDialog>
+                            <Button variant="destructive" size="icon" onClick={() => deleteAlumniOpportunity(opportunity.id)}><Trash2 className="h-4 w-4" /></Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                ) : (
+                  <p className="text-sm text-muted-foreground">No alumni opportunities have been added yet.</p>
+                )}
+              </CardContent>
+            </Card>
+          </>
+        )
       case 'projects':
         return (
            <>
@@ -416,6 +553,7 @@ export default function AdminPage() {
             </Card>
           </>
         )
+
       case 'blog':
          return (
           <>

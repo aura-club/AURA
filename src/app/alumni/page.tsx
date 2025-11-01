@@ -7,43 +7,40 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/use-auth';
 
-// Placeholder data for alumni
-const alumniData = [
-  {
-    name: 'John Doe',
-    profilePicture: 'https://github.com/shadcn.png',
-    email: 'john.doe@example.com',
-    linkedin: 'https://www.linkedin.com/in/johndoe',
-    batch: '2020',
-  },
-  {
-    name: 'Jane Smith',
-    profilePicture: 'https://github.com/shadcn.png',
-    email: 'jane.smith@example.com',
-    linkedin: 'https://www.linkedin.com/in/janesmith',
-    batch: '2021',
-  },
-  // Add more alumni data here
-];
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { useEffect, useState } from 'react';
 
-// Placeholder data for opportunities
-const opportunitiesData = [
-  {
-    title: 'Internship at SpaceX',
-    description: 'An exciting internship opportunity for aspiring aerospace engineers.',
-    link: '#',
-  },
-  {
-    title: 'Alumni Meetup 2025',
-    description: 'Join us for our annual alumni meetup.',
-    link: '#',
-  },
-  // Add more opportunities here
-];
+interface Alumnus {
+  id: string;
+  name: string;
+  email: string;
+  graduationYear: number;
+  company: string;
+  bio: string;
+  photoURL: string;
+  socialLinks?: { platform: string; url: string; }[];
+}
 
 const AlumniPage: FC = () => {
   const { user } = useAuth();
-  const canViewOpportunities = user && (user.role === 'admin' || user.role === 'super_admin' || user.role === 'member');
+  const [alumniData, setAlumniData] = useState<Alumnus[]>([]);
+  
+
+  useEffect(() => {
+    const fetchAlumni = async () => {
+      try {
+        const alumniCollection = collection(db, 'alumni');
+        const alumniSnapshot = await getDocs(alumniCollection);
+        const alumniList = alumniSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }) as Alumnus);
+        setAlumniData(alumniList);
+      } catch (error) {
+        console.error('Error fetching alumni data: ', error);
+      }
+    };
+
+    fetchAlumni();
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">
@@ -59,53 +56,29 @@ const AlumniPage: FC = () => {
           <Card key={index} className="bg-card border-border/60">
             <CardHeader className="items-center">
               <Avatar className="h-24 w-24">
-                <AvatarImage src={alumnus.profilePicture} alt={alumnus.name} />
+                <AvatarImage src={alumnus.photoURL} alt={alumnus.name} />
                 <AvatarFallback>{alumnus.name.charAt(0)}</AvatarFallback>
               </Avatar>
               <CardTitle className="font-headline mt-4">{alumnus.name}</CardTitle>
-              <p className="text-muted-foreground">Batch of {alumnus.batch}</p>
+              <p className="text-muted-foreground">Batch of {alumnus.graduationYear}</p>
             </CardHeader>
             <CardContent className="text-center">
               <div className="flex justify-center gap-4">
                 <Button asChild variant="outline">
                   <a href={`mailto:${alumnus.email}`}>Email</a>
                 </Button>
-                <Button asChild>
-                  <a href={alumnus.linkedin} target="_blank" rel="noopener noreferrer">
-                    LinkedIn
-                  </a>
-                </Button>
+                  {alumnus.socialLinks && Array.isArray(alumnus.socialLinks) && alumnus.socialLinks.map((link, linkIndex) => (
+                    <a key={linkIndex} href={link.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                      {link.platform}
+                    </a>
+                  ))}
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {canViewOpportunities && (
-        <div className="mt-24">
-          <div className="text-center">
-            <h2 className="font-headline text-3xl md:text-4xl font-bold">Opportunities</h2>
-            <p className="mt-4 max-w-3xl mx-auto text-muted-foreground">
-              Exclusive opportunities for our members and alumni.
-            </p>
-          </div>
-          <div className="mt-12 grid gap-8 md:grid-cols-2">
-            {opportunitiesData.map((opportunity, index) => (
-              <Card key={index} className="bg-card border-border/60">
-                <CardHeader>
-                  <CardTitle>{opportunity.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{opportunity.description}</p>
-                  <Button asChild className="mt-4">
-                    <a href={opportunity.link}>Learn More</a>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 };

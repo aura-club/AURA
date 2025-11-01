@@ -141,6 +141,21 @@ export interface LeadershipMember {
     isVisible: boolean;
 }
 
+export interface Alumnus {
+    id: string;
+    name: string;
+    email: string;
+    graduationYear: number;
+    company: string;
+    bio: string;
+    photoURL: string;
+    socialLinks?: { platform: string; url: string; }[];
+}
+
+export interface AlumniOpportunity extends OpportunityBase {
+    category: "alumni";
+}
+
 
 // This is our App's user type, which merges Firebase's User with our custom fields.
 type AppUser = (User & { role: UserRole; canUpload: boolean; status: UserStatus; }) | null;
@@ -152,6 +167,10 @@ type AddBlogPostPayload = Omit<BlogPost, 'id' | 'createdAt' | 'status' | 'author
 export type AddAnnouncementPayload = Omit<Announcement, 'id' | 'createdAt'>;
 export type AddLeaderPayload = Omit<LeadershipMember, 'id'>;
 export type EditLeaderPayload = LeadershipMember;
+export type AddAlumnusPayload = Omit<Alumnus, 'id'>;
+export type EditAlumnusPayload = Alumnus;
+export type AddAlumniOpportunityPayload = Omit<AlumniOpportunity, 'id' | 'createdAt' | 'status' | 'authorEmail' | 'authorName' | 'rejectionReason'>;
+export type EditAlumniOpportunityPayload = Omit<AlumniOpportunity, 'createdAt' | 'status' | 'authorEmail' | 'authorName' | 'rejectionReason'>;
 
 
 interface AuthContextType {
@@ -163,6 +182,8 @@ interface AuthContextType {
   blogPosts: BlogPost[];
   announcements: Announcement[];
   leadership: LeadershipMember[];
+  alumni: Alumnus[];
+  alumniOpportunities: AlumniOpportunity[];
   loading: boolean;
   signIn: (email: string, pass: string) => Promise<User>;
   signUp: (email: string, pass: string, displayName: string) => Promise<any>;
@@ -195,6 +216,14 @@ interface AuthContextType {
   updateLeader: (leader: EditLeaderPayload) => Promise<void>;
   deleteLeader: (leaderId: string) => Promise<void>;
   toggleLeaderVisibility: (leaderId: string, isVisible: boolean) => Promise<void>;
+  addAlumnus: (alumnus: AddAlumnusPayload) => Promise<void>;
+  updateAlumnus: (alumnus: EditAlumnusPayload) => Promise<void>;
+  deleteAlumnus: (alumnusId: string) => Promise<void>;
+  addAlumniOpportunity: (opportunity: AddAlumniOpportunityPayload) => Promise<void>;
+  updateAlumniOpportunity: (opportunity: EditAlumniOpportunityPayload) => Promise<void>;
+  approveAlumniOpportunity: (opportunityId: string) => void;
+  rejectAlumniOpportunity: (opportunityId: string, reason: string) => void;
+  deleteAlumniOpportunity: (opportunityId: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -208,6 +237,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [leadership, setLeadership] = useState<LeadershipMember[]>([]);
+  const [alumni, setAlumni] = useState<Alumnus[]>([]);
+  const [alumniOpportunities, setAlumniOpportunities] = useState<AlumniOpportunity[]>([]);
   const [loading, setLoading] = useState(true);
 
   // This effect handles fetching data based on the user's role.
@@ -323,6 +354,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setOpportunities(sortData([...preloadedOpportunities, ...firestoreOpps]));
         }, handleSnapshotError));
         unsubscribes.push(onSnapshot(blogPostsCollection, snapshot => setBlogPosts(sortData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as BlogPost)))), handleSnapshotError));
+
+        const alumniCollection = collection(db, 'alumni');
+        unsubscribes.push(onSnapshot(query(alumniCollection, orderBy('graduationYear')), 
+            (snapshot) => setAlumni(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Alumnus))),
+            handleSnapshotError
+        ));
+
+        const alumniOppsCollection = collection(db, 'alumniOpportunities');
+        unsubscribes.push(onSnapshot(alumniOppsCollection, snapshot => {
+            const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AlumniOpportunity));
+            setAlumniOpportunities(sortData(firestoreOpps));
+        }, handleSnapshotError));
     };
 
     fetchPublicData();
@@ -712,6 +755,61 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       await updateDoc(leaderDocRef, { isVisible: isVisible });
   }
 
+  const addAlumnus = async (alumnus: AddAlumnusPayload) => {
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can add alumni.");
+    await addDoc(collection(db, 'alumni'), alumnus);
+  };
+
+  const updateAlumnus = async (alumnus: EditAlumnusPayload) => {
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can update alumni.");
+    const alumnusDocRef = doc(db, 'alumni', alumnus.id);
+    await updateDoc(alumnusDocRef, { ...alumnus });
+  };
+
+  const deleteAlumnus = async (alumnusId: string) => {
+    if (!user || user.role !== 'admin' && user.role !== 'super_admin') {
+      throw new Error("Only admins can delete alumni.");
+    }
+    const alumnusDocRef = doc(db, 'alumni', alumnusId);
+    await deleteDoc(alumnusDocRef);
+  };
+
+  const addAlumniOpportunity = async (opportunity: AddAlumniOpportunityPayload) => {
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can add alumni opportunities.");
+    await addDoc(collection(db, 'alumniOpportunities'), {
+        ...opportunity,
+        status: 'approved',
+        createdAt: Timestamp.now(),
+        authorEmail: user.email,
+        authorName: user.displayName || 'Unknown',
+    });
+  }
+
+  const approveAlumniOpportunity = async (opportunityId: string) => {
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can approve alumni opportunities.");
+    const opportunityDocRef = doc(db, 'alumniOpportunities', opportunityId);
+    await updateDoc(opportunityDocRef, { status: 'approved', rejectionReason: "" });
+  };
+
+  const rejectAlumniOpportunity = async (opportunityId: string, reason: string) => {
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can reject alumni opportunities.");
+    const opportunityDocRef = doc(db, 'alumniOpportunities', opportunityId);
+    await updateDoc(opportunityDocRef, { status: 'rejected', rejectionReason: reason });
+  };
+
+  const deleteAlumniOpportunity = async (opportunityId: string) => {
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can delete opportunities.");
+    const opportunityDocRef = doc(db, 'alumniOpportunities', opportunityId);
+    await deleteDoc(opportunityDocRef);
+  };
+
+  const updateAlumniOpportunity = async (opportunity: EditAlumniOpportunityPayload) => {
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can update alumni opportunities.");
+    const opportunityDocRef = doc(db, 'alumniOpportunities', opportunity.id);
+    await updateDoc(opportunityDocRef, { ...opportunity });
+  };
+
+
   const signOut = async () => {
     await firebaseSignOut(auth);
     setUser(null);
@@ -726,6 +824,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     blogPosts,
     announcements,
     leadership,
+    alumni,
+    alumniOpportunities,
     loading,
     signIn,
     signUp,
@@ -758,6 +858,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     updateLeader,
     deleteLeader,
     toggleLeaderVisibility,
+    addAlumnus,
+    updateAlumnus,
+    deleteAlumnus,
+    addAlumniOpportunity,
+    updateAlumniOpportunity,
+    approveAlumniOpportunity,
+    rejectAlumniOpportunity,
+    deleteAlumniOpportunity,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
