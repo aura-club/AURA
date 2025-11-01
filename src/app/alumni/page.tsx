@@ -68,11 +68,12 @@ const AlumniPage: FC = () => {
                   <a href={`mailto:${alumnus.email}`}>Email</a>
                 </Button>
                   {alumnus.socialLinks && Array.isArray(alumnus.socialLinks) && alumnus.socialLinks.map((link, linkIndex) => (
-                    <a key={linkIndex} href={link.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
-                      {link.platform}
-                    </a>
-                  ))}
-              </div>
+                    <Button asChild key={linkIndex}>
+                      <a href={link.url} target="_blank" rel="noopener noreferrer">
+                        {link.platform}
+                      </a>
+                    </Button>
+                  ))}              </div>
             </CardContent>
           </Card>
         ))}
