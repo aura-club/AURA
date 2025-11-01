@@ -71,13 +71,10 @@ const AlumniPage: FC = () => {
               </CardHeader>
               <CardContent className="text-center">
                 <div className="flex justify-center gap-4">
-                  <Button asChild variant="outline">
-                    <a href={`mailto:${alumnus.email}`}>Email</a>
-                  </Button>
                   {/* LinkedIn Button */}
                   {alumnus.socialLinks && Array.isArray(alumnus.socialLinks) && alumnus.socialLinks.map((link) => (
                     link.platform === "LinkedIn" && (
-                      <Button asChild key={link.url}>
+                      <Button asChild key={link.url} size="sm">
                         <a href={link.url} target="_blank" rel="noopener noreferrer">
                           LinkedIn
                         </a>
@@ -85,7 +82,7 @@ const AlumniPage: FC = () => {
                     )
                   ))}
                   {/* View More Button */}
-                  <Button variant="secondary" onClick={() => handleViewMore(alumnus)}>
+                  <Button variant="secondary" onClick={() => handleViewMore(alumnus)} size="sm">
                     View More
                   </Button>
                 </div>
