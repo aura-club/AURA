@@ -65,10 +65,8 @@ const AlumniPage: FC = () => {
                   <AvatarImage src={alumnus.photoURL} alt={alumnus.name} />
                   <AvatarFallback>{alumnus.name.charAt(0)}</AvatarFallback>
                 </Avatar>
-                <CardTitle className="font-headline mt-4">{alumnus.name}</CardTitle>
-                <p className="text-muted-foreground">Batch of {alumnus.graduationYear}</p>
-                <p className="text-sm text-muted-foreground mt-2 max-w-xs mx-auto">{alumnus.bio}</p>
-              </CardHeader>
+                              <CardTitle className="font-headline mt-4">{alumnus.name}</CardTitle>
+                              <p className="text-muted-foreground">Batch of {alumnus.graduationYear}</p>              </CardHeader>
               <CardContent className="text-center">
                 <div className="flex justify-center gap-4">
                   {/* LinkedIn Button */}

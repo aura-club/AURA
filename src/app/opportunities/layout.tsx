@@ -9,6 +9,7 @@ const navLinks = [
   { href: "/opportunities/events", label: "Events" },
   { href: "/opportunities/sessions", label: "Club Sessions" },
   { href: "/opportunities/external", label: "External" },
+  { href: "/opportunities/alumni", label: "Alumni" },
 ];
 
 export default function OpportunitiesLayout({

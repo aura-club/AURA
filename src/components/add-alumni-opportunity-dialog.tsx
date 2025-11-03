@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -31,6 +30,7 @@ import { useState } from "react";
 const alumniOpportunitySchema = z.object({
   title: z.string().min(3, "Title is required"),
   description: z.string().min(20, "Description must be at least 20 characters."),
+  link: z.string().url("Please enter a valid URL (e.g., https://example.com)").min(1, "Link is required"),
 });
 
 type AlumniOpportunityFormValues = z.infer<typeof alumniOpportunitySchema>;
@@ -49,6 +49,7 @@ export function AddAlumniOpportunityDialog({ children }: AddAlumniOpportunityDia
     defaultValues: {
       title: "",
       description: "",
+      link: "",
     },
   });
 
@@ -57,7 +58,7 @@ export function AddAlumniOpportunityDialog({ children }: AddAlumniOpportunityDia
       await addAlumniOpportunity({ ...data, category: "alumni" });
       toast({
         title: "Opportunity Submitted!",
-        description: "The alumni opportunity is now pending review.",
+        description: "The alumni opportunity has been added successfully.",
       });
       form.reset();
       setOpen(false);
@@ -105,10 +106,27 @@ export function AddAlumniOpportunityDialog({ children }: AddAlumniOpportunityDia
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Link</FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="url" 
+                      placeholder="https://example.com/opportunity" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <DialogFooter className="pt-4">
               <Button type="button" variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
               <Button type="submit" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? "Submitting..." : "Submit for Review"}
+                {form.formState.isSubmitting ? "Submitting..." : "Add Opportunity"}
               </Button>
             </DialogFooter>
           </form>

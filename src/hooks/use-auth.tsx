@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
@@ -9,7 +7,6 @@ import { collection, onSnapshot, addDoc, doc, updateDoc, Timestamp, setDoc, getD
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { preloadedOpportunities } from '@/lib/opportunities-data';
 import { preloadedResources } from '@/lib/resources-data';
-
 
 export type UserRole = 'super_admin' | 'admin' | 'member' | 'user';
 export type UserStatus = 'approved' | 'pending' | 'denied';
@@ -37,7 +34,7 @@ export interface Project {
     description: string;
     objectives: string[];
     methodology: string;
-outcomes: string;
+    outcomes: string;
     teamMembers: string[];
     galleryImages?: string[];
     externalLinks?: { label: string; url: string }[];
@@ -156,7 +153,6 @@ export interface AlumniOpportunity extends OpportunityBase {
     category: "alumni";
 }
 
-
 // This is our App's user type, which merges Firebase's User with our custom fields.
 type AppUser = (User & { role: UserRole; canUpload: boolean; status: UserStatus; }) | null;
 
@@ -171,7 +167,6 @@ export type AddAlumnusPayload = Omit<Alumnus, 'id'>;
 export type EditAlumnusPayload = Alumnus;
 export type AddAlumniOpportunityPayload = Omit<AlumniOpportunity, 'id' | 'createdAt' | 'status' | 'authorEmail' | 'authorName' | 'rejectionReason'>;
 export type EditAlumniOpportunityPayload = Omit<AlumniOpportunity, 'createdAt' | 'status' | 'authorEmail' | 'authorName' | 'rejectionReason'>;
-
 
 interface AuthContextType {
   user: AppUser;
@@ -307,6 +302,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const approvedUsers = snapshot.docs.map(doc => doc.data() as AppDbUser);
             setUsers(prev => Array.from(new Map([...prev, ...approvedUsers].map(u => [u.uid, u])).values()));
         }, handleSnapshotError));
+
+        const alumniOppsCollection = collection(db, 'alumniOpportunities');
+        unsubscribes.push(onSnapshot(alumniOppsCollection, snapshot => {
+            const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AlumniOpportunity));
+            setAlumniOpportunities(sortData(firestoreOpps));
+        }, handleSnapshotError));
     };
 
     const fetchUserData = () => {
@@ -343,43 +344,46 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     const fetchAdminData = () => {
-        unsubscribes.push(onSnapshot(usersCollection, snapshot => setUsers(snapshot.docs.map(doc => doc.data() as AppDbUser)), handleSnapshotError));
-        unsubscribes.push(onSnapshot(projectsCollection, snapshot => setProjects(sortData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project)))), handleSnapshotError));
+        if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) return;
+        
+        unsubscribes.push(onSnapshot(usersCollection, (snapshot) => {
+            setUsers(snapshot.docs.map(doc => doc.data() as AppDbUser));
+        }, handleSnapshotError));
+        
+        unsubscribes.push(onSnapshot(projectsCollection, snapshot => {
+            setProjects(sortData(snapshot.docs.map(d => ({...d.data(), id: d.id} as Project))));
+        }, handleSnapshotError));
+        
         unsubscribes.push(onSnapshot(resourcesCollection, snapshot => {
             const firestoreResources = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Resource));
             setResources(sortData(Array.from(new Map([...preloadedResources, ...firestoreResources].map(item => [item.id, item])).values())));
         }, handleSnapshotError));
+        
         unsubscribes.push(onSnapshot(opportunitiesCollection, snapshot => {
             const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Opportunity));
             setOpportunities(sortData([...preloadedOpportunities, ...firestoreOpps]));
         }, handleSnapshotError));
-        unsubscribes.push(onSnapshot(blogPostsCollection, snapshot => setBlogPosts(sortData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as BlogPost)))), handleSnapshotError));
-
+        
+        unsubscribes.push(onSnapshot(blogPostsCollection, snapshot => {
+            setBlogPosts(sortData(snapshot.docs.map(d => ({...d.data(), id: d.id} as BlogPost))));
+        }, handleSnapshotError));
+        
         const alumniCollection = collection(db, 'alumni');
-        unsubscribes.push(onSnapshot(query(alumniCollection, orderBy('graduationYear')), 
-            (snapshot) => setAlumni(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Alumnus))),
-            handleSnapshotError
-        ));
-
-        const alumniOppsCollection = collection(db, 'alumniOpportunities');
-        unsubscribes.push(onSnapshot(alumniOppsCollection, snapshot => {
-            const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AlumniOpportunity));
-            setAlumniOpportunities(sortData(firestoreOpps));
+        unsubscribes.push(onSnapshot(alumniCollection, snapshot => {
+            setAlumni(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Alumnus)));
         }, handleSnapshotError));
     };
-
+    
+    cleanup();
     fetchPublicData();
+    
     if (user) {
         fetchUserData();
-        if (user.role === 'admin' || user.role === 'super_admin') {
-            fetchAdminData();
-        }
-    } else {
-        setAnnouncements([]);
+        fetchAdminData();
     }
-
+    
     return cleanup;
-}, [user, loading]);
+  }, [loading, user]);
 
   const handleUser = async (firebaseUser: User | null): Promise<AppUser> => {
     if (!firebaseUser || !firebaseUser.email) return null;
@@ -419,7 +423,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
              await updateProfile(firebaseUser, { displayName: dbUser.name });
         }
     }
-
 
     return {
         ...firebaseUser,
@@ -809,7 +812,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     await updateDoc(opportunityDocRef, { ...opportunity });
   };
 
-
   const signOut = async () => {
     await firebaseSignOut(auth);
     setUser(null);
@@ -867,32 +869,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     rejectAlumniOpportunity,
     deleteAlumniOpportunity,
   };
-
+  
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
+}
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
-
-    
-
-    
-
-
-
-
-    
-
-    
-
-
-
-
-
-
-
