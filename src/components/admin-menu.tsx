@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -9,7 +8,7 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
 } from "@/components/ui/sidebar";
-import { GitPullRequest, Users, UserCog, FolderKanban, Library, Calendar, Newspaper, Trash2 } from "lucide-react";
+import { GitPullRequest, Users, UserCog, FolderKanban, Library, Calendar, Newspaper, Trash2, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
@@ -122,7 +121,6 @@ export function AdminMenu() {
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
-
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
@@ -132,6 +130,18 @@ export function AdminMenu() {
               <Link href="/dashboard/admin?tab=blog">
                 <Newspaper />
                 Blog Posts
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              tooltip="Shop Management"
+              isActive={pathname === "/dashboard/shop"}
+            >
+              <Link href="/dashboard/shop">
+                <ShoppingCart />
+                Shop Management
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
