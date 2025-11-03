@@ -1,8 +1,5 @@
-
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,11 +19,20 @@ interface DeleteConfirmationDialogProps {
   title: string;
   description: string;
   open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function DeleteConfirmationDialog({ children, onConfirm, onCancel, title, description, open }: DeleteConfirmationDialogProps) {
+export function DeleteConfirmationDialog({ 
+  children, 
+  onConfirm, 
+  onCancel, 
+  title, 
+  description, 
+  open,
+  onOpenChange 
+}: DeleteConfirmationDialogProps) {
   return (
-    <AlertDialog open={open}>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
       {children && <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>}
       <AlertDialogContent>
         <AlertDialogHeader>
