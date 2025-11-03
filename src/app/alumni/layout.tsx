@@ -10,13 +10,31 @@ export default function AlumniLayout({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     if (!loading && !user) {
+      // Not logged in - redirect to login
       router.push('/login');
+    } else if (!loading && user && user.role === 'user') {
+      // Logged in but just a regular user (not member/admin/super_admin) - redirect to home
+      router.push('/');
     }
   }, [user, loading, router]);
 
-  if (loading || !user) {
-    return <div className="flex h-screen items-center justify-center">Loading...</div>;
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
+  // Not authorized
+  if (!user || user.role === 'user') {
+    return null;
+  }
+
+  // Authorized (member, admin, or super_admin)
   return <>{children}</>;
 }

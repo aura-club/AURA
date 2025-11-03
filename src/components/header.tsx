@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -18,7 +17,7 @@ const navLinks = [
   { href: "/opportunities", label: "Opportunities" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
-  { href: "/alumni", label: "Alumni", auth: true },
+  { href: "/alumni", label: "Alumni", memberOnly: true },
 ];
 
 export function Header() {
@@ -27,25 +26,30 @@ export function Header() {
 
   const handleLogout = async () => {
     await signOut();
-    // You might want to redirect here, e.g., router.push('/')
+  };
+
+  // Helper function to check if user can see a link
+  const canViewLink = (link: typeof navLinks[0]) => {
+    if (!link.memberOnly) return true;
+    return user && (user.role === 'member' || user.role === 'admin' || user.role === 'super_admin');
   };
 
   const NavLinksDesktop = () => (
     <nav className="hidden md:flex gap-6 items-center">
       {navLinks
-        .filter(link => !link.auth || (link.auth && user))
+        .filter(link => canViewLink(link))
         .map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className={cn(
-            "text-sm font-medium transition-colors hover:text-white/80",
-            pathname.startsWith(link.href) ? "text-white" : "text-white/70"
-          )}
-        >
-          {link.label}
-        </Link>
-      ))}
+          <Link
+            key={link.href}
+            href={link.href}
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-white/80",
+              pathname.startsWith(link.href) ? "text-white" : "text-white/70"
+            )}
+          >
+            {link.label}
+          </Link>
+        ))}
     </nav>
   );
 
@@ -63,19 +67,19 @@ export function Header() {
             <Logo />
           </div>
           {navLinks
-            .filter(link => !link.auth || (link.auth && user))
+            .filter(link => canViewLink(link))
             .map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "transition-colors hover:text-foreground",
-                pathname.startsWith(link.href) ? "text-foreground" : "text-muted-foreground"
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "transition-colors hover:text-foreground",
+                  pathname.startsWith(link.href) ? "text-foreground" : "text-muted-foreground"
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
         </nav>
       </SheetContent>
     </Sheet>
@@ -120,9 +124,9 @@ export function Header() {
     }
 
     return (
-       <Button asChild variant="outline">
-          <Link href="/login">Sign In</Link>
-        </Button>
+      <Button asChild variant="outline">
+        <Link href="/login">Sign In</Link>
+      </Button>
     )
   }
 
@@ -130,11 +134,11 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-7xl items-center">
         <div className="flex-1 flex items-center justify-start">
-            <Logo />
+          <Logo />
         </div>
         
         <div className="flex-1 flex items-center justify-center">
-            <NavLinksDesktop />
+          <NavLinksDesktop />
         </div>
         
         <div className="flex-1 flex items-center justify-end gap-4">
