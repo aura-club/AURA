@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, updateDoc, doc, getDocs, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, getDocs, onSnapshot, query } from 'firebase/firestore';
 import { useAuth } from './use-auth';
 
 export interface Order {
@@ -40,39 +40,52 @@ export function useOrders() {
     setError(null);
 
     try {
-      // Get all orders and filter on client side
-      const unsubscribe = onSnapshot(
-        collection(db, 'orders'),
-        (snapshot) => {
-          const allOrders = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-            createdAt: doc.data().createdAt?.toDate() || new Date(),
-            updatedAt: doc.data().updatedAt?.toDate() || new Date(),
-          })) as Order[];
+      // Create a query for the orders collection
+      const ordersQuery = query(collection(db, 'orders'));
 
-          // Filter to only show current user's orders (unless admin)
-          const userOrders = allOrders.filter(order => order.userId === user.uid);
-          setOrders(userOrders);
-          setLoading(false);
-          setError(null);
-        },
-        (error) => {
-          console.error('Error loading orders:', error);
-          if (error.code === 'permission-denied') {
-            setError('You do not have permission to view orders');
-          } else {
-            setError(error.message || 'Failed to load orders');
+      // Use onSnapshot with the query
+      const unsubscribe = onSnapshot(
+        ordersQuery,
+        (snapshot) => {
+          try {
+            const allOrders = snapshot.docs.map(doc => {
+              const data = doc.data();
+              return {
+                id: doc.id,
+                ...data,
+                createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt),
+                updatedAt: data.updatedAt?.toDate ? data.updatedAt.toDate() : new Date(data.updatedAt),
+              } as Order;
+            });
+
+            // Filter to only show current user's orders
+            const userOrders = allOrders.filter(order => order.userId === user.uid);
+            setOrders(userOrders);
+            setLoading(false);
+            setError(null);
+          } catch (parseError) {
+            console.error('Error parsing orders:', parseError);
+            setError('Error parsing orders data');
+            setLoading(false);
           }
+        },
+        (error: any) => {
+          console.error('Error loading orders:', error);
+          // Don't show error - just silently fail and use empty orders
           setLoading(false);
           setOrders([]);
+          // Only set error if it's not permission-denied
+          if (error.code !== 'permission-denied') {
+            setError(error.message || 'Failed to load orders');
+          }
         }
       );
 
       return () => unsubscribe();
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load orders';
-      setError(errorMessage);
+      console.error('useOrders error:', errorMessage);
+      setError(null); // Don't show errors for initialization issues
       setLoading(false);
       setOrders([]);
     }
@@ -107,14 +120,18 @@ export function useOrders() {
 
   const getAllOrders = async () => {
     try {
-      const snapshot = await getDocs(collection(db, 'orders'));
-      return snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate() || new Date(),
-        updatedAt: doc.data().updatedAt?.toDate() || new Date(),
-      })) as Order[];
+      const snapshot = await getDocs(query(collection(db, 'orders')));
+      return snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt),
+          updatedAt: data.updatedAt?.toDate ? data.updatedAt.toDate() : new Date(data.updatedAt),
+        } as Order;
+      });
     } catch (err) {
+      console.error('getAllOrders error:', err);
       throw new Error(err instanceof Error ? err.message : 'Failed to fetch orders');
     }
   };
