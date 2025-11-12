@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -32,7 +31,6 @@ import { EditAlumniOpportunityDialog } from "@/components/edit-alumni-opportunit
 import Image from "next/image";
 import { UpdateRoleSelect } from "@/components/update-role-select";
 
-
 const statusColors: { [key in SubmissionStatus]: "default" | "secondary" | "destructive" | "outline" } = {
   approved: "secondary",
   pending: "outline",
@@ -46,19 +44,43 @@ export default function AdminPage() {
   const activeTab = searchParams.get('tab') || 'requests';
   const [alumnusToDelete, setAlumnusToDelete] = useState<Alumnus | null>(null);
 
-  const handleApproveUser = (email: string) => {
-    approveUser(email);
-    toast({ title: "Member Approved", description: "The user has been promoted to a member." });
+  const handleApproveUser = async (email: string) => {
+    try {
+      await approveUser(email);
+      toast({ title: "Member Approved", description: "The user has been promoted to a member." });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Approval Failed",
+        description: error.message || "Failed to approve user. Please try again.",
+      });
+    }
   };
 
-  const handleDenyUser = (email: string) => {
-    denyUser(email);
-    toast({ title: "Request Denied", description: "The user's join request has been denied." });
+  const handleDenyUser = async (email: string) => {
+    try {
+      await denyUser(email);
+      toast({ title: "Request Denied", description: "The user's join request has been denied." });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Denial Failed",
+        description: error.message || "Failed to deny user. Please try again.",
+      });
+    }
   };
   
-  const handleToggleUpload = (email: string, canUpload: boolean) => {
-    toggleUploadPermission(email, canUpload);
-    toast({ title: "Permissions Updated", description: "The member's upload permissions have been changed." });
+  const handleToggleUpload = async (email: string, canUpload: boolean) => {
+    try {
+      await toggleUploadPermission(email, canUpload);
+      toast({ title: "Permissions Updated", description: "The member's upload permissions have been changed." });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Update Failed",
+        description: error.message || "Failed to update permissions. Please try again.",
+      });
+    }
   };
 
   const handleApproveProject = (id: string) => {
@@ -101,8 +123,6 @@ export default function AdminPage() {
     toast({ title: "Blog Post Rejected", description: "The post has been rejected and will not be displayed." });
   };
 
-
-
   const handleDeleteAlumnus = async (alumnusToDelete: Alumnus) => {
     try {
       await deleteAlumnus(alumnusToDelete.id);
@@ -128,7 +148,6 @@ export default function AdminPage() {
         });
     }
   };
-
 
   const joinRequests = users.filter(u => u.status === 'pending');
   const membersAndUsers = users.filter(u => u.status === 'approved' && u.email !== currentUser?.email);

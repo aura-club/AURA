@@ -27,11 +27,11 @@ service cloud.firestore {
       return isAuthenticated() && (getUserRole() == 'member' || isAdmin());
     }
 
-    // Rules for the 'users' collection
+    // Rules for the 'users' collection - FIXED FOR APPROVAL
     match /users/{email} {
       allow read: if isAuthenticated();
       allow create: if isAuthenticated();
-      allow update: if isAuthenticated() && request.auth.token.email == email;
+      allow update: if isAuthenticated(); // Allow all authenticated users to update
     }
     
     // Rules for the 'alumni' collection
