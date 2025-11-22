@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth, type UserRole } from "@/hooks/use-auth";
+import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import {
   Table,
@@ -11,15 +11,28 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { ShieldAlert } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { ShieldAlert, Settings } from "lucide-react";
 import { UpdateRoleSelect } from "@/components/update-role-select";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+
+interface AdminPermissions {
+  canUpload: boolean;
+  canDelete: boolean;
+  canManageMembers: boolean;
+  canManageShop: boolean;
+  canApproveSubmissions: boolean;
+  canManageOrders: boolean;
+}
 
 export default function SuperAdminPage() {
-  const { user, users, updateUserRole } = useAuth();
+  const { user, users } = useAuth();
   const { toast } = useToast();
   const router = useRouter();
+  const [updatingPermissions, setUpdatingPermissions] = useState<string | null>(null);
 
   useEffect(() => {
     if (user && user.role !== 'super_admin') {
@@ -31,66 +44,226 @@ export default function SuperAdminPage() {
     return <div className="flex h-screen items-center justify-center">Access Denied</div>;
   }
 
-  // Sort users by role hierarchy: super_admin → admin → member → user
-  const sortedUsers = useMemo(() => {
-    const roleOrder: { [key in UserRole]: number } = {
-      'super_admin': 1,
-      'admin': 2,
-      'member': 3,
-      'user': 4,
-    };
-
+  // Filter only admins (exclude super_admins, members, and regular users)
+  const adminUsers = useMemo(() => {
     return users
-      .filter(u => u.email !== user.email)
-      .sort((a, b) => {
-        const roleComparison = roleOrder[a.role] - roleOrder[b.role];
-        if (roleComparison !== 0) return roleComparison;
-        // If same role, sort alphabetically by name
-        return a.name.localeCompare(b.name);
+      .filter(u => u.role === 'admin')
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [users]);
+
+  const updatePermission = async (
+    userEmail: string,
+    permissionKey: keyof AdminPermissions,
+    value: boolean
+  ) => {
+    setUpdatingPermissions(userEmail);
+    try {
+      const userDoc = doc(db, 'users', userEmail);
+      await updateDoc(userDoc, {
+        [`permissions.${permissionKey}`]: value,
       });
-  }, [users, user.email]);
+      
+      toast({
+        title: "Permission Updated",
+        description: `Admin permission has been ${value ? 'granted' : 'revoked'}.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update permission",
+        variant: "destructive",
+      });
+    } finally {
+      setUpdatingPermissions(null);
+    }
+  };
+
+  const getPermissions = (admin: any): AdminPermissions => {
+    return {
+      canUpload: admin.permissions?.canUpload ?? true,
+      canDelete: admin.permissions?.canDelete ?? true,
+      canManageMembers: admin.permissions?.canManageMembers ?? true,
+      canManageShop: admin.permissions?.canManageShop ?? true,
+      canApproveSubmissions: admin.permissions?.canApproveSubmissions ?? true,
+      canManageOrders: admin.permissions?.canManageOrders ?? true,
+    };
+  };
 
   return (
     <div className="space-y-8">
       <div>
         <h1 className="font-headline text-3xl font-bold flex items-center gap-3">
           <ShieldAlert className="h-8 w-8" />
-          Super Admin: Manage User Roles
+          Super Admin: Manage Admin Permissions
         </h1>
         <p className="text-muted-foreground mt-2">
-          Promote or demote users to any role.
+          Control permissions for admin users. Super admins have all permissions by default.
         </p>
       </div>
+
       <Card>
         <CardHeader>
-          <CardTitle>User Roles</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <Settings className="h-5 w-5" />
+            Admin Users ({adminUsers.length})
+          </CardTitle>
           <CardDescription>
-            Change the role of any user.
+            Configure granular permissions for each admin. Toggle permissions on/off as needed.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Current Role</TableHead>
-                <TableHead className="text-right">Role</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sortedUsers.map((u) => (
-                <TableRow key={u.uid}>
-                  <TableCell className="font-medium">{u.name}</TableCell>
-                  <TableCell>{u.email}</TableCell>
-                  <TableCell className="capitalize">{u.role.replace('_', ' ')}</TableCell>
-                  <TableCell className="text-right">
-                    <UpdateRoleSelect userEmail={u.email} currentRole={u.role} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          {adminUsers.length > 0 ? (
+            <div className="space-y-6">
+              {adminUsers.map((admin) => {
+                const permissions = getPermissions(admin);
+                const isUpdating = updatingPermissions === admin.email;
+
+                return (
+                  <Card key={admin.email} className="border-2">
+                    <CardContent className="pt-6">
+                      {/* Admin Header */}
+                      <div className="flex items-start justify-between mb-6 pb-4 border-b">
+                        <div className="flex-1">
+                          <h3 className="text-lg font-semibold">{admin.name}</h3>
+                          <p className="text-sm text-muted-foreground">{admin.email}</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">
+                            Admin
+                          </span>
+                          <UpdateRoleSelect userEmail={admin.email} currentRole={admin.role} />
+                        </div>
+                      </div>
+
+                      {/* Permission Grid */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {/* Can Upload Content */}
+                        <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">Upload Content</p>
+                            <p className="text-xs text-muted-foreground">Create projects, resources, etc.</p>
+                          </div>
+                          <Switch
+                            checked={permissions.canUpload}
+                            onCheckedChange={(checked) =>
+                              updatePermission(admin.email, 'canUpload', checked)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </div>
+
+                        {/* Can Delete Content */}
+                        <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">Delete Content</p>
+                            <p className="text-xs text-muted-foreground">Remove posts, projects, resources</p>
+                          </div>
+                          <Switch
+                            checked={permissions.canDelete}
+                            onCheckedChange={(checked) =>
+                              updatePermission(admin.email, 'canDelete', checked)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </div>
+
+                        {/* Can Manage Members */}
+                        <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">Manage Members</p>
+                            <p className="text-xs text-muted-foreground">Approve/deny member requests</p>
+                          </div>
+                          <Switch
+                            checked={permissions.canManageMembers}
+                            onCheckedChange={(checked) =>
+                              updatePermission(admin.email, 'canManageMembers', checked)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </div>
+
+                        {/* Can Manage Shop */}
+                        <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">Manage Shop</p>
+                            <p className="text-xs text-muted-foreground">Add/edit products, locations</p>
+                          </div>
+                          <Switch
+                            checked={permissions.canManageShop}
+                            onCheckedChange={(checked) =>
+                              updatePermission(admin.email, 'canManageShop', checked)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </div>
+
+                        {/* Can Approve Submissions */}
+                        <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">Approve Submissions</p>
+                            <p className="text-xs text-muted-foreground">Review pending content</p>
+                          </div>
+                          <Switch
+                            checked={permissions.canApproveSubmissions}
+                            onCheckedChange={(checked) =>
+                              updatePermission(admin.email, 'canApproveSubmissions', checked)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </div>
+
+                        {/* Can Manage Orders */}
+                        <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">Manage Orders</p>
+                            <p className="text-xs text-muted-foreground">View and update shop orders</p>
+                          </div>
+                          <Switch
+                            checked={permissions.canManageOrders}
+                            onCheckedChange={(checked) =>
+                              updatePermission(admin.email, 'canManageOrders', checked)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <ShieldAlert className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
+              <p className="text-muted-foreground">No admin users found.</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                Promote users to admin role from the Members section.
+              </p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Info Card */}
+      <Card className="bg-blue-50 border-blue-200">
+        <CardContent className="pt-6">
+          <div className="flex gap-3">
+            <ShieldAlert className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <h4 className="font-semibold text-blue-900">About Admin Permissions</h4>
+              <ul className="text-sm text-blue-800 mt-2 space-y-1">
+                <li>• <strong>Upload Content:</strong> Create new projects, resources, opportunities, and blog posts</li>
+                <li>• <strong>Delete Content:</strong> Remove any content from the platform</li>
+                <li>• <strong>Manage Members:</strong> Approve/deny join requests and manage user permissions</li>
+                <li>• <strong>Manage Shop:</strong> Add/edit products, manage inventory and pickup locations</li>
+                <li>• <strong>Approve Submissions:</strong> Review and approve pending content submissions</li>
+                <li>• <strong>Manage Orders:</strong> View all orders and update order status</li>
+              </ul>
+              <p className="text-sm text-blue-800 mt-3 font-medium">
+                Note: Super admins always have all permissions and cannot be restricted.
+              </p>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

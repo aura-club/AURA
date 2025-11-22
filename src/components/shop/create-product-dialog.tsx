@@ -31,6 +31,7 @@ import {
 import { useShop } from "@/hooks/use-shop";
 import { usePickupLocations } from "@/hooks/use-pickup-locations";
 import { useToast } from "@/hooks/use-toast";
+import { usePermissions, showPermissionError } from "@/hooks/use-permissions";
 import { storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Upload, X, Link, MapPin } from "lucide-react";
@@ -69,6 +70,7 @@ export function CreateProductDialog({ children }: CreateProductDialogProps) {
   const { addProduct } = useShop();
   const { locations } = usePickupLocations();
   const { toast } = useToast();
+  const permissions = usePermissions();
   
   const { register, handleSubmit, watch, control, formState: { errors }, reset, setValue } = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
@@ -157,6 +159,12 @@ export function CreateProductDialog({ children }: CreateProductDialogProps) {
   };
 
   const onSubmit = async (data: ProductFormData) => {
+    // Check permission first
+    if (!permissions.canManageShop) {
+      toast(showPermissionError());
+      return;
+    }
+
     if (!data.deliveryAvailable && !data.pickupAvailable) {
       toast({
         title: "Error",
@@ -485,7 +493,7 @@ export function CreateProductDialog({ children }: CreateProductDialogProps) {
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button type="submit" disabled={isUploading}>
+            <Button type="submit" disabled={isUploading || !permissions.canManageShop}>
               {isUploading ? "Uploading..." : "Add Product"}
             </Button>
           </div>

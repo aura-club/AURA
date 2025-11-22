@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Edit2, Trash2, Search, ChevronDown } from "lucide-react";
 import { useShop } from "@/hooks/use-shop";
 import { useToast } from "@/hooks/use-toast";
+import { usePermissions, showPermissionError } from "@/hooks/use-permissions";
 import { CreateProductDialog } from "@/components/shop/create-product-dialog";
 import { EditProductDialog } from "@/components/shop/edit-product-dialog";
 import { DeleteProductDialog } from "@/components/shop/delete-product-dialog";
@@ -15,11 +17,25 @@ import { PickupLocationsManager } from "@/components/admin/pickup-locations-mana
 export default function ShopManagementPage() {
   const { products, loading, deleteProduct } = useShop();
   const { toast } = useToast();
+  const permissions = usePermissions();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<"all" | "electrical" | "airframe" | "mechanical" | "drone">("all");
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showCategoryFilter, setShowCategoryFilter] = useState(false);
+
+  // Redirect if no permission
+  useEffect(() => {
+    if (!permissions.canManageShop) {
+      router.push('/dashboard');
+      toast({
+        title: "Access Denied",
+        description: "You don't have permission to access shop management.",
+        variant: "destructive",
+      });
+    }
+  }, [permissions.canManageShop, router, toast]);
 
   const categories = [
     { value: "all", label: "All Products" },
@@ -41,6 +57,13 @@ export default function ShopManagementPage() {
 
   const handleDeleteProduct = async () => {
     if (!selectedProduct) return;
+    
+    if (!permissions.canDelete) {
+      toast(showPermissionError());
+      setShowDeleteDialog(false);
+      return;
+    }
+    
     try {
       await deleteProduct(selectedProduct.id);
       toast({
@@ -57,6 +80,11 @@ export default function ShopManagementPage() {
       });
     }
   };
+
+  // Show nothing while checking permissions (prevents flash)
+  if (!permissions.canManageShop) {
+    return null;
+  }
 
   return (
     <div className="space-y-4 md:space-y-6">
@@ -226,16 +254,28 @@ export default function ShopManagementPage() {
                               <Edit2 className="h-3 w-3" />
                             </Button>
                           </EditProductDialog>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => {
-                              setSelectedProduct(product);
-                              setShowDeleteDialog(true);
-                            }}
-                          >
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
+                          
+                          {permissions.canDelete ? (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                setSelectedProduct(product);
+                                setShowDeleteDialog(true);
+                              }}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          ) : (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              disabled
+                              onClick={() => toast(showPermissionError())}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -292,18 +332,32 @@ export default function ShopManagementPage() {
                             Edit
                           </Button>
                         </EditProductDialog>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="flex-1"
-                          onClick={() => {
-                            setSelectedProduct(product);
-                            setShowDeleteDialog(true);
-                          }}
-                        >
-                          <Trash2 className="h-3 w-3 mr-1" />
-                          Delete
-                        </Button>
+                        
+                        {permissions.canDelete ? (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="flex-1"
+                            onClick={() => {
+                              setSelectedProduct(product);
+                              setShowDeleteDialog(true);
+                            }}
+                          >
+                            <Trash2 className="h-3 w-3 mr-1" />
+                            Delete
+                          </Button>
+                        ) : (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="flex-1"
+                            disabled
+                            onClick={() => toast(showPermissionError())}
+                          >
+                            <Trash2 className="h-3 w-3 mr-1" />
+                            Delete
+                          </Button>
+                        )}
                       </div>
                     </CardContent>
                   </Card>

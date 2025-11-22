@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,12 +16,15 @@ import { Badge } from "@/components/ui/badge";
 import { Eye, CheckCircle, Clock, Truck, Package } from "lucide-react";
 import { useOrders, Order } from "@/hooks/use-orders";
 import { useToast } from "@/hooks/use-toast";
+import { usePermissions, showPermissionError } from "@/hooks/use-permissions";
 import { OrderDetailsDialog } from "@/components/orders/order-details-dialog";
 import { UpdateOrderStatusDialog } from "@/components/orders/update-order-status-dialog";
 
 export default function OrdersManagementPage() {
   const { getAllOrders, updateOrderStatus, loading, error } = useOrders();
   const { toast } = useToast();
+  const permissions = usePermissions();
+  const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("all");
@@ -29,10 +33,24 @@ export default function OrdersManagementPage() {
   const [showStatusDialog, setShowStatusDialog] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
 
+  // Redirect if no permission
+  useEffect(() => {
+    if (!permissions.canManageOrders) {
+      router.push('/dashboard');
+      toast({
+        title: "Access Denied",
+        description: "You don't have permission to access orders management.",
+        variant: "destructive",
+      });
+    }
+  }, [permissions.canManageOrders, router, toast]);
+
   // Load all orders on mount
   useEffect(() => {
-    loadOrders();
-  }, []);
+    if (permissions.canManageOrders) {
+      loadOrders();
+    }
+  }, [permissions.canManageOrders]);
 
   const loadOrders = async () => {
     try {
@@ -109,7 +127,13 @@ export default function OrdersManagementPage() {
   };
 
   const handleStatusUpdate = async (newStatus: Order['status'], notes?: string) => {
+    if (!permissions.canManageOrders) {
+      toast(showPermissionError());
+      return;
+    }
+
     if (!selectedOrder) return;
+    
     try {
       await updateOrderStatus(selectedOrder.id, newStatus, notes);
       toast({
@@ -126,6 +150,25 @@ export default function OrdersManagementPage() {
       });
     }
   };
+
+  const handleViewDetails = (order: Order) => {
+    setSelectedOrder(order);
+    setShowDetailsDialog(true);
+  };
+
+  const handleUpdateStatus = (order: Order) => {
+    if (!permissions.canManageOrders) {
+      toast(showPermissionError());
+      return;
+    }
+    setSelectedOrder(order);
+    setShowStatusDialog(true);
+  };
+
+  // Show nothing while checking permissions (prevents flash)
+  if (!permissions.canManageOrders) {
+    return null;
+  }
 
   return (
     <div className="space-y-6">
@@ -260,19 +303,13 @@ export default function OrdersManagementPage() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => {
-                            setSelectedOrder(order);
-                            setShowDetailsDialog(true);
-                          }}
+                          onClick={() => handleViewDetails(order)}
                         >
                           <Eye className="h-3 w-3" />
                         </Button>
                         <Button
                           size="sm"
-                          onClick={() => {
-                            setSelectedOrder(order);
-                            setShowStatusDialog(true);
-                          }}
+                          onClick={() => handleUpdateStatus(order)}
                         >
                           Update
                         </Button>

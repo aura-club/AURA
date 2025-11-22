@@ -17,6 +17,7 @@ import { DeleteConfirmationDialog } from "@/components/delete-confirmation-dialo
 import { Check, X, FileText, Calendar, Newspaper, Users, Library, FolderKanban, GitPullRequest, UserCog, PlusCircle, Edit, Trash2, Store } from "lucide-react";
 import { useAuth, type UserRole } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
+import { usePermissions, showPermissionError } from "@/hooks/use-permissions";
 import { ProjectReviewDialog } from "@/components/project-review-dialog";
 import { ResourceReviewDialog } from "@/components/resource-review-dialog";
 import { OpportunityReviewDialog } from "@/components/opportunity-review-dialog";
@@ -41,12 +42,17 @@ const statusColors: { [key in SubmissionStatus]: "default" | "secondary" | "dest
 export default function AdminPage() {
   const { user: currentUser, users, projects, resources, opportunities, blogPosts, leadership, alumni, alumniOpportunities, approveUser, denyUser, deleteUser, toggleUploadPermission, approveProject, rejectProject, approveResource, rejectResource, approveOpportunity, rejectOpportunity, approveBlogPost, rejectBlogPost, toggleLeaderVisibility, approveAlumniOpportunity, rejectAlumniOpportunity, deleteAlumnus, deleteAlumniOpportunity, updateAlumniOpportunity } = useAuth();
   const { toast } = useToast();
+  const permissions = usePermissions();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get('tab') || 'requests';
   const [alumnusToDelete, setAlumnusToDelete] = useState<Alumnus | null>(null);
   const [userToDelete, setUserToDelete] = useState<AppDbUser | null>(null);
 
   const handleApproveUser = async (email: string) => {
+    if (!permissions.canManageMembers) {
+      toast(showPermissionError());
+      return;
+    }
     try {
       await approveUser(email);
       toast({ title: "Member Approved", description: "The user has been promoted to a member." });
@@ -60,6 +66,10 @@ export default function AdminPage() {
   };
 
   const handleDenyUser = async (email: string) => {
+    if (!permissions.canManageMembers) {
+      toast(showPermissionError());
+      return;
+    }
     try {
       await denyUser(email);
       toast({ title: "Request Denied", description: "The user's join request has been denied." });
@@ -73,6 +83,10 @@ export default function AdminPage() {
   };
   
   const handleToggleUpload = async (email: string, canUpload: boolean) => {
+    if (!permissions.canManageMembers) {
+      toast(showPermissionError());
+      return;
+    }
     try {
       await toggleUploadPermission(email, canUpload);
       toast({ title: "Permissions Updated", description: "The member's upload permissions have been changed." });
@@ -86,46 +100,82 @@ export default function AdminPage() {
   };
 
   const handleApproveProject = (id: string) => {
+    if (!permissions.canApproveSubmissions) {
+      toast(showPermissionError());
+      return;
+    }
     approveProject(id);
     toast({ title: "Project Approved", description: "The project will now be visible on the public site." });
   };
 
   const handleRejectProject = (id: string, reason: string) => {
+    if (!permissions.canApproveSubmissions) {
+      toast(showPermissionError());
+      return;
+    }
     rejectProject(id, reason);
     toast({ title: "Project Rejected", description: "The project has been rejected and will not be displayed." });
   };
 
   const handleApproveResource = (id: string) => {
+    if (!permissions.canApproveSubmissions) {
+      toast(showPermissionError());
+      return;
+    }
     approveResource(id);
     toast({ title: "Resource Approved", description: "The resource will now be visible on the public site." });
   };
 
   const handleRejectResource = (id: string, reason: string) => {
+    if (!permissions.canApproveSubmissions) {
+      toast(showPermissionError());
+      return;
+    }
     rejectResource(id, reason);
     toast({ title: "Resource Rejected", description: "The resource has been rejected and will not be displayed." });
   };
 
   const handleApproveOpportunity = (id: string) => {
+    if (!permissions.canApproveSubmissions) {
+      toast(showPermissionError());
+      return;
+    }
     approveOpportunity(id);
     toast({ title: "Opportunity Approved", description: "The opportunity will now be visible on the public site." });
   };
 
   const handleRejectOpportunity = (id: string, reason: string) => {
+    if (!permissions.canApproveSubmissions) {
+      toast(showPermissionError());
+      return;
+    }
     rejectOpportunity(id, reason);
     toast({ title: "Opportunity Rejected", description: "The opportunity has been rejected and will not be displayed." });
   };
 
   const handleApproveBlogPost = (id: string) => {
+    if (!permissions.canApproveSubmissions) {
+      toast(showPermissionError());
+      return;
+    }
     approveBlogPost(id);
     toast({ title: "Blog Post Approved", description: "The post will now be visible on the public site." });
   };
 
   const handleRejectBlogPost = (id: string, reason: string) => {
+    if (!permissions.canApproveSubmissions) {
+      toast(showPermissionError());
+      return;
+    }
     rejectBlogPost(id, reason);
     toast({ title: "Blog Post Rejected", description: "The post has been rejected and will not be displayed." });
   };
 
   const handleDeleteAlumnus = async (alumnusToDelete: Alumnus) => {
+    if (!permissions.canDelete) {
+      toast(showPermissionError());
+      return;
+    }
     try {
       await deleteAlumnus(alumnusToDelete.id);
       toast({ title: "Alumnus Deleted", description: `The alumnus "${alumnusToDelete.name}" has been successfully deleted.` });
@@ -139,6 +189,10 @@ export default function AdminPage() {
   };
   
   const handleToggleLeaderVisibility = async (id: string, isVisible: boolean) => {
+    if (!permissions.canManageMembers) {
+      toast(showPermissionError());
+      return;
+    }
     try {
         await toggleLeaderVisibility(id, isVisible);
         toast({ title: "Visibility Updated", description: "The leader's visibility has been changed." });
@@ -152,6 +206,10 @@ export default function AdminPage() {
   };
 
   const handleDeleteUser = async (userToDelete: AppDbUser) => {
+    if (!permissions.canDelete) {
+      toast(showPermissionError());
+      return;
+    }
     try {
       await deleteUser(userToDelete.email);
       toast({ 
@@ -224,8 +282,22 @@ export default function AdminPage() {
                           <TableCell className="hidden md:table-cell">{req.email}</TableCell>
                           <TableCell className="hidden lg:table-cell text-muted-foreground max-w-sm truncate">{req.reason}</TableCell>
                           <TableCell className="text-right space-x-2">
-                            <Button variant="outline" size="sm" onClick={() => handleApproveUser(req.email)}><Check className="h-4 w-4 mr-1" />Approve</Button>
-                            <Button variant="destructive" size="sm" onClick={() => handleDenyUser(req.email)}><X className="h-4 w-4 mr-1" />Deny</Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => handleApproveUser(req.email)}
+                              disabled={!permissions.canManageMembers}
+                            >
+                              <Check className="h-4 w-4 mr-1" />Approve
+                            </Button>
+                            <Button 
+                              variant="destructive" 
+                              size="sm" 
+                              onClick={() => handleDenyUser(req.email)}
+                              disabled={!permissions.canManageMembers}
+                            >
+                              <X className="h-4 w-4 mr-1" />Deny
+                            </Button>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -276,7 +348,7 @@ export default function AdminPage() {
                             checked={member.canUpload} 
                             onCheckedChange={(checked) => handleToggleUpload(member.email, checked)}
                             aria-label="Toggle Upload Permission" 
-                            disabled={member.role === 'admin' || member.role === 'super_admin'}
+                            disabled={member.role === 'admin' || member.role === 'super_admin' || !permissions.canManageMembers}
                           />
                         </TableCell>
                         <TableCell className="text-right">
@@ -284,6 +356,7 @@ export default function AdminPage() {
                             size="sm"
                             variant="destructive"
                             onClick={() => setUserToDelete(member)}
+                            disabled={!permissions.canDelete}
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -321,9 +394,15 @@ export default function AdminPage() {
                     <CardTitle>Leadership Team</CardTitle>
                     <CardDescription>Total members: {leadership.length}</CardDescription>
                   </div>
-                   <EditLeaderDialog>
-                      <Button><PlusCircle className="mr-2 h-4 w-4" /> Add Leader</Button>
-                   </EditLeaderDialog>
+                   {permissions.canManageMembers ? (
+                     <EditLeaderDialog>
+                        <Button><PlusCircle className="mr-2 h-4 w-4" /> Add Leader</Button>
+                     </EditLeaderDialog>
+                   ) : (
+                     <Button disabled onClick={() => toast(showPermissionError())}>
+                       <PlusCircle className="mr-2 h-4 w-4" /> Add Leader
+                     </Button>
+                   )}
               </CardHeader>
               <CardContent>
                  {leadership.length > 0 ? (
@@ -357,12 +436,19 @@ export default function AdminPage() {
                                     checked={member.isVisible}
                                     onCheckedChange={(checked) => handleToggleLeaderVisibility(member.id, checked)}
                                     aria-label="Toggle Visibility"
+                                    disabled={!permissions.canManageMembers}
                                 />
                             </TableCell>
                              <TableCell className="text-right space-x-2">
-                                <EditLeaderDialog leader={member}>
-                                    <Button variant="outline" size="icon"><Edit className="h-4 w-4" /></Button>
-                                </EditLeaderDialog>
+                                {permissions.canManageMembers ? (
+                                  <EditLeaderDialog leader={member}>
+                                      <Button variant="outline" size="icon"><Edit className="h-4 w-4" /></Button>
+                                  </EditLeaderDialog>
+                                ) : (
+                                  <Button variant="outline" size="icon" disabled onClick={() => toast(showPermissionError())}>
+                                    <Edit className="h-4 w-4" />
+                                  </Button>
+                                )}
                              </TableCell>
                           </TableRow>
                         ))}
@@ -388,9 +474,15 @@ export default function AdminPage() {
                     <CardTitle>Alumni</CardTitle>
                     <CardDescription>Total alumni: {alumni.length}</CardDescription>
                   </div>
-                   <EditAlumnusDialog>
-                      <Button><PlusCircle className="mr-2 h-4 w-4" /> Add Alumnus</Button>
-                   </EditAlumnusDialog>
+                   {permissions.canManageMembers ? (
+                     <EditAlumnusDialog>
+                        <Button><PlusCircle className="mr-2 h-4 w-4" /> Add Alumnus</Button>
+                     </EditAlumnusDialog>
+                   ) : (
+                     <Button disabled onClick={() => toast(showPermissionError())}>
+                       <PlusCircle className="mr-2 h-4 w-4" /> Add Alumnus
+                     </Button>
+                   )}
               </CardHeader>
               <CardContent>
                  {alumni.length > 0 ? (
@@ -421,10 +513,23 @@ export default function AdminPage() {
                             <TableCell>{alumnus.graduationYear}</TableCell>
                             <TableCell>{alumnus.company}</TableCell>
                              <TableCell className="text-right space-x-2">
-                                <EditAlumnusDialog alumnus={alumnus}>
-                                    <Button variant="outline" size="icon"><Edit className="h-4 w-4" /></Button>
-                                </EditAlumnusDialog>
-                                <Button variant="destructive" size="icon" onClick={() => setAlumnusToDelete(alumnus)}><Trash2 className="h-4 w-4" /></Button>
+                                {permissions.canManageMembers ? (
+                                  <EditAlumnusDialog alumnus={alumnus}>
+                                      <Button variant="outline" size="icon"><Edit className="h-4 w-4" /></Button>
+                                  </EditAlumnusDialog>
+                                ) : (
+                                  <Button variant="outline" size="icon" disabled onClick={() => toast(showPermissionError())}>
+                                    <Edit className="h-4 w-4" />
+                                  </Button>
+                                )}
+                                <Button 
+                                  variant="destructive" 
+                                  size="icon" 
+                                  onClick={() => setAlumnusToDelete(alumnus)}
+                                  disabled={!permissions.canDelete}
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
                              </TableCell>
                           </TableRow>
                         ))}
@@ -453,9 +558,15 @@ export default function AdminPage() {
                   <CardTitle>Alumni Opportunities</CardTitle>
                   <CardDescription>Total opportunities: {alumniOpportunities.length}</CardDescription>
                 </div>
-                <AddAlumniOpportunityDialog>
-                  <Button><PlusCircle className="mr-2 h-4 w-4" /> Add Opportunity</Button>
-                </AddAlumniOpportunityDialog>
+                {permissions.canUpload ? (
+                  <AddAlumniOpportunityDialog>
+                    <Button><PlusCircle className="mr-2 h-4 w-4" /> Add Opportunity</Button>
+                  </AddAlumniOpportunityDialog>
+                ) : (
+                  <Button disabled onClick={() => toast(showPermissionError())}>
+                    <PlusCircle className="mr-2 h-4 w-4" /> Add Opportunity
+                  </Button>
+                )}
               </CardHeader>
               <CardContent>
                 {alumniOpportunities.length > 0 ? (
@@ -473,10 +584,23 @@ export default function AdminPage() {
                           <TableCell className="font-medium">{opportunity.title}</TableCell>
                           <TableCell className="hidden md:table-cell">{opportunity.authorName}</TableCell>
                           <TableCell className="text-right space-x-2">
-                            <EditAlumniOpportunityDialog opportunity={opportunity}>
-                              <Button variant="outline" size="icon"><Edit className="h-4 w-4" /></Button>
-                            </EditAlumniOpportunityDialog>
-                            <Button variant="destructive" size="icon" onClick={() => deleteAlumniOpportunity(opportunity.id)}><Trash2 className="h-4 w-4" /></Button>
+                            {permissions.canUpload ? (
+                              <EditAlumniOpportunityDialog opportunity={opportunity}>
+                                <Button variant="outline" size="icon"><Edit className="h-4 w-4" /></Button>
+                              </EditAlumniOpportunityDialog>
+                            ) : (
+                              <Button variant="outline" size="icon" disabled onClick={() => toast(showPermissionError())}>
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                            )}
+                            <Button 
+                              variant="destructive" 
+                              size="icon" 
+                              onClick={() => deleteAlumniOpportunity(opportunity.id)}
+                              disabled={!permissions.canDelete}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -517,12 +641,19 @@ export default function AdminPage() {
                           <TableCell className="font-medium">{project.title}</TableCell>
                           <TableCell className="hidden md:table-cell">{project.authorName}</TableCell>
                           <TableCell className="text-right space-x-2">
-                             <ProjectReviewDialog project={project} onApprove={handleApproveProject} onReject={handleRejectProject}>
-                                <Button variant="outline" size="sm">
-                                    <FileText className="h-4 w-4 mr-2"/>
-                                    Review
-                                </Button>
-                             </ProjectReviewDialog>
+                             {permissions.canApproveSubmissions ? (
+                               <ProjectReviewDialog project={project} onApprove={handleApproveProject} onReject={handleRejectProject}>
+                                  <Button variant="outline" size="sm">
+                                      <FileText className="h-4 w-4 mr-2"/>
+                                      Review
+                                  </Button>
+                               </ProjectReviewDialog>
+                             ) : (
+                               <Button variant="outline" size="sm" disabled onClick={() => toast(showPermissionError())}>
+                                 <FileText className="h-4 w-4 mr-2"/>
+                                 Review
+                               </Button>
+                             )}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -563,12 +694,19 @@ export default function AdminPage() {
                           <TableCell className="font-medium">{resource.title}</TableCell>
                           <TableCell className="hidden md:table-cell"><Badge variant="secondary">{resource.category}</Badge></TableCell>
                           <TableCell className="text-right space-x-2">
-                             <ResourceReviewDialog resource={resource} onApprove={handleApproveResource} onReject={handleRejectResource}>
-                                <Button variant="outline" size="sm">
-                                    <FileText className="h-4 w-4 mr-2"/>
-                                    Review
-                                </Button>
-                             </ResourceReviewDialog>
+                             {permissions.canApproveSubmissions ? (
+                               <ResourceReviewDialog resource={resource} onApprove={handleApproveResource} onReject={handleRejectResource}>
+                                  <Button variant="outline" size="sm">
+                                      <FileText className="h-4 w-4 mr-2"/>
+                                      Review
+                                  </Button>
+                               </ResourceReviewDialog>
+                             ) : (
+                               <Button variant="outline" size="sm" disabled onClick={() => toast(showPermissionError())}>
+                                 <FileText className="h-4 w-4 mr-2"/>
+                                 Review
+                               </Button>
+                             )}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -611,12 +749,19 @@ export default function AdminPage() {
                             <Badge variant="outline">{opportunity.category}</Badge>
                           </TableCell>
                           <TableCell className="text-right space-x-2">
-                             <OpportunityReviewDialog opportunity={opportunity} onApprove={handleApproveOpportunity} onReject={handleRejectOpportunity}>
-                                <Button variant="outline" size="sm">
-                                    <Calendar className="h-4 w-4 mr-2"/>
-                                    Review
-                                </Button>
-                             </OpportunityReviewDialog>
+                             {permissions.canApproveSubmissions ? (
+                               <OpportunityReviewDialog opportunity={opportunity} onApprove={handleApproveOpportunity} onReject={handleRejectOpportunity}>
+                                  <Button variant="outline" size="sm">
+                                      <Calendar className="h-4 w-4 mr-2"/>
+                                      Review
+                                  </Button>
+                               </OpportunityReviewDialog>
+                             ) : (
+                               <Button variant="outline" size="sm" disabled onClick={() => toast(showPermissionError())}>
+                                 <Calendar className="h-4 w-4 mr-2"/>
+                                 Review
+                               </Button>
+                             )}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -658,12 +803,19 @@ export default function AdminPage() {
                           <TableCell className="font-medium">{post.title}</TableCell>
                           <TableCell className="hidden md:table-cell text-muted-foreground">{post.authorName}</TableCell>
                           <TableCell className="text-right space-x-2">
-                             <BlogPostReviewDialog post={post} onApprove={handleApproveBlogPost} onReject={handleRejectBlogPost}>
-                                <Button variant="outline" size="sm">
-                                    <Newspaper className="h-4 w-4 mr-2"/>
-                                    Review
-                                </Button>
-                             </BlogPostReviewDialog>
+                             {permissions.canApproveSubmissions ? (
+                               <BlogPostReviewDialog post={post} onApprove={handleApproveBlogPost} onReject={handleRejectBlogPost}>
+                                  <Button variant="outline" size="sm">
+                                      <Newspaper className="h-4 w-4 mr-2"/>
+                                      Review
+                                  </Button>
+                               </BlogPostReviewDialog>
+                             ) : (
+                               <Button variant="outline" size="sm" disabled onClick={() => toast(showPermissionError())}>
+                                 <Newspaper className="h-4 w-4 mr-2"/>
+                                 Review
+                               </Button>
+                             )}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -686,7 +838,23 @@ export default function AdminPage() {
               </h1>
               <p className="text-muted-foreground mt-2">Manage pickup locations for shop orders.</p>
             </div>
-            <PickupLocationsManager />
+            {permissions.canManageShop ? (
+              <PickupLocationsManager />
+            ) : (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Shop Settings</CardTitle>
+                  <CardDescription>Manage pickup locations</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center py-12">
+                    <Store className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
+                    <p className="text-muted-foreground mb-2">You don't have permission to manage shop settings.</p>
+                    <p className="text-sm text-muted-foreground">Contact a Super Admin to request access.</p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </>
         )
       

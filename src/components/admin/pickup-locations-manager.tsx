@@ -5,6 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { usePermissions, showPermissionError } from "@/hooks/use-permissions";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, Timestamp } from "firebase/firestore";
 import { MapPin, Plus, Trash2, Edit2, X } from "lucide-react";
@@ -24,6 +25,7 @@ export function PickupLocationsManager() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name: "", address: "", contactNumber: "" });
   const { toast } = useToast();
+  const permissions = usePermissions();
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "pickupLocations"), (snapshot) => {
@@ -38,6 +40,11 @@ export function PickupLocationsManager() {
   }, []);
 
   const handleAdd = async () => {
+    if (!permissions.canManageShop) {
+      toast(showPermissionError());
+      return;
+    }
+
     if (!formData.name || !formData.address) {
       toast({ title: "Error", description: "Name and address are required", variant: "destructive" });
       return;
@@ -58,6 +65,11 @@ export function PickupLocationsManager() {
   };
 
   const handleUpdate = async (id: string) => {
+    if (!permissions.canManageShop) {
+      toast(showPermissionError());
+      return;
+    }
+
     try {
       await updateDoc(doc(db, "pickupLocations", id), formData);
       toast({ title: "Success", description: "Pickup location updated" });
@@ -69,6 +81,11 @@ export function PickupLocationsManager() {
   };
 
   const handleDelete = async (id: string) => {
+    if (!permissions.canDelete) {
+      toast(showPermissionError());
+      return;
+    }
+
     if (!confirm("Are you sure you want to delete this pickup location?")) return;
     
     try {
@@ -80,6 +97,11 @@ export function PickupLocationsManager() {
   };
 
   const toggleActive = async (id: string, isActive: boolean) => {
+    if (!permissions.canManageShop) {
+      toast(showPermissionError());
+      return;
+    }
+
     try {
       await updateDoc(doc(db, "pickupLocations", id), { isActive: !isActive });
       toast({ title: "Success", description: `Location ${!isActive ? 'activated' : 'deactivated'}` });
@@ -89,6 +111,11 @@ export function PickupLocationsManager() {
   };
 
   const startEdit = (location: PickupLocation) => {
+    if (!permissions.canManageShop) {
+      toast(showPermissionError());
+      return;
+    }
+
     setEditingId(location.id);
     setFormData({ name: location.name, address: location.address, contactNumber: location.contactNumber || "" });
     setIsAdding(false);
@@ -108,7 +135,11 @@ export function PickupLocationsManager() {
             <MapPin className="h-5 w-5" />
             Pickup Locations
           </CardTitle>
-          <Button size="sm" onClick={() => setIsAdding(true)} disabled={isAdding || editingId !== null}>
+          <Button 
+            size="sm" 
+            onClick={() => setIsAdding(true)} 
+            disabled={isAdding || editingId !== null || !permissions.canManageShop}
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Location
           </Button>
@@ -179,7 +210,7 @@ export function PickupLocationsManager() {
                       size="sm"
                       variant="ghost"
                       onClick={() => startEdit(location)}
-                      disabled={isAdding || editingId !== null}
+                      disabled={isAdding || editingId !== null || !permissions.canManageShop}
                     >
                       <Edit2 className="h-4 w-4" />
                     </Button>
@@ -187,6 +218,7 @@ export function PickupLocationsManager() {
                       size="sm"
                       variant="ghost"
                       onClick={() => toggleActive(location.id, location.isActive)}
+                      disabled={!permissions.canManageShop}
                     >
                       {location.isActive ? "Deactivate" : "Activate"}
                     </Button>
@@ -195,6 +227,7 @@ export function PickupLocationsManager() {
                       variant="ghost"
                       onClick={() => handleDelete(location.id)}
                       className="text-red-600 hover:text-red-700"
+                      disabled={!permissions.canDelete}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
