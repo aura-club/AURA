@@ -14,7 +14,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { DeleteConfirmationDialog } from "@/components/delete-confirmation-dialog";
-import { Check, X, FileText, Calendar, Newspaper, Users, Library, FolderKanban, GitPullRequest, UserCog, PlusCircle, Edit, Trash2 } from "lucide-react";
+import { Check, X, FileText, Calendar, Newspaper, Users, Library, FolderKanban, GitPullRequest, UserCog, PlusCircle, Edit, Trash2, Store } from "lucide-react";
 import { useAuth, type UserRole } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { ProjectReviewDialog } from "@/components/project-review-dialog";
@@ -28,6 +28,7 @@ import { EditAlumnusDialog } from "@/components/edit-alumnus-dialog";
 import { AlumniOpportunityReviewDialog } from "@/components/alumni-opportunity-review-dialog";
 import { AddAlumniOpportunityDialog } from "@/components/add-alumni-opportunity-dialog";
 import { EditAlumniOpportunityDialog } from "@/components/edit-alumni-opportunity-dialog";
+import { PickupLocationsManager } from "@/components/admin/pickup-locations-manager";
 import Image from "next/image";
 import { UpdateRoleSelect } from "@/components/update-role-select";
 
@@ -675,6 +676,20 @@ export default function AdminPage() {
             </Card>
           </>
         )
+      
+      case 'shop-settings':
+        return (
+          <>
+            <div className="mb-8">
+              <h1 className="font-headline text-3xl font-bold flex items-center gap-3">
+                <Store className="h-8 w-8"/>Shop Settings
+              </h1>
+              <p className="text-muted-foreground mt-2">Manage pickup locations for shop orders.</p>
+            </div>
+            <PickupLocationsManager />
+          </>
+        )
+      
       default:
         return null;
     }

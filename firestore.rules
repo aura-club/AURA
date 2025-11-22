@@ -116,5 +116,14 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // Rules for the 'pickupLocations' collection
+    match /pickupLocations/{locationId} {
+      // Admins can create, read, update, delete all locations
+      allow read, write: if isAdmin();
+      
+      // All authenticated users can read active locations (for checkout)
+      allow read: if isAuthenticated() && resource.data.isActive == true;
+    }
+
   }
 }

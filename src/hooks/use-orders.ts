@@ -17,6 +17,14 @@ export interface Order {
   }[];
   totalPrice: number;
   status: 'pending' | 'confirmed' | 'processing' | 'delivered' | 'cancelled';
+  deliveryMethod: 'delivery' | 'pickup';
+  deliveryAddress?: string;
+  pickupLocation?: {
+    id: string;
+    name: string;
+    address: string;
+    contactNumber?: string;
+  };
   createdAt: Date;
   updatedAt: Date;
   notes?: string;
@@ -40,10 +48,8 @@ export function useOrders() {
     setError(null);
 
     try {
-      // Create a query for the orders collection
       const ordersQuery = query(collection(db, 'orders'));
 
-      // Use onSnapshot with the query
       const unsubscribe = onSnapshot(
         ordersQuery,
         (snapshot) => {
@@ -58,7 +64,6 @@ export function useOrders() {
               } as Order;
             });
 
-            // Filter to only show current user's orders
             const userOrders = allOrders.filter(order => order.userId === user.uid);
             setOrders(userOrders);
             setLoading(false);
@@ -71,10 +76,8 @@ export function useOrders() {
         },
         (error: any) => {
           console.error('Error loading orders:', error);
-          // Don't show error - just silently fail and use empty orders
           setLoading(false);
           setOrders([]);
-          // Only set error if it's not permission-denied
           if (error.code !== 'permission-denied') {
             setError(error.message || 'Failed to load orders');
           }
@@ -85,7 +88,7 @@ export function useOrders() {
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load orders';
       console.error('useOrders error:', errorMessage);
-      setError(null); // Don't show errors for initialization issues
+      setError(null);
       setLoading(false);
       setOrders([]);
     }
@@ -95,7 +98,7 @@ export function useOrders() {
     try {
       const docRef = await addDoc(collection(db, 'orders'), {
         ...orderData,
-        status: 'pending',
+        status: orderData.status || 'pending',
         createdAt: new Date(),
         updatedAt: new Date(),
       });

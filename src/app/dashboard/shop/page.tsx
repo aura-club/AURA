@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { CreateProductDialog } from "@/components/shop/create-product-dialog";
 import { EditProductDialog } from "@/components/shop/edit-product-dialog";
 import { DeleteProductDialog } from "@/components/shop/delete-product-dialog";
+import { PickupLocationsManager } from "@/components/admin/pickup-locations-manager";
 
 export default function ShopManagementPage() {
   const { products, loading, deleteProduct } = useShop();
@@ -100,6 +101,9 @@ export default function ShopManagementPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Pickup Locations Manager */}
+      <PickupLocationsManager />
 
       {/* Filters */}
       <Card>
