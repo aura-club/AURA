@@ -32,13 +32,14 @@ export function usePermissions() {
   // Regular admins check their permissions
   if (isAdmin) {
     const permissions = (user as any).permissions || {};
+    
     return {
-      canUpload: permissions.canUpload ?? true,
-      canDelete: permissions.canDelete ?? true,
-      canManageMembers: permissions.canManageMembers ?? true,
-      canManageShop: permissions.canManageShop ?? true,
-      canApproveSubmissions: permissions.canApproveSubmissions ?? true,
-      canManageOrders: permissions.canManageOrders ?? true,
+      canUpload: permissions.canUpload === true,
+      canDelete: permissions.canDelete === true,
+      canManageMembers: permissions.canManageMembers === true,
+      canManageShop: permissions.canManageShop === true,
+      canApproveSubmissions: permissions.canApproveSubmissions === true,
+      canManageOrders: permissions.canManageOrders === true,
       isAdmin: true,
       isSuperAdmin: false,
     };

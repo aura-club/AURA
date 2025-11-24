@@ -17,12 +17,14 @@ import { Eye, CheckCircle, Clock, Truck, Package } from "lucide-react";
 import { useOrders, Order } from "@/hooks/use-orders";
 import { useToast } from "@/hooks/use-toast";
 import { usePermissions, showPermissionError } from "@/hooks/use-permissions";
+import { useAuth } from "@/hooks/use-auth";
 import { OrderDetailsDialog } from "@/components/orders/order-details-dialog";
 import { UpdateOrderStatusDialog } from "@/components/orders/update-order-status-dialog";
 
 export default function OrdersManagementPage() {
   const { getAllOrders, updateOrderStatus, loading, error } = useOrders();
   const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
   const permissions = usePermissions();
   const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
@@ -32,25 +34,24 @@ export default function OrdersManagementPage() {
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [showStatusDialog, setShowStatusDialog] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+  const [hasCheckedPermissions, setHasCheckedPermissions] = useState(false);
 
-  // Redirect if no permission
+  // Redirect if no permission (only after auth is loaded)
   useEffect(() => {
-    if (!permissions.canManageOrders) {
-      router.push('/dashboard');
-      toast({
-        title: "Access Denied",
-        description: "You don't have permission to access orders management.",
-        variant: "destructive",
-      });
+    if (!authLoading && user) {
+      setHasCheckedPermissions(true);
+      if (!permissions.canManageOrders) {
+        router.push('/dashboard/access-denied');
+      }
     }
-  }, [permissions.canManageOrders, router, toast]);
+  }, [authLoading, user, permissions.canManageOrders, router]);
 
   // Load all orders on mount
   useEffect(() => {
-    if (permissions.canManageOrders) {
+    if (permissions.canManageOrders && hasCheckedPermissions) {
       loadOrders();
     }
-  }, [permissions.canManageOrders]);
+  }, [permissions.canManageOrders, hasCheckedPermissions]);
 
   const loadOrders = async () => {
     try {
@@ -165,7 +166,19 @@ export default function OrdersManagementPage() {
     setShowStatusDialog(true);
   };
 
-  // Show nothing while checking permissions (prevents flash)
+  // Show loading while checking auth and permissions
+  if (authLoading || !hasCheckedPermissions) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show nothing if no permission (prevents flash before redirect)
   if (!permissions.canManageOrders) {
     return null;
   }

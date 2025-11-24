@@ -1,8 +1,10 @@
-
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
+import { usePermissions, showPermissionError } from "@/hooks/use-permissions";
 import {
   Table,
   TableBody,
@@ -26,28 +28,70 @@ const statusColors: { [key in SubmissionStatus]: "default" | "secondary" | "dest
 };
 
 export default function DeleteContentPage() {
-    const { projects, resources, opportunities, blogPosts, deleteProject, deleteResource, deleteOpportunity, deleteBlogPost } = useAuth();
+    const { user, projects, resources, opportunities, blogPosts, deleteProject, deleteResource, deleteOpportunity, deleteBlogPost, loading: authLoading } = useAuth();
     const { toast } = useToast();
+    const permissions = usePermissions();
+    const router = useRouter();
+
+    // Redirect if no delete permission
+    useEffect(() => {
+      if (!authLoading && user && !permissions.canDelete) {
+        router.push('/dashboard/access-denied');
+      }
+    }, [authLoading, user, permissions.canDelete, router]);
 
     const handleDeleteProject = (id: string) => {
+        if (!permissions.canDelete) {
+          toast(showPermissionError());
+          return;
+        }
         deleteProject(id);
         toast({ title: "Project Deleted", description: "The project has been permanently removed." });
     };
 
     const handleDeleteResource = (id: string) => {
+        if (!permissions.canDelete) {
+          toast(showPermissionError());
+          return;
+        }
         deleteResource(id);
         toast({ title: "Resource Deleted", description: "The resource has been permanently removed." });
     };
 
     const handleDeleteOpportunity = (id: string) => {
+        if (!permissions.canDelete) {
+          toast(showPermissionError());
+          return;
+        }
         deleteOpportunity(id);
         toast({ title: "Opportunity Deleted", description: "The opportunity has been permanently removed." });
     };
 
     const handleDeleteBlogPost = (id: string) => {
+        if (!permissions.canDelete) {
+          toast(showPermissionError());
+          return;
+        }
         deleteBlogPost(id);
         toast({ title: "Blog Post Deleted", description: "The post has been permanently removed." });
     };
+
+    // Show loading while checking auth
+    if (authLoading) {
+      return (
+        <div className="flex items-center justify-center h-96">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading...</p>
+          </div>
+        </div>
+      );
+    }
+
+    // Show nothing if no permission (prevents flash before redirect)
+    if (!permissions.canDelete) {
+      return null;
+    }
 
   return (
     <div className="space-y-8">

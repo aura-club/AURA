@@ -20,7 +20,6 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 interface AdminPermissions {
-  canUpload: boolean;
   canDelete: boolean;
   canManageMembers: boolean;
   canManageShop: boolean;
@@ -65,7 +64,8 @@ export default function SuperAdminPage() {
       
       toast({
         title: "Permission Updated",
-        description: `Admin permission has been ${value ? 'granted' : 'revoked'}.`,
+        description: `Permission ${value ? 'granted' : 'revoked'}. The affected admin should refresh their page to see changes.`,
+        duration: 5000,
       });
     } catch (error) {
       toast({
@@ -80,12 +80,11 @@ export default function SuperAdminPage() {
 
   const getPermissions = (admin: any): AdminPermissions => {
     return {
-      canUpload: admin.permissions?.canUpload ?? true,
-      canDelete: admin.permissions?.canDelete ?? true,
-      canManageMembers: admin.permissions?.canManageMembers ?? true,
-      canManageShop: admin.permissions?.canManageShop ?? true,
-      canApproveSubmissions: admin.permissions?.canApproveSubmissions ?? true,
-      canManageOrders: admin.permissions?.canManageOrders ?? true,
+      canDelete: admin.permissions?.canDelete === true,
+      canManageMembers: admin.permissions?.canManageMembers === true,
+      canManageShop: admin.permissions?.canManageShop === true,
+      canApproveSubmissions: admin.permissions?.canApproveSubmissions === true,
+      canManageOrders: admin.permissions?.canManageOrders === true,
     };
   };
 
@@ -137,21 +136,6 @@ export default function SuperAdminPage() {
 
                       {/* Permission Grid */}
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {/* Can Upload Content */}
-                        <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
-                          <div className="flex-1">
-                            <p className="font-medium text-sm">Upload Content</p>
-                            <p className="text-xs text-muted-foreground">Create projects, resources, etc.</p>
-                          </div>
-                          <Switch
-                            checked={permissions.canUpload}
-                            onCheckedChange={(checked) =>
-                              updatePermission(admin.email, 'canUpload', checked)
-                            }
-                            disabled={isUpdating}
-                          />
-                        </div>
-
                         {/* Can Delete Content */}
                         <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
                           <div className="flex-1">
@@ -252,7 +236,6 @@ export default function SuperAdminPage() {
             <div>
               <h4 className="font-semibold text-blue-900">About Admin Permissions</h4>
               <ul className="text-sm text-blue-800 mt-2 space-y-1">
-                <li>• <strong>Upload Content:</strong> Create new projects, resources, opportunities, and blog posts</li>
                 <li>• <strong>Delete Content:</strong> Remove any content from the platform</li>
                 <li>• <strong>Manage Members:</strong> Approve/deny join requests and manage user permissions</li>
                 <li>• <strong>Manage Shop:</strong> Add/edit products, manage inventory and pickup locations</li>

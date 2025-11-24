@@ -388,53 +388,56 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [loading, user]);
 
   const handleUser = async (firebaseUser: User | null): Promise<AppUser> => {
-    if (!firebaseUser || !firebaseUser.email) return null;
-    
-    const userDocRef = doc(db, 'users', firebaseUser.email);
-    let dbUser: AppDbUser | undefined;
-    
-    const docSnap = await getDoc(userDocRef);
-    if (docSnap.exists()) {
-        dbUser = docSnap.data() as AppDbUser;
-    } else {
-        const newUser: AppDbUser = {
-            uid: firebaseUser.uid,
-            email: firebaseUser.email,
-            name: firebaseUser.displayName || 'New User',
-            role: 'user',
-            canUpload: false,
-            status: 'approved',
-        };
-        if (firebaseUser.photoURL) {
-            newUser.photoURL = firebaseUser.photoURL;
-        }
-        await setDoc(userDocRef, newUser);
-        dbUser = newUser;
-    }
-    
-    if (dbUser.status === 'denied') {
-        await firebaseSignOut(auth);
-        throw new Error("Your membership request has been denied. Please contact an admin for more information.");
-    }
-    
-    // Sync Firebase Auth profile with our DB profile if needed
-    if (firebaseUser.displayName !== dbUser.name || (firebaseUser.photoURL && dbUser.photoURL && firebaseUser.photoURL !== dbUser.photoURL)) {
-        if (dbUser.name && dbUser.photoURL) {
-            await updateProfile(firebaseUser, { displayName: dbUser.name, photoURL: dbUser.photoURL });
-        } else if (dbUser.name) {
-             await updateProfile(firebaseUser, { displayName: dbUser.name });
-        }
-    }
-
-    return {
-        ...firebaseUser,
-        displayName: dbUser.name,
-        photoURL: dbUser.photoURL || firebaseUser.photoURL,
-        role: dbUser.role,
-        canUpload: dbUser.canUpload || dbUser.role === 'admin' || dbUser.role === 'super_admin',
-        status: dbUser.status,
-    };
+  if (!firebaseUser || !firebaseUser.email) return null;
+  
+  const userDocRef = doc(db, 'users', firebaseUser.email);
+  let dbUser: AppDbUser | undefined;
+  
+  const docSnap = await getDoc(userDocRef);
+  if (docSnap.exists()) {
+      dbUser = docSnap.data() as AppDbUser;
+  } else {
+      const newUser: AppDbUser = {
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          name: firebaseUser.displayName || 'New User',
+          role: 'user',
+          canUpload: false,
+          status: 'approved',
+      };
+      if (firebaseUser.photoURL) {
+          newUser.photoURL = firebaseUser.photoURL;
+      }
+      await setDoc(userDocRef, newUser);
+      dbUser = newUser;
   }
+  
+  if (dbUser.status === 'denied') {
+      await firebaseSignOut(auth);
+      throw new Error("Your membership request has been denied. Please contact an admin for more information.");
+  }
+  
+  // Sync Firebase Auth profile with our DB profile if needed
+  if (firebaseUser.displayName !== dbUser.name || (firebaseUser.photoURL && dbUser.photoURL && firebaseUser.photoURL !== dbUser.photoURL)) {
+      if (dbUser.name && dbUser.photoURL) {
+          await updateProfile(firebaseUser, { displayName: dbUser.name, photoURL: dbUser.photoURL });
+      } else if (dbUser.name) {
+           await updateProfile(firebaseUser, { displayName: dbUser.name });
+      }
+  }
+
+  // ADDED: Include permissions in the returned user object
+  return {
+      ...firebaseUser,
+      displayName: dbUser.name,
+      photoURL: dbUser.photoURL || firebaseUser.photoURL,
+      role: dbUser.role,
+      canUpload: dbUser.canUpload || dbUser.role === 'admin' || dbUser.role === 'super_admin',
+      status: dbUser.status,
+      permissions: (dbUser as any).permissions || {}, // ADD THIS LINE
+  };
+}
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -451,7 +454,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     });
     return () => unsubscribe();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []); 
+
 
   const signIn = async (email: string, pass: string): Promise<User> => {
     const userCredential = await signInWithEmailAndPassword(auth, email, pass);
@@ -590,23 +594,40 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
   
   const updateUserRole = async (email: string, role: UserRole) => {
-    if (!user) throw new Error("Authentication required.");
+  if (!user) throw new Error("Authentication required.");
 
-    if (user.email === email) {
-      throw new Error("You cannot change your own role.");
-    }
+  if (user.email === email) {
+    throw new Error("You cannot change your own role.");
+  }
 
-    if (user.role !== 'super_admin') {
-        const canUpdate = user.role === 'admin' && role !== 'admin' && role !== 'super_admin';
-        if (!canUpdate) {
-            throw new Error("You do not have permission to perform this action.");
-        }
-    }
-    
-    const userDocRef = doc(db, "users", email);
-    const canUpload = role === 'member' || role === 'admin' || role === 'super_admin';
-    await updateDoc(userDocRef, { role, canUpload });
-  };
+  if (user.role !== 'super_admin') {
+      const canUpdate = user.role === 'admin' && role !== 'admin' && role !== 'super_admin';
+      if (!canUpdate) {
+          throw new Error("You do not have permission to perform this action.");
+      }
+  }
+  
+  const userDocRef = doc(db, "users", email);
+  const canUpload = role === 'member' || role === 'admin' || role === 'super_admin';
+  
+  // Initialize default permissions for new admins
+  const updates: any = { role, canUpload };
+  
+  if (role === 'admin') {
+    // Set default permissions to true for new admins
+    updates.permissions = {
+      canUpload: true,
+      canDelete: true,
+      canManageMembers: true,
+      canManageShop: true,
+      canApproveSubmissions: true,
+      canManageOrders: true,
+    };
+  }
+  
+  await updateDoc(userDocRef, updates);
+};
+
 
   const toggleUploadPermission = async (email: string, canUpload: boolean) => {
     const userDocRef = doc(db, 'users', email);

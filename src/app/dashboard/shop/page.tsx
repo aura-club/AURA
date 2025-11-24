@@ -9,6 +9,7 @@ import { Plus, Edit2, Trash2, Search, ChevronDown, X } from "lucide-react";
 import { useShop } from "@/hooks/use-shop";
 import { useToast } from "@/hooks/use-toast";
 import { usePermissions, showPermissionError } from "@/hooks/use-permissions";
+import { useAuth } from "@/hooks/use-auth";
 import { CreateProductDialog } from "@/components/shop/create-product-dialog";
 import { EditProductDialog } from "@/components/shop/edit-product-dialog";
 import { DeleteProductDialog } from "@/components/shop/delete-product-dialog";
@@ -17,6 +18,7 @@ import { PickupLocationsManager } from "@/components/admin/pickup-locations-mana
 export default function ShopManagementPage() {
   const { products, loading, deleteProduct } = useShop();
   const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
   const permissions = usePermissions();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,17 +27,21 @@ export default function ShopManagementPage() {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showCategoryFilter, setShowCategoryFilter] = useState(false);
 
-  // Redirect if no permission
-  useEffect(() => {
-    if (!permissions.canManageShop) {
-      router.push('/dashboard');
-      toast({
-        title: "Access Denied",
-        description: "You don't have permission to access shop management.",
-        variant: "destructive",
-      });
-    }
-  }, [permissions.canManageShop, router, toast]);
+  // Redirect if no permission - re-checks when permissions change
+  // Replace the useEffect with this debug version:
+useEffect(() => {
+  console.log('🔍 Shop Page - Auth Loading:', authLoading);
+  console.log('🔍 Shop Page - User:', user);
+  console.log('🔍 Shop Page - canManageShop:', permissions.canManageShop);
+  
+  if (!authLoading && user && !permissions.canManageShop) {
+    console.log('❌ Access denied - redirecting to access-denied page');
+    router.push('/dashboard/access-denied');
+  } else if (!authLoading && user && permissions.canManageShop) {
+    console.log('✅ Access granted - user can manage shop');
+  }
+}, [authLoading, user, permissions.canManageShop, router]);
+
 
   const categories = [
     { value: "all", label: "All Products" },
@@ -81,7 +87,19 @@ export default function ShopManagementPage() {
     }
   };
 
-  // Show nothing while checking permissions (prevents flash)
+  // Show loading while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show nothing if no permission (prevents flash before redirect)
   if (!permissions.canManageShop) {
     return null;
   }
