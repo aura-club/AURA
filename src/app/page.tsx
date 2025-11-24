@@ -1,17 +1,15 @@
-
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, Calendar, ChevronDown, FlaskConical, Rocket } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { FeaturedProjects } from "@/components/featured-projects";
 import { JoinDialog } from "@/components/join-dialog";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-dvh">
+    <div className="flex flex-col">
       <section className="relative w-full h-dvh min-h-[700px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <video

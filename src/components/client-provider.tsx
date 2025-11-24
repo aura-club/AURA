@@ -1,6 +1,7 @@
 "use client";
 
 import React, { ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
 import { AuthProvider } from '@/hooks/use-auth';
 import { ShopProvider } from '@/hooks/use-shop';
 import { Header } from './header';
@@ -12,17 +13,33 @@ interface ClientProviderProps {
 }
 
 export function ClientProvider({ children }: ClientProviderProps) {
+  const pathname = usePathname();
+  
+  // Check if current path is dashboard or login
+  const isDashboard = pathname?.startsWith('/dashboard');
+  const isLogin = pathname?.startsWith('/login') || pathname?.startsWith('/signup');
+  const hideHeaderFooter = isDashboard || isLogin;
+
   return (
     <AuthProvider>
       <ShopProvider>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-1">
+        {hideHeaderFooter ? (
+          // Dashboard/Login: No Header/Footer
+          <>
             {children}
-          </main>
-          <Footer />
-        </div>
-        <Toaster />
+            <Toaster />
+          </>
+        ) : (
+          // Public pages: With Header/Footer
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+            <Toaster />
+          </div>
+        )}
       </ShopProvider>
     </AuthProvider>
   );

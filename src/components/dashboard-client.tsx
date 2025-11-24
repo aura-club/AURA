@@ -211,8 +211,8 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
         </SidebarFooter>
       </Sidebar>
 
-      {/* Main Content Area */}
-      <div className="flex flex-col flex-1 w-full overflow-hidden">
+      {/* Main Content Area - FIXED OVERFLOW */}
+      <div className="flex flex-col flex-1 w-full min-w-0">
         {/* Mobile Header - Only visible on mobile */}
         <header className="lg:hidden h-16 flex items-center justify-between px-4 border-b border-border/40 bg-background flex-shrink-0">
           <SidebarTrigger />
@@ -220,9 +220,9 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
           <div className="w-9" /> {/* Spacer for alignment */}
         </header>
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-auto bg-background">
-          <div className="p-4 md:p-6 lg:p-8">
+        {/* Main Content - Single Scrollbar */}
+        <main className="flex-1 overflow-y-auto bg-background">
+          <div className="container mx-auto p-4 md:p-6 lg:p-8 max-w-7xl">
             {children}
           </div>
         </main>
