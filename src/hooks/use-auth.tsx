@@ -426,7 +426,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
   }
 
-  // ADDED: Include permissions in the returned user object
+  // ADDED: Include permissions 
   return {
       ...firebaseUser,
       displayName: dbUser.name,
