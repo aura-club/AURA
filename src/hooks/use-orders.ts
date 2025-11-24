@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, updateDoc, doc, getDocs, onSnapshot, query } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, getDocs, onSnapshot, query, where, orderBy } from 'firebase/firestore';
 import { useAuth } from './use-auth';
 
 export interface Order {
@@ -139,6 +139,33 @@ export function useOrders() {
     }
   };
 
+  // NEW FUNCTION: Get orders for a specific user
+  const getUserOrders = async (userId: string): Promise<Order[]> => {
+    try {
+      const ordersRef = collection(db, 'orders');
+      const q = query(
+        ordersRef, 
+        where('userId', '==', userId),
+        orderBy('createdAt', 'desc')
+      );
+      
+      const snapshot = await getDocs(q);
+      
+      return snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt),
+          updatedAt: data.updatedAt?.toDate ? data.updatedAt.toDate() : new Date(data.updatedAt),
+        } as Order;
+      });
+    } catch (err) {
+      console.error('getUserOrders error:', err);
+      throw new Error(err instanceof Error ? err.message : 'Failed to fetch user orders');
+    }
+  };
+
   return {
     orders,
     loading,
@@ -146,5 +173,6 @@ export function useOrders() {
     createOrder,
     updateOrderStatus,
     getAllOrders,
+    getUserOrders, // Added this new function
   };
 }

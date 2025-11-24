@@ -5,28 +5,30 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Home, LogOut, Settings, PlusCircle, History, ShieldAlert, Menu, ExternalLink } from "lucide-react";
+import { Home, LogOut, Settings, PlusCircle, History, ShieldAlert, ExternalLink, Package } from "lucide-react";
 import Link from "next/link";
 import { Toaster } from "@/components/ui/toaster";
 import { useAuth } from "@/hooks/use-auth";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, Suspense } from "react";
 import { AdminMenu } from "@/components/admin-menu";
+import { Logo } from "@/components/logo";
 
 function DashboardContent({ children }: { children: React.ReactNode }) {
   const { user, loading, signOut } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const { toggleSidebar } = useSidebar();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -49,24 +51,72 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   const canUpload = user.canUpload && !isAdmin && !isSuperAdmin;
 
   return (
-    <div className="flex h-screen w-full">
-      {/* Sidebar - Always on top, z-50 */}
-      <Sidebar className="border-r border-border/40 z-50">
-        <SidebarContent className="overflow-y-auto pt-4">
+    <div className="flex h-screen w-full overflow-hidden">
+      {/* Sidebar */}
+      <Sidebar className="border-r border-border/40">
+        {/* Sidebar Header with Logo */}
+        <SidebarHeader className="border-b border-border/40 h-16 flex items-center px-4">
+          <div className="flex items-center justify-between w-full">
+            <Logo />
+            <SidebarTrigger className="lg:hidden" />
+          </div>
+        </SidebarHeader>
+
+        {/* Sidebar Content */}
+        <SidebarContent className="overflow-y-auto">
+          {/* User Navigation - For All Users */}
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {/* Dashboard Home - Always visible for non-admins */}
+                {!isAdmin && !isSuperAdmin && (
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip="Dashboard" isActive={pathname === '/dashboard'}>
+                      <Link href="/dashboard">
+                        <Home className="h-4 w-4" />
+                        Dashboard
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )}
+                
+                {/* My Orders - Available to all users */}
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild tooltip="My Orders" isActive={pathname === '/dashboard/my-orders'}>
+                    <Link href="/dashboard/my-orders">
+                      <Package className="h-4 w-4" />
+                      My Orders
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
           {/* Member Navigation */}
-          {(canUpload && !isAdmin) && (
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Add Content" isActive={pathname.startsWith('/dashboard/add')}>
-                  <Link href="/dashboard/add"><PlusCircle className="h-4 w-4" />Add Content</Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Submission History" isActive={pathname === '/dashboard/history'}>
-                  <Link href="/dashboard/history"><History className="h-4 w-4" />History</Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
+          {(canUpload && !isAdmin && !isSuperAdmin) && (
+            <SidebarGroup>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip="Add Content" isActive={pathname.startsWith('/dashboard/add')}>
+                      <Link href="/dashboard/add">
+                        <PlusCircle className="h-4 w-4" />
+                        Add Content
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip="Submission History" isActive={pathname === '/dashboard/history'}>
+                      <Link href="/dashboard/history">
+                        <History className="h-4 w-4" />
+                        History
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
           )}
 
           {/* Admin Navigation - Dashboard */}
@@ -76,7 +126,10 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Dashboard" isActive={pathname === '/dashboard'}>
-                      <Link href="/dashboard"><Home className="h-4 w-4" />Dashboard</Link>
+                      <Link href="/dashboard">
+                        <Home className="h-4 w-4" />
+                        Dashboard
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 </SidebarMenu>
@@ -104,7 +157,10 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Manage Admins" isActive={pathname === '/dashboard/super-admin'}>
-                      <Link href="/dashboard/super-admin"><ShieldAlert className="h-4 w-4" />Manage Admins</Link>
+                      <Link href="/dashboard/super-admin">
+                        <ShieldAlert className="h-4 w-4" />
+                        Manage Admins
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 </SidebarMenu>
@@ -112,27 +168,25 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
             </SidebarGroup>
           )}
         </SidebarContent>
-        <SidebarFooter className="border-t border-border/40 space-y-3">
-          {/* View Public Site Button */}
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <Button asChild variant="outline" size="sm" className="w-full">
-                <Link href="/" className="justify-center gap-2">
-                  <ExternalLink className="h-4 w-4" />
-                  View Public Site
-                </Link>
-              </Button>
-            </SidebarMenuItem>
-          </SidebarMenu>
 
-          {/* User Info */}
-          <div className="flex items-center gap-2 p-2 rounded-md border border-border/40">
-            <Avatar className="h-8 w-8">
+        {/* Sidebar Footer */}
+        <SidebarFooter className="border-t border-border/40 p-4 space-y-3">
+          {/* View Public Site Button */}
+          <Button asChild variant="outline" size="sm" className="w-full justify-start gap-2">
+            <Link href="/">
+              <ExternalLink className="h-4 w-4" />
+              View Public Site
+            </Link>
+          </Button>
+
+          {/* User Info Card */}
+          <div className="flex items-center gap-3 p-3 rounded-lg border border-border/40 bg-muted/30">
+            <Avatar className="h-9 w-9 border-2 border-border">
               <AvatarImage src={user.photoURL || undefined} alt={displayName} />
-              <AvatarFallback>{displayName.charAt(0)}</AvatarFallback>
+              <AvatarFallback className="text-xs font-semibold">{displayName.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
-            <div className="overflow-hidden flex-1">
-              <p className="font-semibold text-xs truncate">{displayName}</p>
+            <div className="overflow-hidden flex-1 min-w-0">
+              <p className="font-semibold text-sm truncate">{displayName}</p>
               <p className="text-xs text-muted-foreground truncate">{user.email}</p>
             </div>
           </div>
@@ -141,12 +195,16 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Settings" isActive={pathname === '/dashboard/settings'}>
-                <Link href="/dashboard/settings"><Settings className="h-4 w-4" />Settings</Link>
+                <Link href="/dashboard/settings">
+                  <Settings className="h-4 w-4" />
+                  Settings
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton onClick={handleLogout} tooltip="Logout">
-                <LogOut className="h-4 w-4" />Logout
+                <LogOut className="h-4 w-4" />
+                Logout
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -155,22 +213,16 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
 
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 w-full overflow-hidden">
-        {/* Header */}
-        <header className="h-16 flex items-center justify-between px-4 border-b border-border/40 bg-background flex-shrink-0 sticky top-0 z-40">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => toggleSidebar()}
-            className="h-9 w-9"
-          >
-            <Menu className="h-4 w-4" />
-          </Button>
-          <div />
+        {/* Mobile Header - Only visible on mobile */}
+        <header className="lg:hidden h-16 flex items-center justify-between px-4 border-b border-border/40 bg-background flex-shrink-0">
+          <SidebarTrigger />
+          <Logo />
+          <div className="w-9" /> {/* Spacer for alignment */}
         </header>
 
         {/* Main Content */}
         <main className="flex-1 overflow-auto bg-background">
-          <div className="p-4 md:p-8">
+          <div className="p-4 md:p-6 lg:p-8">
             {children}
           </div>
         </main>
