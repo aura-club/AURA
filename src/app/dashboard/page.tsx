@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/hooks/use-auth";
-import { JoinClubForm } from "@/components/join-club-form";
 import { CreateAnnouncementForm } from "@/components/create-announcement-form";
 
 export default function DashboardPage() {
@@ -55,7 +54,12 @@ export default function DashboardPage() {
             <CardDescription>Apply now to gain access to exclusive resources, project creation tools, and voting rights in the club.</CardDescription>
           </CardHeader>
           <CardContent>
-            <JoinClubForm />
+            <p className="text-sm text-muted-foreground mb-4">
+              Complete your membership application to unlock all features.
+            </p>
+            <Button asChild>
+              <Link href="/join">Complete Application</Link>
+            </Button>
           </CardContent>
         </Card>
       )}
