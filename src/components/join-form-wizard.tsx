@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, User, ClipboardList } from "lucide-react";
+import { CheckCircle2, User, ClipboardList, XCircle } from "lucide-react";
 import { MCQQuiz } from "./mcq-quiz";
 import { getRandomQuestions, PASSING_SCORE, MAX_ATTEMPTS } from "@/lib/mcq-data";
 
@@ -76,8 +76,8 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
         setQuizQuestions(getRandomQuestions(15)); // New random questions
         setStep(3); // Go to retry screen
       } else {
-        // Max attempts reached
-        setStep(4); // Go to failure screen
+        // Max attempts reached - UPDATED
+        setStep(4); // Go to failure screen (NO ACCOUNT CREATED)
       }
     }
   };
@@ -224,14 +224,16 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
   }
 
   // Step 3: Retry Screen
-  if (step === 3) {
-    return (
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Quiz Failed</CardTitle>
-          <CardDescription>
-            You didn't pass this time, but you have {MAX_ATTEMPTS - attemptNumber} attempt(s) remaining.
-          </CardDescription>
+  // Step 3: Retry Screen
+if (step === 3) {
+  const attemptsRemaining = MAX_ATTEMPTS - attemptNumber;
+  return (
+    <Card className="w-full max-w-2xl mx-auto">
+      <CardHeader className="text-center">
+        <CardTitle className="text-2xl">Quiz Failed</CardTitle>
+        <CardDescription>
+          You didn't pass this time. You have {attemptsRemaining} {attemptsRemaining === 1 ? 'attempt' : 'attempts'} remaining.
+        </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="bg-muted p-4 rounded-lg">
@@ -250,22 +252,36 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
     );
   }
 
-  // Step 4: Max Attempts Reached
+  // Step 4: Max Attempts Reached - UPDATED
   if (step === 4) {
     return (
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Maximum Attempts Reached</CardTitle>
-          <CardDescription>
-            You have used all {MAX_ATTEMPTS} attempts for the screening quiz.
+          <div className="flex justify-center mb-4">
+            <XCircle className="h-20 w-20 text-red-500" />
+          </div>
+          <CardTitle className="text-2xl text-red-600">Application Failed</CardTitle>
+          <CardDescription className="mt-2">
+            You have used all {MAX_ATTEMPTS} attempts for the screening quiz without passing.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-muted p-4 rounded-lg text-center">
-            <p className="text-sm">
-              Please contact the club administrators if you believe you should be given another chance.
+          <div className="bg-destructive/10 border border-destructive/20 p-4 rounded-lg">
+            <p className="text-sm font-semibold mb-2">What does this mean?</p>
+            <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+              <li>Your account has <strong>NOT been created</strong></li>
+              <li>You cannot join the club at this time</li>
+              <li>You may contact club administrators for special consideration</li>
+            </ul>
+          </div>
+          
+          <div className="bg-muted p-4 rounded-lg">
+            <p className="text-sm font-semibold mb-2">Need Help?</p>
+            <p className="text-sm text-muted-foreground">
+              Contact the club administrators at <strong>admin@auraclub.com</strong> if you believe you should be given another chance.
             </p>
           </div>
+
           <Button onClick={() => window.location.href = '/'} variant="outline" className="w-full">
             Return to Home
           </Button>

@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, Calendar, ChevronDown, FlaskConical, Rocket } from "lucide-react";
 import Link from "next/link";
 import { FeaturedProjects } from "@/components/featured-projects";
-import { JoinDialog } from "@/components/join-dialog";
 
 export default function Home() {
   return (
@@ -33,9 +32,9 @@ export default function Home() {
             Where innovation meets exploration. Join us in pushing the boundaries of aerospace engineering and aeronautical sciences.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4">
-            <JoinDialog>
-               <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">Join Our Mission</Button>
-            </JoinDialog>
+            <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+              <Link href="/join">Join Our Mission</Link>
+            </Button>
             <Button asChild size="lg" variant="outline">
               <Link href="/projects">
                 Explore Projects <ArrowRight className="ml-2 h-5 w-5" />
@@ -106,11 +105,11 @@ export default function Home() {
                   Become a part of our community and start building the future of aerospace.
                 </p>
               </div>
-              <JoinDialog>
-                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground flex-shrink-0">
+              <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground flex-shrink-0">
+                <Link href="/join">
                   Join AURA Today <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </JoinDialog>
+                </Link>
+              </Button>
             </div>
            </Card>
         </div>

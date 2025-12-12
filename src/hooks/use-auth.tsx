@@ -16,11 +16,26 @@ interface AppDbUser {
   uid: string;
   email: string;
   name: string;
+  usn?: string;           // NEW
+  phone?: string;         // NEW
   role: UserRole;
   canUpload: boolean;
   status: UserStatus;
   reason?: string;
   photoURL?: string;
+  quizScore?: number;     // NEW
+  attemptCount?: number;  // NEW
+}
+
+// NEW: Quiz Attempt interface
+export interface QuizAttempt {
+  userId: string;
+  userEmail: string;
+  attemptNumber: number;
+  answers: number[];
+  score: number;
+  passed: boolean;
+  timestamp: Timestamp;
 }
 
 export type SubmissionStatus = 'pending' | 'approved' | 'rejected';
@@ -182,7 +197,7 @@ interface AuthContextType {
   alumniOpportunities: AlumniOpportunity[];
   loading: boolean;
   signIn: (email: string, pass: string) => Promise<User>;
-  signUp: (email: string, pass: string, displayName: string) => Promise<any>;
+  signUp: (email: string, pass: string, displayName: string, usn?: string, phone?: string, reason?: string, quizScore?: number, quizAnswers?: number[]) => Promise<any>; // UPDATED
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<User>;
   updateUserProfile: (displayName: string, photoURL?: string | null, photoFile?: File | null) => Promise<void>;
@@ -396,8 +411,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const docSnap = await getDoc(userDocRef);
   if (docSnap.exists()) {
       dbUser = docSnap.data() as AppDbUser;
+      
+      // CRITICAL: Check if user is denied or failed quiz BEFORE proceeding
+      if (dbUser.status === 'denied') {
+          await firebaseSignOut(auth);
+          throw new Error("Access denied. Your membership application was not approved. Please contact an administrator.");
+      }
+      
+      // Block users who failed all quiz attempts (quizScore < 10)
+      if (dbUser.quizScore !== undefined && dbUser.quizScore < 10) {
+          await firebaseSignOut(auth);
+          throw new Error("You did not pass the screening quiz. You cannot access this account.");
+      }
+      
   } else {
-      const newUser: AppDbUser = {
+      // New user from Google sign-in - create approved account
+      const newUser: any = {
           uid: firebaseUser.uid,
           email: firebaseUser.email,
           name: firebaseUser.displayName || 'New User',
@@ -412,11 +441,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       dbUser = newUser;
   }
   
-  if (dbUser.status === 'denied') {
-      await firebaseSignOut(auth);
-      throw new Error("Your membership request has been denied. Please contact an admin for more information.");
-  }
-  
   // Sync Firebase Auth profile with our DB profile if needed
   if (firebaseUser.displayName !== dbUser.name || (firebaseUser.photoURL && dbUser.photoURL && firebaseUser.photoURL !== dbUser.photoURL)) {
       if (dbUser.name && dbUser.photoURL) {
@@ -426,7 +450,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
   }
 
-  // ADDED: Include permissions 
   return {
       ...firebaseUser,
       displayName: dbUser.name,
@@ -434,9 +457,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       role: dbUser.role,
       canUpload: dbUser.canUpload || dbUser.role === 'admin' || dbUser.role === 'super_admin',
       status: dbUser.status,
-      permissions: (dbUser as any).permissions || {}, // ADD THIS LINE
+      permissions: (dbUser as any).permissions || {},
   };
 }
+
 
 
   useEffect(() => {
@@ -455,7 +479,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return () => unsubscribe();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); 
-
 
   const signIn = async (email: string, pass: string): Promise<User> => {
     const userCredential = await signInWithEmailAndPassword(auth, email, pass);
@@ -480,28 +503,59 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return result.user;
   }
 
-  const signUp = async (email: string, pass: string, displayName: string) => {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-    await updateProfile(userCredential.user, { displayName });
+  // UPDATED: signUp function with quiz parameters
+  const signUp = async (
+  email: string, 
+  pass: string, 
+  displayName: string, 
+  usn?: string, 
+  phone?: string, 
+  reason?: string,
+  quizScore?: number,
+  quizAnswers?: number[]
+) => {
+  const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+  await updateProfile(userCredential.user, { displayName });
 
-    const newUser: AppDbUser = {
-      uid: userCredential.user.uid,
-      email,
-      name: displayName,
-      role: 'user',
-      canUpload: false,
-      status: 'approved',
-    };
-    if (userCredential.user.photoURL) {
-        newUser.photoURL = userCredential.user.photoURL;
-    }
-    await setDoc(doc(db, 'users', email), newUser);
-
-    await firebaseSignOut(auth);
-    setUser(null);
-
-    return userCredential;
+  // Build user object dynamically - only include defined fields
+  const newUser: any = {
+    uid: userCredential.user.uid,
+    email,
+    name: displayName,
+    role: 'user',
+    canUpload: false,
+    status: 'pending',
   };
+  
+  // Only add optional fields if they exist
+  if (usn) newUser.usn = usn;
+  if (phone) newUser.phone = phone;
+  if (reason) newUser.reason = reason;
+  if (quizScore !== undefined) newUser.quizScore = quizScore;
+  if (quizScore !== undefined) newUser.attemptCount = 1;
+  if (userCredential.user.photoURL) newUser.photoURL = userCredential.user.photoURL;
+  
+  await setDoc(doc(db, 'users', email), newUser);
+
+  // Store quiz attempt
+  if (quizScore !== undefined && quizAnswers) {
+    await addDoc(collection(db, 'quizAttempts'), {
+      userId: userCredential.user.uid,
+      userEmail: email,
+      attemptNumber: 1,
+      answers: quizAnswers,
+      score: quizScore,
+      passed: quizScore >= 10,
+      timestamp: Timestamp.now(),
+    });
+  }
+
+  await firebaseSignOut(auth);
+  setUser(null);
+
+  return userCredential;
+};
+
 
   const requestMembership = async (email: string, reason: string) => {
     const userDocRef = doc(db, 'users', email);
@@ -627,7 +681,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   
   await updateDoc(userDocRef, updates);
 };
-
 
   const toggleUploadPermission = async (email: string, canUpload: boolean) => {
     const userDocRef = doc(db, 'users', email);

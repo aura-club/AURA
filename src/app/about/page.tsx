@@ -1,14 +1,12 @@
-
 "use client";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ShieldCheck } from "lucide-react";
-import { JoinDialog } from "@/components/join-dialog";
+import Link from "next/link";
 import { useAuth } from "@/hooks/use-auth";
 import { Badge } from "@/components/ui/badge";
-
 
 export default function AboutPage() {
   const { leadership, users } = useAuth();
@@ -111,7 +109,6 @@ export default function AboutPage() {
         </section>
         )}
 
-
         <section id="members" className="mb-24">
             <div className="text-center mb-12">
                 <h2 className="font-headline text-3xl md:text-4xl font-bold">Our Members</h2>
@@ -145,7 +142,6 @@ export default function AboutPage() {
             </div>
         </section>
 
-
         <section id="join-us">
             <Card className="bg-card border-border/60 overflow-hidden group p-8 md:p-12">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
@@ -155,11 +151,11 @@ export default function AboutPage() {
                     Become a part of our community and start building the future of aerospace.
                     </p>
                 </div>
-                <JoinDialog>
-                    <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground flex-shrink-0">
-                    Join AURA Today <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                </JoinDialog>
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground flex-shrink-0">
+                    <Link href="/join">
+                        Join AURA Today <ArrowRight className="ml-2 h-5 w-5" />
+                    </Link>
+                </Button>
                 </div>
             </Card>
         </section>

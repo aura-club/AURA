@@ -59,25 +59,26 @@ export default function LoginPage() {
   });
 
   async function onSubmit(data: LoginFormValues) {
-    setIsSubmitting(true);
-    try {
-      await signIn(data.email, data.password);
-      toast({
-        title: "Login Successful!",
-        description: "Redirecting to your dashboard...",
-      });
-    } catch (error: any) {
-      console.error("Login error:", error);
-      toast({
-        variant: "destructive",
-        title: "Login Failed",
-        description: error.message || "An unexpected error occurred. Please try again.",
-      });
-      form.setValue("password", "");
-    } finally {
-      setIsSubmitting(false);
-    }
+  setIsSubmitting(true);
+  try {
+    await signIn(data.email, data.password);
+    toast({
+      title: "Welcome back!",
+      description: "You have successfully signed in.",
+    });
+    router.push('/dashboard');
+  } catch (error: any) {
+    console.error("Login error:", error);
+    toast({
+      variant: "destructive",
+      title: "Sign-in Failed",
+      description: error.message || "Invalid credentials. Please try again.",
+    });
+  } finally {
+    setIsSubmitting(false);
   }
+}
+
 
   const handleGoogleSignIn = async () => {
     try {

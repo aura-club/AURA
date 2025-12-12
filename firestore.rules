@@ -50,6 +50,20 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
     
+    // Rules for the 'quizAttempts' collection - NEW
+    match /quizAttempts/{attemptId} {
+      // Users can read their own quiz attempts
+      // Admins can read all quiz attempts
+      allow read: if isAuthenticated() && (
+        resource.data.userEmail == request.auth.token.email ||
+        isAdmin()
+      );
+      // Any authenticated user can create quiz attempts (during signup)
+      allow create: if isAuthenticated();
+      // Only admins can update or delete quiz attempts
+      allow update, delete: if isAdmin();
+    }
+    
     // Rules for the 'alumni' collection
     match /alumni/{alumnusId} {
       allow read: if true;

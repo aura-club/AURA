@@ -109,11 +109,12 @@ export function MCQQuiz({ questions, onComplete, attemptNumber, maxAttempts }: M
             </Alert>
           ) : (
             <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>
-                You need at least 10 correct answers to pass. You have {maxAttempts - attemptNumber} attempt(s) remaining.
-              </AlertDescription>
-            </Alert>
+  <AlertCircle className="h-4 w-4" />
+  <AlertDescription>
+    You need at least 10 correct answers to pass. You have {maxAttempts - attemptNumber} {maxAttempts - attemptNumber === 1 ? 'attempt' : 'attempts'} remaining.
+  </AlertDescription>
+</Alert>
+
           )}
 
           <div className="bg-muted p-4 rounded-lg">
@@ -139,7 +140,7 @@ export function MCQQuiz({ questions, onComplete, attemptNumber, maxAttempts }: M
   }
 
   return (
-    <Card className="w-full max-w-3xl mx-auto">
+    <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
@@ -200,21 +201,14 @@ export function MCQQuiz({ questions, onComplete, attemptNumber, maxAttempts }: M
           </div>
         </RadioGroup>
 
-        <div className="flex items-center justify-between pt-4 border-t">
-          <Button
-            variant="outline"
-            onClick={handlePrevious}
-            disabled={currentQuestionIndex === 0}
-          >
-            Previous
-          </Button>
-
-          <div className="flex gap-2">
+        {/* Question Navigation - UPDATED */}
+        <div className="bg-muted/30 p-4 rounded-lg">
+          <div className="flex flex-wrap gap-2 justify-center">
             {questions.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentQuestionIndex(index)}
-                className={`w-8 h-8 rounded-full text-xs font-medium transition-colors ${
+                className={`w-10 h-10 rounded-full text-sm font-medium transition-colors ${
                   index === currentQuestionIndex
                     ? 'bg-accent text-accent-foreground'
                     : selectedAnswers[index] !== -1
@@ -226,16 +220,28 @@ export function MCQQuiz({ questions, onComplete, attemptNumber, maxAttempts }: M
               </button>
             ))}
           </div>
+        </div>
+
+        {/* Navigation Buttons - UPDATED */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t">
+          <Button
+            variant="outline"
+            onClick={handlePrevious}
+            disabled={currentQuestionIndex === 0}
+            className="w-full sm:w-auto"
+          >
+            Previous
+          </Button>
 
           {currentQuestionIndex < questions.length - 1 ? (
-            <Button onClick={handleNext}>
+            <Button onClick={handleNext} className="w-full sm:w-auto">
               Next
             </Button>
           ) : (
             <Button
               onClick={handleSubmit}
               disabled={!isAllAnswered}
-              className="bg-green-600 hover:bg-green-700"
+              className="bg-green-600 hover:bg-green-700 w-full sm:w-auto"
             >
               Submit Quiz
             </Button>
