@@ -18,7 +18,7 @@ export default function Home() {
             playsInline
             className="w-full h-full object-cover"
           >
-            <source src="/auravideo.mp4" type="video/mp4" />
+            <source src="/aireinovideo.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <div className="absolute inset-0 bg-background/60"></div>
@@ -26,7 +26,7 @@ export default function Home() {
 
         <div className="relative z-10 container mx-auto flex flex-col items-center text-center px-4">
           <h1 className="font-headline text-6xl md:text-8xl lg:text-9xl font-extrabold text-primary-foreground tracking-tighter">
-            AURA
+            AIREINO
           </h1>
           <p className="mt-6 max-w-xl text-lg md:text-xl text-muted-foreground">
             Where innovation meets exploration. Join us in pushing the boundaries of aerospace engineering and aeronautical sciences.
@@ -107,7 +107,7 @@ export default function Home() {
               </div>
               <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground flex-shrink-0">
                 <Link href="/join">
-                  Join AURA Today <ArrowRight className="ml-2 h-5 w-5" />
+                  Join AIREINO Today <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
             </div>

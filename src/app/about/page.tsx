@@ -20,7 +20,7 @@ export default function AboutPage() {
   return (
     <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">
-            <h1 className="font-headline text-4xl md:text-5xl font-bold">About AURA</h1>
+            <h1 className="font-headline text-4xl md:text-5xl font-bold">About AIREINO</h1>
             <p className="mt-4 max-w-3xl mx-auto text-muted-foreground">
                 Get to know the team, our mission, and the core values that drive us to innovate and explore.
             </p>
@@ -153,7 +153,7 @@ export default function AboutPage() {
                 </div>
                 <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground flex-shrink-0">
                     <Link href="/join">
-                        Join AURA Today <ArrowRight className="ml-2 h-5 w-5" />
+                        Join AIREINO Today <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
                 </Button>
                 </div>

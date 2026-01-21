@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { ClientProvider } from '@/components/client-provider';
 
 export const metadata: Metadata = {
-  title: 'AURA',
+  title: 'AIREINO',
   description: 'The central hub for the Aerospace and Unmanned Research Association.',
 };
 

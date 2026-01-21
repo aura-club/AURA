@@ -22,7 +22,7 @@ export default function DashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle className="font-headline">Content Management</CardTitle>
-            <CardDescription>Add new content to the AURA website.</CardDescription>
+            <CardDescription>Add new content to the AIREINO website.</CardDescription>
           </CardHeader>
           <CardContent>
             <Button asChild>

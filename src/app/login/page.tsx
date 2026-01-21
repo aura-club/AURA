@@ -106,7 +106,7 @@ export default function LoginPage() {
         <CardHeader>
           <CardTitle className="font-headline text-3xl">Sign In</CardTitle>
           <CardDescription>
-            Access your AURA portal.
+            Access your AIREINO portal.
           </CardDescription>
         </CardHeader>
         <CardContent>

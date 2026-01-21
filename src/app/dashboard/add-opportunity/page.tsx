@@ -131,7 +131,7 @@ export default function AddOpportunityPage() {
                         <FormItem><FormLabel>Location / Link</FormLabel><FormControl><Input placeholder="e.g., Engineering Bldg, Room 201 or 'Virtual'" {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                      <FormField control={form.control} name="host" render={({ field }) => (
-                        <FormItem><FormLabel>Host Organization (Optional)</FormLabel><FormControl><Input placeholder="e.g., NASA, SpaceX" {...field} /></FormControl><FormDescription>Leave blank if this is an internal AURA Nexus event.</FormDescription><FormMessage /></FormItem>
+                        <FormItem><FormLabel>Host Organization (Optional)</FormLabel><FormControl><Input placeholder="e.g., NASA, SpaceX" {...field} /></FormControl><FormDescription>Leave blank if this is an internal AIREINO Nexus event.</FormDescription><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="description" render={({ field }) => (
                         <FormItem><FormLabel>Description</FormLabel><FormControl><Textarea placeholder="A detailed description of the event." {...field} /></FormControl><FormMessage /></FormItem>

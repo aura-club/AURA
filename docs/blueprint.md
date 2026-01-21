@@ -1,4 +1,4 @@
-# **App Name**: AURA Nexus
+# **App Name**: AIREINO Nexus
 
 ## Core Features:
 

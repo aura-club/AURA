@@ -34,7 +34,7 @@ export default function ProjectsPage() {
       <div className="text-center mb-12">
         <h1 className="font-headline text-4xl md:text-5xl font-bold">Our Projects</h1>
         <p className="mt-4 max-w-3xl mx-auto text-muted-foreground">
-          Explore the innovative projects being developed by AURA Nexus members.
+          Explore the innovative projects being developed by AIREINO Nexus members.
         </p>
       </div>
 

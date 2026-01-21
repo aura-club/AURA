@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -10,9 +10,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, User, ClipboardList, XCircle } from "lucide-react";
+import { CheckCircle2, User, ClipboardList, XCircle, ChevronRight, Brain, Zap, Plane, Activity, Rocket, Hammer } from "lucide-react";
 import { MCQQuiz } from "./mcq-quiz";
-import { getRandomQuestions, PASSING_SCORE, MAX_ATTEMPTS } from "@/lib/mcq-data";
+import { getQuestionsForDivision, getAttemptStatus, recordAttempt, Division, DIVISION_CONFIGS, Question } from "@/lib/quiz-engine"; // Updated import
 
 const userInfoSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -26,15 +26,31 @@ const userInfoSchema = z.object({
 type UserInfoFormValues = z.infer<typeof userInfoSchema>;
 
 interface JoinFormWizardProps {
-  onComplete: (data: UserInfoFormValues & { quizScore: number; quizAnswers: number[] }) => Promise<void>;
+  onComplete: (data: UserInfoFormValues & { quizScore: number; quizAnswers: number[]; division: string }) => Promise<void>;
 }
 
 export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
   const [step, setStep] = useState(1);
   const [userInfo, setUserInfo] = useState<UserInfoFormValues | null>(null);
-  const [attemptNumber, setAttemptNumber] = useState(1);
-  const [quizQuestions, setQuizQuestions] = useState(getRandomQuestions(15));
+  const [selectedDivision, setSelectedDivision] = useState<Division | null>(null);
+  const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Attempt tracking state
+  const [attemptsLeft, setAttemptsLeft] = useState(3);
+  const [cooldownTime, setCooldownTime] = useState<number | null>(null);
+
+  // Check attempts on mount
+  useEffect(() => {
+    const status = getAttemptStatus();
+    setAttemptsLeft(status.attemptsLeft);
+    setCooldownTime(status.cooldownUntil);
+
+    // If blocked, go to blocked screen (Step 5)
+    if (status.attemptsLeft <= 0 && status.cooldownUntil) {
+      setStep(5);
+    }
+  }, []);
 
   const form = useForm<UserInfoFormValues>({
     resolver: zodResolver(userInfoSchema),
@@ -50,11 +66,33 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
 
   const handleUserInfoSubmit = (data: UserInfoFormValues) => {
     setUserInfo(data);
-    setStep(2);
+    setStep(2); // Move to Division Selection
+  };
+
+  const handleDivisionSelect = (division: Division) => {
+    setSelectedDivision(division);
+    const questions = getQuestionsForDivision(division);
+    setQuizQuestions(questions);
+
+    if (attemptsLeft > 0) {
+      setStep(3); // Start Quiz
+    } else {
+      setStep(5); // Blocked
+    }
   };
 
   const handleQuizComplete = async (score: number, answers: number[]) => {
-    if (score >= PASSING_SCORE) {
+    if (!selectedDivision) return;
+
+    recordAttempt(); // Deduct an attempt
+    const status = getAttemptStatus();
+    setAttemptsLeft(status.attemptsLeft);
+    setCooldownTime(status.cooldownUntil);
+
+    const config = DIVISION_CONFIGS[selectedDivision];
+    const passed = score >= config.passingScore;
+
+    if (passed) {
       // Passed - submit to backend
       setIsSubmitting(true);
       try {
@@ -62,6 +100,7 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
           ...userInfo!,
           quizScore: score,
           quizAnswers: answers,
+          division: selectedDivision,
         });
       } catch (error) {
         console.error("Submission error:", error);
@@ -69,38 +108,42 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
         setIsSubmitting(false);
       }
     } else {
-      // Failed - check attempts
-      if (attemptNumber < MAX_ATTEMPTS) {
-        // Allow retry
-        setAttemptNumber(attemptNumber + 1);
-        setQuizQuestions(getRandomQuestions(15)); // New random questions
-        setStep(3); // Go to retry screen
+      // Failed
+      if (status.attemptsLeft > 0) {
+        setStep(4); // Retry screen
       } else {
-        // Max attempts reached - UPDATED
-        setStep(4); // Go to failure screen (NO ACCOUNT CREATED)
+        setStep(5); // Blocked/Failed screen
       }
     }
   };
 
   const handleRetry = () => {
-    setStep(2); // Go back to quiz
+    // Regenerate questions for the same division
+    if (selectedDivision) {
+      setQuizQuestions(getQuestionsForDivision(selectedDivision));
+      setStep(3); // Go back to quiz
+    }
   };
 
-  const progress = (step / 2) * 100;
+  const formatTime = (timestamp: number) => {
+    return new Date(timestamp).toLocaleString();
+  };
 
-  // Step 1: User Information Form
+  const progress = (step / 3) * 100;
+
+  // Step 1: User Information Form (Unchanged Logic, just render)
   if (step === 1) {
     return (
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
           <div className="flex items-center gap-2 mb-2">
             <User className="h-6 w-6 text-accent" />
-            <CardTitle className="text-2xl">Join Our Club</CardTitle>
+            <CardTitle className="text-2xl font-headline">Join Our Club</CardTitle>
           </div>
           <CardDescription>
             Fill in your details to start the membership application process
           </CardDescription>
-          <Progress value={progress} className="mt-4" />
+          <Progress value={20} className="mt-4" />
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -118,13 +161,12 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="usn"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>USN (University Seat Number) *</FormLabel>
+                    <FormLabel>USN *</FormLabel>
                     <FormControl>
                       <Input placeholder="1JS21CS001" {...field} />
                     </FormControl>
@@ -132,14 +174,13 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
                   </FormItem>
                 )}
               />
-
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email Address *</FormLabel>
+                      <FormLabel>Email *</FormLabel>
                       <FormControl>
                         <Input type="email" placeholder="you@example.com" {...field} />
                       </FormControl>
@@ -147,13 +188,12 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
                     </FormItem>
                   )}
                 />
-
                 <FormField
                   control={form.control}
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number *</FormLabel>
+                      <FormLabel>Phone *</FormLabel>
                       <FormControl>
                         <Input placeholder="+919876543210" {...field} />
                       </FormControl>
@@ -162,7 +202,6 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
                   )}
                 />
               </div>
-
               <FormField
                 control={form.control}
                 name="password"
@@ -176,16 +215,15 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="reason"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Why do you want to join? *</FormLabel>
+                    <FormLabel>Statement of Purpose *</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Explain your interest in aeronautical engineering and what you hope to gain from joining the club..."
+                        placeholder="Why do you want to join AIREINO? What can you contribute?"
                         className="min-h-[100px]"
                         {...field}
                       />
@@ -194,10 +232,7 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
                   </FormItem>
                 )}
               />
-
-              <Button type="submit" className="w-full">
-                Continue to Quiz
-              </Button>
+              <Button type="submit" className="w-full">Next Step</Button>
             </form>
           </Form>
         </CardContent>
@@ -205,44 +240,84 @@ export function JoinFormWizard({ onComplete }: JoinFormWizardProps) {
     );
   }
 
-  // Step 2: MCQ Quiz
+  // Step 2: Division Selection
   if (step === 2) {
     return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-center gap-2 text-muted-foreground">
-          <ClipboardList className="h-5 w-5" />
-          <span>Step 2 of 2: Complete the Screening Quiz</span>
-        </div>
-        <MCQQuiz
-          questions={quizQuestions}
-          onComplete={handleQuizComplete}
-          attemptNumber={attemptNumber}
-          maxAttempts={MAX_ATTEMPTS}
-        />
-      </div>
+      <Card className="w-full max-w-4xl mx-auto">
+        <CardHeader>
+          <div className="flex items-center gap-2 mb-2">
+            <Rocket className="h-6 w-6 text-accent" />
+            <CardTitle className="text-2xl font-headline">Select Your Division</CardTitle>
+          </div>
+          <CardDescription>
+            Choose a division to specialize in. You will be tested on relevant topics.
+          </CardDescription>
+          <Progress value={40} className="mt-4" />
+        </CardHeader>
+        <CardContent className="grid gap-4 md:grid-cols-2">
+          {[
+            { id: 'Aerodynamics', icon: Plane, label: 'Aerodynamics & Stability', desc: 'Wing design, stability, flight physics.', criteria: 'Passing: 15/25' },
+            { id: 'Avionics', icon: Activity, label: 'Avionics & Embedded', desc: 'Flight controllers, sensors, logic.', criteria: 'Passing: 15/25' },
+            { id: 'Propulsion', icon: Zap, label: 'Propulsion & Power', desc: 'Motors, batteries, propulsion.', criteria: 'Passing: 15/25' },
+            { id: 'Structure', icon: Hammer, label: 'Structures & Materials', desc: 'Manufacturing, CAD, materials science.', criteria: 'Passing: 15/25' },
+            { id: 'Elite', icon: Brain, label: 'Elite Division', desc: 'All-rounder exam for Core Members.', criteria: 'Passing: 26/40 (Hard)' }
+          ].map((div) => (
+            <div
+              key={div.id}
+              onClick={() => handleDivisionSelect(div.id as Division)}
+              className="flex flex-col p-6 border rounded-xl hover:border-accent hover:bg-accent/5 cursor-pointer transition-all group relative overflow-hidden"
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 bg-primary/10 rounded-full text-primary group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
+                  <div.icon className="h-6 w-6" />
+                </div>
+                <h3 className="font-bold text-lg">{div.label}</h3>
+              </div>
+              <p className="text-muted-foreground text-sm flex-1">{div.desc}</p>
+              <div className="mt-4 pt-4 border-t flex items-center justify-between text-xs font-medium">
+                <span className="text-muted-foreground">{div.criteria}</span>
+                <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-accent group-hover:translate-x-1 transition-all" />
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
     );
   }
 
-  // Step 3: Retry Screen
-  // Step 3: Retry Screen
-if (step === 3) {
-  const attemptsRemaining = MAX_ATTEMPTS - attemptNumber;
-  return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Quiz Failed</CardTitle>
-        <CardDescription>
-          You didn't pass this time. You have {attemptsRemaining} {attemptsRemaining === 1 ? 'attempt' : 'attempts'} remaining.
-        </CardDescription>
+  // Step 3: Quiz
+  if (step === 3 && selectedDivision) {
+    const config = DIVISION_CONFIGS[selectedDivision];
+    return (
+      <MCQQuiz
+        questions={quizQuestions}
+        onComplete={handleQuizComplete}
+        attemptNumber={4 - attemptsLeft} // If 3 attempts left, it's 1st attempt. 3 - 3 + 1 = 1.
+        maxAttempts={3}
+        division={selectedDivision}
+        passingScore={config.passingScore}
+        timeLimitSeconds={config.timeLimitSeconds}
+      />
+    );
+  }
+
+  // Step 4: Retry Screen
+  if (step === 4) {
+    return (
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl font-headline">Quiz Failed</CardTitle>
+          <CardDescription>
+            You didn't meet the passing criteria for {selectedDivision}.
+          </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="bg-muted p-4 rounded-lg">
-            <p className="text-sm text-muted-foreground mb-2">Tips for your next attempt:</p>
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              <li>Review basic aeronautical engineering concepts</li>
-              <li>Take your time to read each question carefully</li>
-              <li>You need at least 10 correct answers out of 15</li>
-            </ul>
+        <CardContent className="space-y-6">
+          <div className="bg-muted p-4 rounded-lg text-left">
+            <h4 className="font-semibold mb-2">Status:</h4>
+            <div className="flex justify-between items-center text-sm">
+              <span>Attempts Remaining:</span>
+              <span className="font-bold text-accent">{attemptsLeft}</span>
+            </div>
           </div>
           <Button onClick={handleRetry} className="w-full">
             Try Again
@@ -252,38 +327,29 @@ if (step === 3) {
     );
   }
 
-  // Step 4: Max Attempts Reached - UPDATED
-  if (step === 4) {
+  // Step 5: Blocked Screen
+  if (step === 5) {
     return (
-      <Card className="w-full max-w-2xl mx-auto">
+      <Card className="w-full max-w-2xl mx-auto border-destructive/50">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <XCircle className="h-20 w-20 text-red-500" />
+            <XCircle className="h-20 w-20 text-destructive" />
           </div>
-          <CardTitle className="text-2xl text-red-600">Application Failed</CardTitle>
-          <CardDescription className="mt-2">
-            You have used all {MAX_ATTEMPTS} attempts for the screening quiz without passing.
+          <CardTitle className="text-2xl text-destructive font-headline">Access Locked</CardTitle>
+          <CardDescription>
+            You have exhausted all attempts for today.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-destructive/10 border border-destructive/20 p-4 rounded-lg">
-            <p className="text-sm font-semibold mb-2">What does this mean?</p>
-            <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-              <li>Your account has <strong>NOT been created</strong></li>
-              <li>You cannot join the club at this time</li>
-              <li>You may contact club administrators for special consideration</li>
-            </ul>
-          </div>
-          
-          <div className="bg-muted p-4 rounded-lg">
-            <p className="text-sm font-semibold mb-2">Need Help?</p>
-            <p className="text-sm text-muted-foreground">
-              Contact the club administrators at <strong>admin@auraclub.com</strong> if you believe you should be given another chance.
+          <div className="bg-destructive/10 p-6 rounded-lg text-center">
+            <p className="font-medium mb-1">Cooldown Active</p>
+            <p className="text-sm text-muted-foreground">Please try again after:</p>
+            <p className="text-lg font-mono font-bold mt-2">
+              {cooldownTime ? formatTime(cooldownTime) : '24 hours'}
             </p>
           </div>
-
-          <Button onClick={() => window.location.href = '/'} variant="outline" className="w-full">
-            Return to Home
+          <Button variant="outline" className="w-full" onClick={() => window.location.reload()}>
+            Refresh Status
           </Button>
         </CardContent>
       </Card>

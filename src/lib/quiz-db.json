@@ -1,0 +1,5724 @@
+{
+  "questions": [
+    {
+      "id": "aero-001",
+      "question": "What is the primary force that keeps an airplane in the air?",
+      "options": [
+        "Drag",
+        "Lift",
+        "Weight",
+        "Thrust"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-002",
+      "question": "What force must a rocket overcome to leave the launch pad?",
+      "options": [
+        "Lift",
+        "Drag",
+        "Gravity (Weight)",
+        "Magnetism"
+      ],
+      "correctIndex": 2,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-003",
+      "question": "Which part of the plane controls \"Yaw\" (turning the nose left/right)?",
+      "options": [
+        "Aileron",
+        "Elevator",
+        "Rudder",
+        "Flaps"
+      ],
+      "correctIndex": 2,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-004",
+      "question": "Which part of the plane controls \"Pitch\" (nose up/down)?",
+      "options": [
+        "Rudder",
+        "Elevator",
+        "Aileron",
+        "Propeller"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-005",
+      "question": "Which part of the plane controls \"Roll\" (tilting wings left/right)?",
+      "options": [
+        "Ailerons",
+        "Rudder",
+        "Elevator",
+        "Landing Gear"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-006",
+      "question": "What is the main purpose of \"Flaps\" on a wing?",
+      "options": [
+        "To fly faster",
+        "To increase lift and drag for takeoff/landing",
+        "To look cool",
+        "To store fuel"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-007",
+      "question": "Ideally, an airplane should be balanced:",
+      "options": [
+        "Perfectly at the Center of Gravity (CG)",
+        "Extremely tail heavy",
+        "Extremely nose heavy",
+        "With all weight on one wing"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-008",
+      "question": "If a plane is \"Tail Heavy,\" it is generally:",
+      "options": [
+        "Very stable",
+        "Unstable and hard to control",
+        "Faster",
+        "Easier to land"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-009",
+      "question": "What shape is a standard airfoil (wing cross-section)?",
+      "options": [
+        "Circle",
+        "Teardrop / Asymmetric Curve",
+        "Square",
+        "Triangle"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-010",
+      "question": "Which creates more drag?",
+      "options": [
+        "A smooth, streamlined ball",
+        "A flat square plate facing the wind",
+        "A needle",
+        "A thin wire"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-011",
+      "question": "In a water rocket, fins are placed at the bottom to provide:",
+      "options": [
+        "Thrust",
+        "Stability",
+        "Weight",
+        "Color"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-012",
+      "question": "What happens to air pressure as you go higher in altitude?",
+      "options": [
+        "It increases",
+        "It decreases",
+        "It stays the same",
+        "It becomes liquid"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-013",
+      "question": "A glider does not have:",
+      "options": [
+        "Wings",
+        "An Engine/Motor",
+        "A Tail",
+        "A Cockpit"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-014",
+      "question": "To turn a plane left, you typically bank the wings:",
+      "options": [
+        "Left",
+        "Right",
+        "Keep them flat",
+        "Pitch up"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-015",
+      "question": "\"Drag\" is the force that:",
+      "options": [
+        "Pushes the plane forward",
+        "Resists forward motion",
+        "Lifts the plane up",
+        "Pulls the plane down"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-016",
+      "question": "The leading edge of a wing is:",
+      "options": [
+        "The front edge",
+        "The back edge",
+        "The top surface",
+        "The tip"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-017",
+      "question": "The trailing edge of a wing is:",
+      "options": [
+        "The front edge",
+        "The back edge",
+        "The bottom surface",
+        "The root"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-018",
+      "question": "What is \"Thrust\"?",
+      "options": [
+        "The force pulling the plane down",
+        "The force pushing the plane forward",
+        "The force stopping the plane",
+        "The force turning the plane"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-019",
+      "question": "On a quadcopter, how is \"Yaw\" (turning) achieved?",
+      "options": [
+        "By a rudder",
+        "By spinning diagonal motors faster/slower",
+        "By tilting the motors",
+        "By moving a weight"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-020",
+      "question": "If a rocket has no fins, it will likely:",
+      "options": [
+        "Fly straight up",
+        "Tumble out of control",
+        "Fly to the moon",
+        "Hover"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-021",
+      "question": "What is a \"Biplane\"?",
+      "options": [
+        "A plane with 1 wing",
+        "A plane with 2 stacked wings",
+        "A plane with 3 wings",
+        "A plane with no wings"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-022",
+      "question": "Which is heavier?",
+      "options": [
+        "Cold air",
+        "Hot air",
+        "They are the same",
+        "Vacuum"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-023",
+      "question": "Why do planes takeoff into the wind?",
+      "options": [
+        "To go faster over the ground",
+        "To generate more lift at a slower ground speed",
+        "To save fuel",
+        "It is a superstition"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-024",
+      "question": "What does \"VTOL\" stand for?",
+      "options": [
+        "Vertical Take-Off and Landing",
+        "Very Tall Object Landing",
+        "Variable Time Of Launch",
+        "Vertical Thrust Only Launch"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-025",
+      "question": "A \"Canard\" is:",
+      "options": [
+        "A small wing at the front of the plane",
+        "A type of engine",
+        "A tail fin",
+        "A propeller type"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-026",
+      "question": "When a pilot pulls the stick BACK, the elevator moves:",
+      "options": [
+        "Down",
+        "Up",
+        "Left",
+        "Right"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-027",
+      "question": "When the elevator moves UP, the plane's nose moves:",
+      "options": [
+        "Down",
+        "Up",
+        "Left",
+        "Right"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-028",
+      "question": "Paper airplanes mostly rely on which principle?",
+      "options": [
+        "Gliding",
+        "Rocket propulsion",
+        "Magnetic levitation",
+        "Solar power"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-029",
+      "question": "What is the \"Fuselage\"?",
+      "options": [
+        "The main body of the aircraft",
+        "The wing",
+        "The engine",
+        "The wheels"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-030",
+      "question": "If one wing generates more lift than the other, the plane will:",
+      "options": [
+        "Roll",
+        "Pitch",
+        "Yaw",
+        "Stop"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-031",
+      "question": "\"Dihedral\" creates stability in which axis?",
+      "options": [
+        "Pitch",
+        "Roll",
+        "Yaw",
+        "Thrust"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-032",
+      "question": "A parachute works by creating massive:",
+      "options": [
+        "Lift",
+        "Drag",
+        "Thrust",
+        "Gravity"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-033",
+      "question": "Which aircraft can hover stationary?",
+      "options": [
+        "A glider",
+        "A helicopter / Drone",
+        "A commercial jet",
+        "A paper plane"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-034",
+      "question": "For a plane to turn, it needs to be:",
+      "options": [
+        "Heavy",
+        "Unstable",
+        "Banked (Tilted)",
+        "Stopped"
+      ],
+      "correctIndex": 2,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-035",
+      "question": "What is the \"Chord Line\"?",
+      "options": [
+        "An imaginary line from the leading edge to the trailing edge of the wing",
+        "The length of the fuselage",
+        "The width of the propeller",
+        "The height of the tail"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "aero-036",
+      "question": "Bernoulli's Principle relates pressure to:",
+      "options": [
+        "Temperature",
+        "Velocity (Speed) of the fluid",
+        "Density only",
+        "Mass"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-037",
+      "question": "According to Bernoulli, fast-moving air has:",
+      "options": [
+        "Higher Pressure",
+        "Lower Pressure",
+        "Zero Pressure",
+        "Same Pressure as slow air"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-038",
+      "question": "A \"Stall\" occurs when:",
+      "options": [
+        "The engine quits",
+        "The critical angle of attack is exceeded",
+        "The pilot brakes",
+        "The plane flies too fast"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-039",
+      "question": "What is \"Angle of Attack\" (AoA)?",
+      "options": [
+        "Angle between the wing chord line and the relative wind",
+        "Angle of the plane relative to the ground",
+        "Angle of the propeller blades",
+        "Angle of the tail"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-040",
+      "question": "Induced Drag is caused by:",
+      "options": [
+        "The friction of air on the skin",
+        "The production of Lift (wingtip vortices)",
+        "The shape of the fuselage",
+        "The landing gear"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-041",
+      "question": "High Aspect Ratio wings (long and skinny) are best for:",
+      "options": [
+        "Fighter jets",
+        "Gliders / Efficiency",
+        "Racing planes",
+        "Indoor flyers"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-042",
+      "question": "Low Aspect Ratio wings (short and stubby) are good for:",
+      "options": [
+        "High roll rate and maneuverability",
+        "Long distance gliding",
+        "Carrying heavy loads",
+        "Solar power"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-043",
+      "question": "\"Washout\" in a wing design means:",
+      "options": [
+        "Cleaning the wing",
+        "Twisting the wingtips down to prevent tip stalling",
+        "Removing the paint",
+        "Making the wing wet"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-044",
+      "question": "The Center of Pressure (CP) on a stable rocket must be:",
+      "options": [
+        "Ahead of the CG",
+        "Behind the CG",
+        "At the CG",
+        "Nowhere"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-045",
+      "question": "If the CG is behind the CP in a rocket, the rocket is:",
+      "options": [
+        "Stable",
+        "Unstable",
+        "Neutral",
+        "Faster"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-046",
+      "question": "What is \"parasitic drag\"?",
+      "options": [
+        "Drag created by lift",
+        "Drag created by the shape/friction of the object",
+        "Drag from the engine",
+        "Drag from the pilot"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-047",
+      "question": "A \"Delta Wing\" (triangle shape) is common on:",
+      "options": [
+        "Gliders",
+        "Supersonic jets",
+        "Cargo planes",
+        "Helicopters"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-048",
+      "question": "\"Adverse Yaw\" means:",
+      "options": [
+        "When banking left, the nose tries to turn right",
+        "When banking left, the nose turns left perfectly",
+        "The plane refuses to turn",
+        "The plane stalls"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-049",
+      "question": "To counter Adverse Yaw, pilots use:",
+      "options": [
+        "More aileron",
+        "Rudder",
+        "Elevator",
+        "Flaps"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-050",
+      "question": "Ground Effect causes a plane to:",
+      "options": [
+        "Sink faster near the ground",
+        "Float and refuse to land near the ground",
+        "Crash immediately",
+        "Spin"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-051",
+      "question": "Which provides stability in the Pitch axis?",
+      "options": [
+        "The Vertical Stabilizer (Fin)",
+        "The Horizontal Stabilizer (Tailplane)",
+        "The Wing tips",
+        "The Propeller"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-052",
+      "question": "Which provides stability in the Yaw axis?",
+      "options": [
+        "The Vertical Stabilizer (Fin)",
+        "The Horizontal Stabilizer",
+        "The Ailerons",
+        "The Landing Gear"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-053",
+      "question": "A \"T-Tail\" aircraft has the horizontal stabilizer:",
+      "options": [
+        "On the fuselage",
+        "On top of the vertical fin",
+        "Under the wing",
+        "On the nose"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-054",
+      "question": "\"Wing Loading\" is calculated as:",
+      "options": [
+        "Weight / Wing Area",
+        "Wing Area / Weight",
+        "Thrust / Weight",
+        "Span / Chord"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-055",
+      "question": "A high Wing Loading means the plane:",
+      "options": [
+        "Can fly very slowly",
+        "Must fly faster to stay airborne",
+        "Is a glider",
+        "Is very light"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-056",
+      "question": "Anhedral (wings angling down) is used to:",
+      "options": [
+        "Increase stability",
+        "Decrease stability (increase maneuverability)",
+        "Increase lift",
+        "Reduce drag"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-057",
+      "question": "The \"Static Margin\" refers to:",
+      "options": [
+        "The distance between CG and CP",
+        "The weight of the fuel",
+        "The length of the runway",
+        "The speed of sound"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-058",
+      "question": "Laminar Flow means the air is:",
+      "options": [
+        "Turbulent and chaotic",
+        "Smooth and attached to the surface",
+        "Separated from the wing",
+        "Frozen"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-059",
+      "question": "Turbulent Flow creates:",
+      "options": [
+        "Less skin friction drag",
+        "More skin friction drag",
+        "Less noise",
+        "More lift"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-060",
+      "question": "Why do golf balls have dimples?",
+      "options": [
+        "To look nice",
+        "To create a turbulent boundary layer and reduce pressure drag",
+        "To increase weight",
+        "To slow them down"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-061",
+      "question": "Reynolds Principle measures the ratio of:",
+      "options": [
+        "Lift to Drag",
+        "Inertial forces to Viscous forces",
+        "Weight to Thrust",
+        "Air to Water"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-062",
+      "question": "At low Reynolds numbers (small RC planes), air feels:",
+      "options": [
+        "Thinner",
+        "Stickier / More viscous",
+        "Faster",
+        "Hotter"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-063",
+      "question": "A \"Symmetrical Airfoil\" (same curve top and bottom) produces:",
+      "options": [
+        "Lift at 0 degrees Angle of Attack",
+        "Zero Lift at 0 degrees Angle of Attack",
+        "Negative Lift always",
+        "Infinite Lift"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-064",
+      "question": "Symmetrical Airfoils are good for:",
+      "options": [
+        "Cargo planes",
+        "Aerobatic planes (inverted flight)",
+        "Gliders",
+        "Trainer planes"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-065",
+      "question": "\"Camber\" refers to:",
+      "options": [
+        "The thickness of the wing",
+        "The curvature of the airfoil",
+        "The length of the wing",
+        "The material of the wing"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-066",
+      "question": "A \"Reflex\" airfoil (trailing edge curves up) is used for:",
+      "options": [
+        "Flying Wings (to provide self-stability)",
+        "Cargo planes",
+        "Helicopters",
+        "Rockets"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-067",
+      "question": "\"Winglets\" at the tip of the wing help to:",
+      "options": [
+        "Increase speed",
+        "Reduce wingtip vortices and induced drag",
+        "Add weight",
+        "Look scary"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-068",
+      "question": "In a \"Bank and Yank\" turn, the \"Yank\" refers to:",
+      "options": [
+        "Pulling the throttle",
+        "Pulling the elevator up to turn",
+        "Pulling the rudder",
+        "Pulling the parachute"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-069",
+      "question": "A \"Spin\" is an aggravated stall involving:",
+      "options": [
+        "High speed",
+        "Yaw and Roll (Autorotation)",
+        "Pitch only",
+        "Engine failure"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-070",
+      "question": "To recover from a spin, you generally:",
+      "options": [
+        "Pull back on the stick",
+        "Reduce throttle and apply opposite rudder",
+        "Apply full throttle",
+        "Scream"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "aero-071",
+      "question": "If you balance your plane on your fingers and the tail drops down, the plane is:",
+      "options": [
+        "Nose Heavy",
+        "Tail Heavy",
+        "Balanced",
+        "Broken"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-072",
+      "question": "Why do jet fighters fly at very high altitudes?",
+      "options": [
+        "To avoid birds",
+        "Air is thinner (less drag), allowing higher speeds",
+        "To be closer to the sun",
+        "Because the pilots like the view"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-073",
+      "question": "\"Trim\" on a radio transmitter is used to:",
+      "options": [
+        "Increase the engine power",
+        "Fine-tune the control surfaces so the plane flies straight without holding the stick",
+        "Change the color of the LED",
+        "Turn off the radio"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-074",
+      "question": "What is a \"Sonic Boom\"?",
+      "options": [
+        "The sound of the engine starting",
+        "A shockwave created when an object flies faster than sound",
+        "The sound of a crash",
+        "A special type of music"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-075",
+      "question": "If your plane keeps turning left on its own, you should add:",
+      "options": [
+        "Left Trim",
+        "Right Trim",
+        "Up Trim",
+        "Down Trim"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-076",
+      "question": "Why do some paper airplanes have the back edges bent slightly up?",
+      "options": [
+        "It adds \"Reflex\" to push the tail down and keep the nose up",
+        "It makes them slower",
+        "It is a mistake",
+        "It adds drag only"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-077",
+      "question": "If you put a heavy camera on the nose of your drone, the front motors must work:",
+      "options": [
+        "Harder (spin faster)",
+        "Less (spin slower)",
+        "The same",
+        "Backwards"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-078",
+      "question": "A \"Bi-copter\" (2 motors) is difficult to build because:",
+      "options": [
+        "It has too much power",
+        "It is unstable in the pitch axis without servos to tilt the motors",
+        "It is too cheap",
+        "It flies too fast"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-079",
+      "question": "What happens if you launch a water rocket with ONLY water (no air)?",
+      "options": [
+        "It goes very high",
+        "It doesn't fly because water can't be compressed to store energy",
+        "It explodes",
+        "It freezes"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-080",
+      "question": "What happens if you launch a water rocket with ONLY air (no water)?",
+      "options": [
+        "It flies very high",
+        "It pops off the pad quickly but has no momentum/mass, so it stops low",
+        "It is perfect",
+        "It melts"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-081",
+      "question": "If you want to fly for a very long time (Endurance), you want:",
+      "options": [
+        "Maximum Drag",
+        "High Lift and Low Drag",
+        "Maximum Speed",
+        "Maximum Weight"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-082",
+      "question": "Why do commercial planes have round windows instead of square ones?",
+      "options": [
+        "Round windows look better",
+        "Square corners concentrate stress and can cause cracks",
+        "Round windows are cheaper",
+        "To see more"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-083",
+      "question": "\"Supersonic\" means:",
+      "options": [
+        "Faster than light",
+        "Faster than the speed of sound (Mach 1)",
+        "Very loud",
+        "Very quiet"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-084",
+      "question": "If a rocket engine is slightly crooked (not pointing straight down), the rocket will:",
+      "options": [
+        "Spin or turn off course",
+        "Fly straight anyway",
+        "Go faster",
+        "Explode"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-085",
+      "question": "Why do we put the heavy battery inside the fuselage and not on the wing tip?",
+      "options": [
+        "To keep it warm",
+        "To keep the mass centralized (Mass Centralization) for better roll rate/agility",
+        "It looks ugly on the wing",
+        "To hide it"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-086",
+      "question": "A \"Pusher\" plane has the propeller:",
+      "options": [
+        "On the front",
+        "On the back, pushing the plane",
+        "On the top",
+        "On the bottom"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-087",
+      "question": "A \"Tractor\" plane has the propeller:",
+      "options": [
+        "On the front, pulling the plane",
+        "On the back",
+        "Inside the wing",
+        "On the wheels"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-088",
+      "question": "Which is safer for a beginner FPV pilot?",
+      "options": [
+        "A Pusher Prop (on the back) because it won't break in a nose-first crash",
+        "A Tractor Prop (on the front)",
+        "No Prop",
+        "A Jet Engine"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-089",
+      "question": "When a helicopter loses engine power, it can land safely by:",
+      "options": [
+        "Gliding like a plane",
+        "Autorotation (using falling air to spin the blades)",
+        "Parachute",
+        "Crashing"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-090",
+      "question": "If you add tape to one propeller blade but not the other, it will cause:",
+      "options": [
+        "More speed",
+        "Vibration (Imbalance)",
+        "Better cooling",
+        "Silence"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-091",
+      "question": "\"Swept wings\" (angled back) are mostly used for:",
+      "options": [
+        "Slow flying gliders",
+        "High speed flight (delaying shockwaves)",
+        "Helicopters",
+        "Hot air balloons"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-092",
+      "question": "If you try to fly a drone on the Moon, what happens?",
+      "options": [
+        "It flies perfectly",
+        "It cannot fly because there is no air for the props to push against",
+        "It flies upside down",
+        "It floats away"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-093",
+      "question": "If you drop a feather and a hammer on the Moon:",
+      "options": [
+        "The hammer falls faster",
+        "They hit the ground at the same time (no air resistance)",
+        "The feather floats away",
+        "They never fall"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-094",
+      "question": "Why is \"Carbon Fiber\" painted black or clear coated?",
+      "options": [
+        "It is naturally black",
+        "It needs protection from UV light (Sun) which degrades the epoxy",
+        "To look scary",
+        "To hide dirt"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-095",
+      "question": "If a plane flies into a headwind (wind blowing in its face), its speed over the ground:",
+      "options": [
+        "Increases",
+        "Decreases",
+        "Stays the same",
+        "Becomes zero"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-096",
+      "question": "If a plane flies with a tailwind (wind pushing from behind), its speed over the ground:",
+      "options": [
+        "Increases",
+        "Decreases",
+        "Stays the same",
+        "Becomes negative"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-097",
+      "question": "Why do we not fly drones in the rain?",
+      "options": [
+        "They might melt",
+        "Water can short-circuit the electronics",
+        "The propellers get slippery",
+        "It is illegal"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-098",
+      "question": "A \"Shock Cord\" in a rocket recovery system is used to:",
+      "options": [
+        "Electrocute the rocket",
+        "Absorb the snap/force when the parachute opens",
+        "Tie the rocket to the ground",
+        "Make noise"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-099",
+      "question": "If you have a multi-stage rocket, the first stage (booster) must:",
+      "options": [
+        "Stay attached forever",
+        "Fall off after its fuel is used to save weight",
+        "Explode",
+        "Turn into a glider"
+      ],
+      "correctIndex": 1,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "aero-100",
+      "question": "Why is the nose cone usually pointed or rounded?",
+      "options": [
+        "To reduce drag",
+        "To look sharp",
+        "To hold more fuel",
+        "To serve as a handle"
+      ],
+      "correctIndex": 0,
+      "division": "Aerodynamics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-101",
+      "question": "What is the \"Brain\" of the drone called?",
+      "options": [
+        "The Battery",
+        "The Flight Controller (FC)",
+        "The Propeller",
+        "The Frame"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-102",
+      "question": "What device does the pilot hold to control the aircraft?",
+      "options": [
+        "The Receiver",
+        "The Transmitter (Radio Remote)",
+        "The Servo",
+        "The Antenna"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-103",
+      "question": "Which component receives the signal on the aircraft?",
+      "options": [
+        "The Receiver (RX)",
+        "The Motor",
+        "The Battery",
+        "The Landing Gear"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-104",
+      "question": "What does \"ESC\" stand for?",
+      "options": [
+        "Electric Speed Controller",
+        "Engine Stop Circuit",
+        "Emergency Safety Cutoff",
+        "Extra Speedy Car"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-105",
+      "question": "What color wire is universally used for \"Positive\" (+) power?",
+      "options": [
+        "Black",
+        "Red",
+        "Green",
+        "White"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-106",
+      "question": "What color wire is universally used for \"Ground\" (-) or Negative?",
+      "options": [
+        "Black",
+        "Red",
+        "Yellow",
+        "Purple"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-107",
+      "question": "Which component stores the electrical energy?",
+      "options": [
+        "The Motor",
+        "The Battery (LiPo)",
+        "The FC",
+        "The Camera"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-108",
+      "question": "A \"Servo\" is commonly used to:",
+      "options": [
+        "Move a control surface (like a rudder) to a specific angle",
+        "Spin the propeller continuously",
+        "Record audio",
+        "Light up"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-109",
+      "question": "\"FPV\" stands for:",
+      "options": [
+        "First Person View",
+        "Free Pilot Video",
+        "Fast Plane Velocity",
+        "Flying People Vehicle"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-110",
+      "question": "If you unplug the battery, the drone:",
+      "options": [
+        "Continues to fly",
+        "Turns off immediately",
+        "Lands itself safely",
+        "Takes a photo"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-111",
+      "question": "To charge a LiPo battery safely, you should use:",
+      "options": [
+        "A specialized Balance Charger",
+        "A wall socket directly",
+        "A car battery jumper",
+        "A USB cable into the motor"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-112",
+      "question": "GPS helps a drone to:",
+      "options": [
+        "Fly faster",
+        "Know its location and hold position",
+        "Perform flips",
+        "See in the dark"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-113",
+      "question": "What is \"Binding\"?",
+      "options": [
+        "Gluing the drone together",
+        "Connecting the Transmitter to the Receiver wirelessly so they talk to each other",
+        "Tying the wires with zip ties",
+        "Charging the battery"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-114",
+      "question": "How many motors does a \"Tricopter\" have?",
+      "options": [
+        "3",
+        "4",
+        "6",
+        "8"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-115",
+      "question": "How many motors does a \"Hexacopter\" have?",
+      "options": [
+        "4",
+        "6",
+        "8",
+        "12"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-116",
+      "question": "Which stick on the remote usually controls the Throttle (Power)?",
+      "options": [
+        "The one that stays where you leave it (doesn't spring back to center up/down)",
+        "The one that always centers itself",
+        "The switch on the top",
+        "The antenna"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-117",
+      "question": "If the drone loses signal, a \"Failsafe\" is designed to:",
+      "options": [
+        "Make the drone fly away",
+        "Cut the motors (Drop) or Return to Home (RTH)",
+        "Spin uncontrollably",
+        "Explode"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-118",
+      "question": "\"LEDs\" are used for:",
+      "options": [
+        "Making the drone heavy",
+        "Visual orientation (lights)",
+        "Cooling the motors",
+        "Listening to music"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-119",
+      "question": "What is a \"Gimbal\"?",
+      "options": [
+        "A motorized stabilizer for the camera",
+        "A type of battery",
+        "A propeller guard",
+        "A landing leg"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-120",
+      "question": "Which sensor acts like a compass?",
+      "options": [
+        "Magnetometer",
+        "Barometer",
+        "Thermometer",
+        "Speedometer"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-121",
+      "question": "Which sensor measures altitude (height) using air pressure?",
+      "options": [
+        "Barometer",
+        "Gyroscope",
+        "GPS",
+        "Camera"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-122",
+      "question": "If you mix up the + and - wires when plugging in a battery:",
+      "options": [
+        "It works fine",
+        "The electronics will likely burn out (Short Circuit)",
+        "The motors spin backwards",
+        "The battery charges"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-123",
+      "question": "A \"Connector\" (like XT60) is used to:",
+      "options": [
+        "Connect the battery to the drone",
+        "Hold the propeller",
+        "Take pictures",
+        "Land the drone"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-124",
+      "question": "\"OSD\" stands for:",
+      "options": [
+        "On Screen Display (flight data on video feed)",
+        "Over Speed Damage",
+        "One Small Drone",
+        "Only Slow Down"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-125",
+      "question": "What is the voltage of a USB port (used to configure the FC)?",
+      "options": [
+        "5 Volts",
+        "12 Volts",
+        "220 Volts",
+        "1 Volt"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-126",
+      "question": "\"Mode 2\" on a transmitter means the Throttle is on the:",
+      "options": [
+        "Left Stick",
+        "Right Stick",
+        "Top Switch",
+        "Back Dial"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-127",
+      "question": "A \"Buzzer\" on a drone is useful for:",
+      "options": [
+        "Playing music",
+        "Finding the drone if it crashes in tall grass (Lost Model Alarm)",
+        "scaring birds",
+        "Cooling the battery"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-128",
+      "question": "What does the \"Arm\" switch do?",
+      "options": [
+        "Picks up objects",
+        "Activates the motors so the drone is ready to fly",
+        "Takes a selfie",
+        "Turns off the drone"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-129",
+      "question": "Which frequency is most common for controlling drones?",
+      "options": [
+        "2.4 GHz",
+        "100 Hz",
+        "FM Radio (88 MHz)",
+        "X-Ray"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-130",
+      "question": "Which frequency is most common for FPV Video?",
+      "options": [
+        "5.8 GHz",
+        "2.4 GHz",
+        "AM Radio",
+        "Bluetooth"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-131",
+      "question": "If your video feed is snowy or static-filled, you likely have:",
+      "options": [
+        "Perfect signal",
+        "Weak video signal or interference",
+        "A broken lens",
+        "A full SD card"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-132",
+      "question": "\"LiPo\" stands for:",
+      "options": [
+        "Lithium Polymer",
+        "Light Power",
+        "Liquid Potassium",
+        "Little Pony"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-133",
+      "question": "A \"Distribution Board\" (PDB):",
+      "options": [
+        "Splits battery power to all ESCs",
+        "Distributes WiFi",
+        "Distributes weight",
+        "Is a type of propeller"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-134",
+      "question": "To update the settings on a Flight Controller, you connect it to a:",
+      "options": [
+        "Computer / Laptop",
+        "Television",
+        "Microwave",
+        "Wall outlet"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-135",
+      "question": "The \"Antenna\" should be:",
+      "options": [
+        "Cut off to save weight",
+        "Attached securely to send/receive signals",
+        "Covered in foil",
+        "Hidden inside the motor"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "easy"
+    },
+    {
+      "id": "avionics-136",
+      "question": "What is the nominal voltage of a single LiPo cell (1S)?",
+      "options": [
+        "1.5V",
+        "3.7V",
+        "9V",
+        "12V"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-137",
+      "question": "A 4S battery has a fully charged voltage of approximately:",
+      "options": [
+        "16.8V (4 x 4.2V)",
+        "12V",
+        "4V",
+        "100V"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-138",
+      "question": "What does the Accelerometer measure?",
+      "options": [
+        "The direction of North",
+        "Proper acceleration (Gravity) to determine which way is \"Down\"",
+        "The wind speed",
+        "The battery level"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-139",
+      "question": "Which flight mode uses the Accelerometer to keep the drone level when you let go of the",
+      "options": [
+        "Acro Mode (Manual)",
+        "Angle / Stabilize Mode",
+        "Turbo Mode",
+        "Sleep Mode"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-140",
+      "question": "In \"Acro Mode\" (Rate Mode), if you push the stick forward and let go:",
+      "options": [
+        "The drone returns to level",
+        "The drone stays tilted forward and keeps flying forward",
+        "The drone stops",
+        "The drone flips 360 degrees automatically"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-141",
+      "question": "What is \"RTH\"?",
+      "options": [
+        "Run To Hill",
+        "Return To Home (GPS auto-return)",
+        "Ready To Hover",
+        "Rotate The Hub"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-142",
+      "question": "\"Telemetry\" allows you to see:",
+      "options": [
+        "Battery voltage on your remote screen",
+        "The pilot's face",
+        "The future",
+        "Other drones"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-143",
+      "question": "A \"BEC\" (Battery Elimination Circuit) outputs what voltage?",
+      "options": [
+        "Full battery voltage",
+        "A regulated 5V (usually) to power the Flight Controller/Receiver",
+        "0V",
+        "100V"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-144",
+      "question": "If you use a higher \"mAh\" battery, you generally get:",
+      "options": [
+        "Shorter flight time",
+        "Longer flight time (but more weight)",
+        "More speed",
+        "Better video quality"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-145",
+      "question": "\"Solder\" is used to:",
+      "options": [
+        "Glue plastic parts",
+        "Join electrical wires permanently",
+        "Clean the drone",
+        "Lubricate motors"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-146",
+      "question": "What is a \"Short Circuit\"?",
+      "options": [
+        "A flight that is too short",
+        "When electricity flows through an unintended low-resistance path (causing heat/fire)",
+        "A small drone",
+        "A fast computer"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-147",
+      "question": "The \"UART\" ports on a Flight Controller are used for:",
+      "options": [
+        "Connecting peripherals like GPS, Receiver, or VTX",
+        "Plugging in the motors",
+        "Charging the battery",
+        "Cooling the board"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-148",
+      "question": "\"Firmware\" is:",
+      "options": [
+        "The hardware of the drone",
+        "The software installed on the Flight Controller (like Betaflight/ArduPilot)",
+        "The plastic frame",
+        "The user manual"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-149",
+      "question": "If your motors are twitching but not spinning, you might have:",
+      "options": [
+        "A loose connection or one broken wire (out of 3)",
+        "Too much battery",
+        "A perfect drone",
+        "Too much GPS signal"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-150",
+      "question": "What does \"Calibration\" of the Accelerometer do?",
+      "options": [
+        "Tells the drone what \"Flat and Level\" feels like",
+        "Charges the battery",
+        "Deletes the firmware",
+        "Sharpen the propellers"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-151",
+      "question": "\"Crossfire\" and \"ELRS\" are types of:",
+      "options": [
+        "Long Range Radio Links",
+        "Propellers",
+        "Batteries",
+        "Video Cameras"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-152",
+      "question": "A \"V-Tail\" mixer setting is required if:",
+      "options": [
+        "You have a V-shaped tail on your plane",
+        "You have a quadcopter",
+        "You have a boat",
+        "You want to fly fast"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-153",
+      "question": "If you plug a 6S battery into a drone built for 4S:",
+      "options": [
+        "It will fly super fast for a long time",
+        "The electronics/motors will likely burn out due to over-voltage",
+        "It won't take off",
+        "It will be silent"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-154",
+      "question": "\"Continuity Check\" with a multimeter is used to:",
+      "options": [
+        "See if two points are electrically connected (Testing for shorts)",
+        "Measure voltage",
+        "Measure weight",
+        "Measure speed"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-155",
+      "question": "Why do we twist the signal wires?",
+      "options": [
+        "To make them look pretty",
+        "To reduce electromagnetic interference (EMI)",
+        "To make them shorter",
+        "To increase resistance"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-156",
+      "question": "A \"PDB\" usually shares the same physical board as the:",
+      "options": [
+        "Flight Controller (in an AIO / All-In-One board)",
+        "Camera",
+        "Antenna",
+        "Propeller"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-157",
+      "question": "\"Current Sensor\" measures:",
+      "options": [
+        "How many Amps the drone is pulling from the battery",
+        "The wind current",
+        "The river current",
+        "The voltage only"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-158",
+      "question": "If your drone \"Toilet Bowls\" (swirls in circles) in GPS mode, it usually means:",
+      "options": [
+        "The Compass (Magnetometer) is not calibrated or has interference",
+        "The battery is low",
+        "The GPS is too accurate",
+        "The pilot is dizzy"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-159",
+      "question": "\"Storage Voltage\" for a LiPo cell is roughly:",
+      "options": [
+        "3.80V - 3.85V",
+        "4.20V (Full)",
+        "3.00V (Empty)",
+        "0V"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-160",
+      "question": "Why shouldn't you store a LiPo fully charged for months?",
+      "options": [
+        "It will degrade/puff and lose performance",
+        "It will explode immediately",
+        "It will turn into gold",
+        "It gets heavier"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-161",
+      "question": "\"SBUS\" and \"IBUS\" are:",
+      "options": [
+        "Digital serial protocols for Receivers",
+        "Bus routes",
+        "Battery brands",
+        "Motor types"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-162",
+      "question": "A \"Blackbox\" on a drone is used for:",
+      "options": [
+        "Carrying cargo",
+        "Logging flight data for analysis/tuning",
+        "Keeping the battery warm",
+        "Decoration"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-163",
+      "question": "If you want to fly autonomously (Waypoints), you need:",
+      "options": [
+        "A GPS and Compass",
+        "Just a receiver",
+        "A camera only",
+        "Bigger motors"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-164",
+      "question": "\"RSSI\" stands for:",
+      "options": [
+        "Received Signal Strength Indicator (Radio signal quality)",
+        "Really Super Strong Interference",
+        "Rocket Science System Interface",
+        "Remote Stop Switch Indicator"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-165",
+      "question": "A \"LC Filter\" helps to:",
+      "options": [
+        "Clean up video noise caused by motors",
+        "Filter the air",
+        "Filter the water",
+        "Increase battery voltage"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-166",
+      "question": "If the \"C-Rating\" of a battery is too low for the motors:",
+      "options": [
+        "The battery will get hot and puff",
+        "The drone will fly faster",
+        "The motors will freeze",
+        "The battery will charge itself"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-167",
+      "question": "\"Soft Mounting\" the Flight Controller helps to:",
+      "options": [
+        "Reduce vibration noise reaching the Gyro",
+        "Make it comfortable",
+        "Keep it warm",
+        "Make it look nice"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-168",
+      "question": "\"HV LiPo\" (LiHV) charges to:",
+      "options": [
+        "4.35V per cell",
+        "4.20V per cell",
+        "5.0V per cell",
+        "3.0V per cell"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-169",
+      "question": "When soldering, \"Flux\" helps to:",
+      "options": [
+        "Clean the metal and make the solder flow smoothly",
+        "Glue the wire",
+        "Cool the wire",
+        "Insulate the wire"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-170",
+      "question": "A \"Smoke Stopper\" (Lightbulb in series) is used when:",
+      "options": [
+        "Plugging in a battery for the first time to limit current and prevent burning components if",
+        "Flying at night",
+        "Making smoke signals",
+        "Cooking"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avionics-171",
+      "question": "If your FPV video range is very bad, but your control range is good, what is the most likely cause?",
+      "options": [
+        "The VTX antenna is broken or loose",
+        "The GPS is broken",
+        "The battery is too full",
+        "The motors are too fast"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-172",
+      "question": "Why do we never power on the VTX (Video Transmitter) without an antenna attached?",
+      "options": [
+        "It will overheat and burn out quickly",
+        "It will fly away",
+        "It will make a loud noise",
+        "It will drain the battery instantly"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-173",
+      "question": "If your drone flips over instantly upon takeoff, the most common mistake is:",
+      "options": [
+        "A motor is spinning the wrong way OR a propeller is on the wrong motor",
+        "The battery is too heavy",
+        "The GPS is not locked",
+        "It is windy"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-174",
+      "question": "You are flying and the drone suddenly drops out of the sky. The battery was at 15V (4S). What",
+      "options": [
+        "A loose connection or Desync",
+        "The battery was empty (15V is full for 4S)",
+        "You flew too high",
+        "The sun was too bright"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-175",
+      "question": "Why do GPS drones sometimes drift indoors?",
+      "options": [
+        "Because GPS signals cannot penetrate roofs/concrete well",
+        "Because it is dark",
+        "Because there is no wind",
+        "Because the drone is scared"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-176",
+      "question": "If you install the flight controller facing the wrong way (arrow pointing left), you must:",
+      "options": [
+        "Change the \"Board Alignment\" / Yaw offset in the software",
+        "Rebuild the whole drone",
+        "Fly sideways forever",
+        "Use a different battery"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-177",
+      "question": "If you crash and the battery is dented or smells sweet:",
+      "options": [
+        "Dispose of it safely; it is a fire hazard",
+        "Charge it immediately",
+        "Put tape on it and fly again",
+        "Put it in your pocket"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-178",
+      "question": "Why is \"Multishot\" or \"DShot\" better than old PWM for ESCs?",
+      "options": [
+        "It is a faster digital signal, offering smoother control",
+        "It uses less wire",
+        "It is louder",
+        "It makes the motors glow"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-179",
+      "question": "If your radio says \"Rx Loss\" or \"Telemetry Lost\" while the drone is close to you:",
+      "options": [
+        "Your Receiver antenna might be cut or touching carbon fiber",
+        "You are flying too slow",
+        "The battery is full",
+        "The camera is dirty"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-180",
+      "question": "Why do we set a \"Minimum Throttle\" (Air Mode)?",
+      "options": [
+        "To keep the props spinning at zero throttle so the drone maintains stability/steerability while",
+        "To waste battery",
+        "To prevent landing",
+        "To make noise"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-181",
+      "question": "If you change your propeller from a 5-inch to a 7-inch without changing the motor/battery:",
+      "options": [
+        "The motor will draw MORE amps and might burn out",
+        "The motor will draw LESS amps",
+        "Nothing changes",
+        "The drone will disappear"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-182",
+      "question": "In a \"Series\" battery connection (e.g., two 3S batteries in series):",
+      "options": [
+        "Voltage adds up (becomes 6S)",
+        "Capacity adds up",
+        "Nothing happens",
+        "Weight decreases"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-183",
+      "question": "In a \"Parallel\" battery connection:",
+      "options": [
+        "Capacity (mAh) adds up, Voltage stays the same",
+        "Voltage adds up",
+        "Both add up",
+        "Neither adds up"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-184",
+      "question": "Why do high-power drones use a Capacitor on the battery pads?",
+      "options": [
+        "To filter out voltage spikes/noise that can damage electronics",
+        "To add extra flight time",
+        "To make it look professional",
+        "To serve as a backup battery"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-185",
+      "question": "If your drone keeps drifting backwards in Angle mode even after calibration:",
+      "options": [
+        "The battery might be too far back (Center of Gravity issue)",
+        "The motors are broken",
+        "The props are too small",
+        "The air is thin"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-186",
+      "question": "\"Bootloader\" mode is used when:",
+      "options": [
+        "The Flight Controller is \"bricked\" or needs a firmware flash",
+        "Flying normally",
+        "Charging the battery",
+        "Taking off"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-187",
+      "question": "If you hear 3 beeps, then 2 long beeps from the ESCs on startup:",
+      "options": [
+        "It means the ESCs are receiving a valid signal from the FC (System Ready)",
+        "It means the drone is broken",
+        "It means the battery is empty",
+        "It means \"Self Destruct\""
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-188",
+      "question": "If you hear only the first 3 beeps but NOT the last 2 long beeps:",
+      "options": [
+        "The ESC is powered, but NOT getting a signal from the Flight Controller",
+        "Everything is fine",
+        "The motors are missing",
+        "The pilot is missing"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-189",
+      "question": "Why is \"Galvanic Isolation\" (Opto-isolator) sometimes used in ESCs?",
+      "options": [
+        "To protect the receiver from high-voltage noise from the motors",
+        "To make the ESC cheaper",
+        "To make the ESC smaller",
+        "To make the motors faster"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-190",
+      "question": "If you mount a GPS module right next to the power wires:",
+      "options": [
+        "Magnetic interference might stop the compass from working",
+        "It works better",
+        "The GPS charges faster",
+        "The wires get cold"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-191",
+      "question": "\"Looptime\" refers to:",
+      "options": [
+        "How fast the Flight Controller calculates corrections (e.g., 8kHz)",
+        "How long the drone can fly",
+        "How fast the drone flips",
+        "The size of the drone"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-192",
+      "question": "If your OSD shows \"Land Now\", it is triggered by:",
+      "options": [
+        "Low Battery Voltage",
+        "High Altitude",
+        "Low Speed",
+        "Boring flight"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-193",
+      "question": "What is the risk of flying behind a large concrete building?",
+      "options": [
+        "Losing Radio Control and Video Signal (Multipathing/Occlusion)",
+        "The drone gets cold",
+        "The drone gets confused",
+        "No risk"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-194",
+      "question": "If you accidentally cut the Receiver antenna wire short:",
+      "options": [
+        "Your range will be significantly reduced",
+        "It works the same",
+        "It works better",
+        "The drone will fly backwards"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-195",
+      "question": "A \"CLI\" dump is:",
+      "options": [
+        "A text backup of all your settings",
+        "A type of battery",
+        "A crash",
+        "A maneuver"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-196",
+      "question": "Why do we use \"Heat Shrink\" over the ESCs?",
+      "options": [
+        "To prevent short circuits against the carbon fiber frame (Carbon is conductive)",
+        "To keep them warm",
+        "To hide the brand name",
+        "To make them waterproof"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-197",
+      "question": "If your drone oscillates (shakes) quickly during flight, your PID \"P-Gain\" might be:",
+      "options": [
+        "Too High",
+        "Too Low",
+        "Just right",
+        "Zero"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-198",
+      "question": "If your drone feels sluggish and slow to respond, your \"P-Gain\" might be:",
+      "options": [
+        "Too Low",
+        "Too High",
+        "Dangerous",
+        "Perfect"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-199",
+      "question": "What is \"Smart Audio\"?",
+      "options": [
+        "A protocol to change VTX settings (Channel/Power) via the OSD/Remote",
+        "A speaker on the drone",
+        "A microphone",
+        "An intelligent pilot"
+      ],
+      "correctIndex": 0,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "avionics-200",
+      "question": "If you use a GPS with a \"Milled\" or \"CNC\" metal case, what could happen?",
+      "options": [
+        "It might look cool",
+        "The metal might block the GPS signals if not designed correctly",
+        "It becomes magnetic",
+        "It flies better"
+      ],
+      "correctIndex": 1,
+      "division": "Avionics",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-201",
+      "question": "What component creates the pulling force in a drone?",
+      "options": [
+        "The Propeller spinning",
+        "The Camera",
+        "The Antenna",
+        "The Landing Gear"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-202",
+      "question": "\"RPM\" stands for:",
+      "options": [
+        "Revolutions Per Minute",
+        "Rocket Power Machine",
+        "Real Power Meter",
+        "Rapid Pilot Movement"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-203",
+      "question": "Which part of a rocket shoots out gas to push it up?",
+      "options": [
+        "The Nose Cone",
+        "The Fins",
+        "The Nozzle / Engine",
+        "The Parachute"
+      ],
+      "correctIndex": 2,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-204",
+      "question": "In a water rocket, what is the \"fuel\"?",
+      "options": [
+        "Gasoline",
+        "Water and Compressed Air",
+        "Fire",
+        "Electricity"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-205",
+      "question": "A brushless motor typically has how many wires?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "correctIndex": 2,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-206",
+      "question": "A \"LiPo\" is a type of:",
+      "options": [
+        "Propeller",
+        "Motor",
+        "Battery",
+        "Glue"
+      ],
+      "correctIndex": 2,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-207",
+      "question": "If a propeller spins clockwise, it pushes air:",
+      "options": [
+        "Up",
+        "Down (to create lift)",
+        "Sideways",
+        "Nowhere"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-208",
+      "question": "\"Thrust\" is the force that moves the aircraft:",
+      "options": [
+        "Forward (or Up)",
+        "Backward",
+        "Down",
+        "Left"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-209",
+      "question": "What unit do we usually use to measure battery capacity?",
+      "options": [
+        "Volts (V)",
+        "Milliampere-hours (mAh)",
+        "Kilograms (kg)",
+        "Meters (m)"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-210",
+      "question": "Which connector is most common for drone batteries?",
+      "options": [
+        "USB-C",
+        "XT60",
+        "HDMI",
+        "Audio Jack"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-211",
+      "question": "A \"Propeller\" is essentially a rotating:",
+      "options": [
+        "Wing",
+        "Wheel",
+        "Stick",
+        "Screw"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-212",
+      "question": "Why shouldn't you touch a spinning motor?",
+      "options": [
+        "It is cold",
+        "It can cut you or burn you (it gets hot)",
+        "It will stop instantly",
+        "It is soft"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-213",
+      "question": "What creates the loud noise in a drone?",
+      "options": [
+        "The electronic beeper only",
+        "The propellers cutting through the air",
+        "The battery hum",
+        "The pilot screaming"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-214",
+      "question": "In a \"Candy Rocket\" (Sugar Rocket), the fuel is solid. Can you stop it once lit?",
+      "options": [
+        "Yes, just flip a switch",
+        "No, it burns until finished",
+        "Yes, blow on it",
+        "Yes, pour water on it mid-flight"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-215",
+      "question": "What does \"CW\" mean on a prop?",
+      "options": [
+        "Cold Water",
+        "Clockwise",
+        "Cool Wind",
+        "Carbon Wing"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-216",
+      "question": "What does \"CCW\" mean on a prop?",
+      "options": [
+        "Counter-Clockwise",
+        "Cold Carbon Wing",
+        "Center Counter Weight",
+        "Cute Cat Walk"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-217",
+      "question": "An \"EDF\" (Electric Ducted Fan) looks like:",
+      "options": [
+        "A mini jet engine",
+        "A helicopter blade",
+        "A square box",
+        "A balloon"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-218",
+      "question": "Why do we use \"Motor Guards\" on tiny drones (Tiny Whoops)?",
+      "options": [
+        "To protect the propellers and people/furniture",
+        "To add weight",
+        "To look cool",
+        "To slow it down"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-219",
+      "question": "A \"Brushless\" motor is generally:",
+      "options": [
+        "Weaker than a brushed motor",
+        "More efficient and lasts longer than a brushed motor",
+        "Heavier",
+        "Slower"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-220",
+      "question": "Which battery is safe to throw in the trash?",
+      "options": [
+        "LiPo",
+        "Lead Acid",
+        "None (All batteries should be recycled properly)",
+        "All of them"
+      ],
+      "correctIndex": 2,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-221",
+      "question": "\"Volts\" is a measure of:",
+      "options": [
+        "Electrical Pressure",
+        "Capacity",
+        "Weight",
+        "Size"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-222",
+      "question": "If you have a 4-motor drone, how many ESCs do you need?",
+      "options": [
+        "1",
+        "2",
+        "4 (or a 4-in-1 board)",
+        "8"
+      ],
+      "correctIndex": 2,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-223",
+      "question": "Which prop size is bigger: 5040 or 3040?",
+      "options": [
+        "5040 (5 inch)",
+        "3040 (3 inch)",
+        "They are the same",
+        "Numbers don't mean size"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-224",
+      "question": "What happens if you put a 3-blade prop on a motor meant for a 2-blade prop?",
+      "options": [
+        "It generates more thrust but draws more power",
+        "It draws less power",
+        "It stops spinning",
+        "It flies backwards"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-225",
+      "question": "A \"Bullnose\" propeller has:",
+      "options": [
+        "Pointy tips",
+        "Flat/Blunt tips (more surface area)",
+        "Horns",
+        "No blades"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-226",
+      "question": "\"Solid Rocket Motors\" are usually rated by:",
+      "options": [
+        "Color (Red, Blue)",
+        "Letters (A, B, C, D...) indicating total impulse/power",
+        "Smell",
+        "Sound"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-227",
+      "question": "A \"C-motor\" is _____ powerful than an \"A-motor\".",
+      "options": [
+        "Less",
+        "More",
+        "Equally",
+        "Not"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-228",
+      "question": "Can you recharge a solid rocket motor?",
+      "options": [
+        "Yes",
+        "No, it is single-use",
+        "Only on Sundays",
+        "If you use glue"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-229",
+      "question": "Why do we secure the battery with a strap?",
+      "options": [
+        "So it doesn't fall out during a loop",
+        "To keep it warm",
+        "To hide it",
+        "To make it look professional"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-230",
+      "question": "What material are high-performance props made of?",
+      "options": [
+        "Paper",
+        "Polycarbonate / Glass Nylon",
+        "Clay",
+        "Ice"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-231",
+      "question": "What creates the pressure in a water rocket?",
+      "options": [
+        "A Bicycle Pump / Compressor",
+        "Blowing with your mouth",
+        "Shaking the bottle",
+        "Boiling the water"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-232",
+      "question": "If a motor bell is dented:",
+      "options": [
+        "It's fine",
+        "It will likely rub against the magnets and fail",
+        "It spins faster",
+        "It looks cool"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-233",
+      "question": "\"Idle Speed\" is:",
+      "options": [
+        "The speed when the drone is parked",
+        "The slow spinning of motors when Armed but at zero throttle",
+        "Maximum speed",
+        "Crash speed"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-234",
+      "question": "Which generates more thrust?",
+      "options": [
+        "A small fan",
+        "A large propeller",
+        "A wheel",
+        "A stick"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-235",
+      "question": "\"Igniter\" is used to:",
+      "options": [
+        "Start a rocket motor safely from a distance",
+        "Start a drone",
+        "Charge a battery",
+        "Cut wires"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "easy"
+    },
+    {
+      "id": "propulsion-236",
+      "question": "\"Kv\" rating on a motor refers to:",
+      "options": [
+        "Kilo-Volts",
+        "RPM per Volt (Velocity Constant)",
+        "Kilograms of thrust",
+        "Kinetic Value"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-237",
+      "question": "A 2300Kv motor powered by 10 Volts would theoretically spin at:",
+      "options": [
+        "230 RPM",
+        "2,300 RPM",
+        "23,000 RPM (unloaded)",
+        "100 RPM"
+      ],
+      "correctIndex": 2,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-238",
+      "question": "Higher Voltage (more cells) generally leads to:",
+      "options": [
+        "More RPM / Speed",
+        "Less RPM",
+        "More weight only",
+        "Slower charging"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-239",
+      "question": "\"Pitch\" on a propeller (e.g., 5040) refers to:",
+      "options": [
+        "The length of the prop",
+        "How far the prop would move forward in one rotation if air was solid (theoretical distance)",
+        "The weight of the prop",
+        "The color"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-240",
+      "question": "A higher pitch propeller (e.g., 5050 vs 5040):",
+      "options": [
+        "Has more top speed but accelerates slower (like high gear in a car)",
+        "Has great acceleration but low top speed",
+        "Uses less power",
+        "Makes no noise"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-241",
+      "question": "The \"Stator\" in a motor is the part that:",
+      "options": [
+        "Spins",
+        "Stays stationary (holds the copper windings)",
+        "Holds the prop",
+        "Cools the air"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-242",
+      "question": "The \"Rotor\" or \"Bell\" in a motor is the part that:",
+      "options": [
+        "Spins (holds the magnets)",
+        "Stays still",
+        "Connects to the wires",
+        "Is made of plastic"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-243",
+      "question": "A \"C-Rating\" on a battery tells you:",
+      "options": [
+        "The Capacity",
+        "The safe continuous discharge rate (Amps = C-Rating * Capacity)",
+        "The Charge speed",
+        "The Cost"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-244",
+      "question": "If you draw more amps than the battery's C-rating allows:",
+      "options": [
+        "The battery flies longer",
+        "The battery overheats, puffs, and voltage sags (Voltage Drop)",
+        "The motors spin faster",
+        "Nothing happens"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-245",
+      "question": "What is \"Voltage Sag\"?",
+      "options": [
+        "When battery voltage drops temporarily under heavy load (throttle punch)",
+        "When the battery falls out",
+        "When voltage increases",
+        "When the drone sags"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-246",
+      "question": "\"Nominal Voltage\" of a LiPo is 3.7V. \"Full Voltage\" is:",
+      "options": [
+        "3.7V",
+        "4.2V",
+        "5.0V",
+        "3.0V"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-247",
+      "question": "\"Empty Voltage\" (safe limit) of a LiPo is roughly:",
+      "options": [
+        "3.5V (under load)",
+        "0V",
+        "10V",
+        "4.0V"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-248",
+      "question": "Why do rockets use a \"De Laval\" Nozzle (hourglass shape)?",
+      "options": [
+        "To restrict flow",
+        "To accelerate subsonic gas to supersonic speeds",
+        "To mix fuel",
+        "To look like an hourglass"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-249",
+      "question": "In a water rocket, the optimal water amount is usually:",
+      "options": [
+        "100% Full (No air)",
+        "~30-40% Full (Balance of reaction mass and compressed air energy)",
+        "0% (Air only)",
+        "10%"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-250",
+      "question": "\"Specific Impulse\" (Isp) measures:",
+      "options": [
+        "How heavy an engine is",
+        "Rocket Engine Efficiency (Thrust per unit of fuel)",
+        "The speed of the rocket",
+        "The cost of the fuel"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-251",
+      "question": "KNSU (Potassium Nitrate + Sugar) is also known as:",
+      "options": [
+        "Rocket Candy",
+        "Dynamite",
+        "Gunpowder",
+        "Plastic Explosive"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-252",
+      "question": "Why is \"Caramelization\" bad when making sugar fuel?",
+      "options": [
+        "It makes it taste better",
+        "It reduces the energy/burn rate of the fuel",
+        "It makes it burn purple",
+        "It makes it too hard"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-253",
+      "question": "\"Regenerative Braking\" (Damped Light) in drone ESCs:",
+      "options": [
+        "Charges the battery slightly when slowing down motors",
+        "Uses brake pads",
+        "Stops the drone instantly",
+        "Makes the motors hot"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-254",
+      "question": "A \"Unibell\" motor design means:",
+      "options": [
+        "The motor bell is machined from one piece of aluminum (stronger)",
+        "The motor has one bell",
+        "The motor rings a bell",
+        "It is made of plastic"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-255",
+      "question": "What is \"Prop Wash\"?",
+      "options": [
+        "Cleaning the props with water",
+        "Turbulent air created by the props that the drone flies into (causing shakes)",
+        "A brand of propeller",
+        "Propeller polish"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-256",
+      "question": "Why do we \"Balance\" LiPo batteries?",
+      "options": [
+        "So they don't tip over",
+        "To ensure every cell (S) has the exact same voltage (e.g., all at 4.20V)",
+        "To make them lighter",
+        "To make them heavier"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-257",
+      "question": "If one cell in a 4S battery dies (0V), the battery becomes:",
+      "options": [
+        "A 3S battery",
+        "Dangerous / Useless (Do not use)",
+        "Better",
+        "A 5S battery"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-258",
+      "question": "\"Thrust Stand\" is used to:",
+      "options": [
+        "Hold the drone while you repair it",
+        "Measure the thrust and amp draw of a motor/prop combo safely",
+        "Launch the drone",
+        "Charge batteries"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-259",
+      "question": "A \"Pusher Prop\" is designed to:",
+      "options": [
+        "Push air backwards (same as tractor, just mounted differently)",
+        "Push air forwards",
+        "Not spin",
+        "Only work on boats"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-260",
+      "question": "\"Internal Resistance\" (IR) of a battery:",
+      "options": [
+        "Should be High (Good)",
+        "Should be Low (Good - delivers power easily)",
+        "Doesn't matter",
+        "Measures the plastic case"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-261",
+      "question": "As a LiPo battery gets older, its Internal Resistance (IR):",
+      "options": [
+        "Increases (Performance drops)",
+        "Decreases (Gets better)",
+        "Stays the same",
+        "Becomes zero"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-262",
+      "question": "\"Propeller Efficiency\" is usually measured in:",
+      "options": [
+        "Grams of Thrust per Watt of Power (g/W)",
+        "Speed per Volt",
+        "Dollars per Prop",
+        "Noise level"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-263",
+      "question": "Larger propellers are generally _____ efficient than smaller ones.",
+      "options": [
+        "More",
+        "Less",
+        "Equally",
+        "Not"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-264",
+      "question": "Why do racing drones use small (5 inch) props instead of large (10 inch)?",
+      "options": [
+        "For faster RPM and quicker response (Agility)",
+        "For better efficiency",
+        "Because they are cheaper",
+        "Because large props look scary"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-265",
+      "question": "A \"Folding Prop\" is used on gliders to:",
+      "options": [
+        "Reduce drag when the motor is off",
+        "Save space in the box",
+        "Look cool",
+        "Cut grass"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-266",
+      "question": "The \"Core\" in \"Coring\" a rocket motor means:",
+      "options": [
+        "The hollow space down the center of the fuel grain",
+        "The apple core",
+        "The nozzle",
+        "The fuse"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-267",
+      "question": "Burning a rocket fuel from the \"Core\" outwards (Inside-Out) produces:",
+      "options": [
+        "Constant/High Thrust (more surface area burning)",
+        "Very low thrust (Cigarette burn)",
+        "No thrust",
+        "Smoke only"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-268",
+      "question": "\"End Burning\" (Cigarette burn) rocket motors produce:",
+      "options": [
+        "High Thrust for short time",
+        "Low Thrust for long time (Sustainers)",
+        "Explosions",
+        "Blue flames"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-269",
+      "question": "Why use Aluminum powder in rocket fuel?",
+      "options": [
+        "To make it shiny",
+        "To increase burn temperature and specific impulse",
+        "To make it cheaper",
+        "To make it heavier"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-270",
+      "question": "What is a \"Hybrid Rocket\"?",
+      "options": [
+        "Uses Electric and Gas",
+        "Uses Solid Fuel and Liquid Oxidizer (e.g., Rubber + Nitrous Oxide)",
+        "Uses Water and Air",
+        "Uses Solar power"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "medium"
+    },
+    {
+      "id": "propulsion-271",
+      "question": "If you switch from a 3S battery to a 4S battery on the SAME motor/prop:",
+      "options": [
+        "The motor spins faster, draws MORE current, and might burn if not rated for it",
+        "The motor spins slower",
+        "The current decreases",
+        "Nothing changes"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-272",
+      "question": "If you put a BIG propeller on a High KV motor:",
+      "options": [
+        "The motor creates massive torque",
+        "The motor will likely overheat and burn out immediately (Too much load)",
+        "The drone flies efficiently",
+        "It is the perfect combination"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-273",
+      "question": "Why do Long Range drones use Low KV motors and big props?",
+      "options": [
+        "Because big props spinning slowly are more efficient (g/W) than small props spinning fast",
+        "Because they are louder",
+        "Because they are faster",
+        "Because small props are sold out"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-274",
+      "question": "If your battery is hot/puffed after a flight, you likely:",
+      "options": [
+        "Underused it",
+        "Overstressed it (Drew too many Amps for its C-rating)",
+        "Flew too slow",
+        "It is normal"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-275",
+      "question": "What happens to thrust as you go up in altitude (e.g., launching from a mountain)?",
+      "options": [
+        "Thrust increases",
+        "Thrust decreases (Air is thinner, so props have less mass to push)",
+        "Thrust stays the same",
+        "Gravity decreases"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-276",
+      "question": "If you need more \"Pop\" (Punch out power) for freestyle tricks, you should:",
+      "options": [
+        "Decrease battery voltage",
+        "Increase propeller pitch or aggressive curve (at cost of amp draw)",
+        "Use a heavier drone",
+        "Use old batteries"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-277",
+      "question": "Why do we leave \"Headroom\" in ESCs (e.g., using a 40A ESC for a 30A motor)?",
+      "options": [
+        "To be safe against current spikes (Safety Factor)",
+        "To spend more money",
+        "To add weight",
+        "Because 30A ESCs don't exist"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-278",
+      "question": "A \"Desync\" occurs when:",
+      "options": [
+        "The ESC loses track of the motor's position and the motor stutters/stops",
+        "The pilot falls asleep",
+        "The video cuts out",
+        "The battery falls out"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-279",
+      "question": "Why is \"Prop Balancing\" critical for video drones?",
+      "options": [
+        "Unbalanced props cause vibrations -> Jelly video -> Flight Controller works harder",
+        "It makes the drone faster",
+        "It saves battery",
+        "It makes the props last longer"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-280",
+      "question": "In a water rocket, why not use 100% Compressed Air?",
+      "options": [
+        "Air has very low mass. You get high velocity but low thrust (F=ma), so the rocket barely",
+        "It would be too heavy",
+        "It would freeze",
+        "The bottle would melt"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-281",
+      "question": "\"Disk Loading\" is:",
+      "options": [
+        "Weight of the drone divided by the area of the propeller disks",
+        "How many disks the drone can carry",
+        "Loading software from a disk",
+        "The weight of the props"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-282",
+      "question": "High Disk Loading (small props, heavy drone) results in:",
+      "options": [
+        "High efficiency",
+        "Poor efficiency and loud noise (Jet like)",
+        "Glider-like flight",
+        "Silent flight"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-283",
+      "question": "If you connect two 1000mAh batteries in Parallel:",
+      "options": [
+        "You get a 2000mAh battery (Same Voltage)",
+        "You get a 1000mAh battery (Double Voltage)",
+        "You get a 500mAh battery",
+        "Explosion"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-284",
+      "question": "If you connect two 3S (11.1V) batteries in Series:",
+      "options": [
+        "You get a 6S (22.2V) battery (Same Capacity)",
+        "You get a 3S battery with double capacity",
+        "You get a 9S battery",
+        "Nothing happens"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-285",
+      "question": "Why do we use \"Active Braking\" on racing drones?",
+      "options": [
+        "To stop the prop quickly when throttle is lowered, allowing crisp handling",
+        "To save brake pads",
+        "To heat up the motors",
+        "To generate noise"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-286",
+      "question": "If a motor bearing is gritty/noisy:",
+      "options": [
+        "Add oil and ignore it",
+        "Replace it immediately (It causes heat and vibration)",
+        "Fly faster",
+        "Wash it with water"
+      ],
+      "correctIndex": 1,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-287",
+      "question": "What is the advantage of a 6-blade propeller?",
+      "options": [
+        "Very quiet and \"grippy\" in corners",
+        "extremely inefficient (high amp draw)",
+        "Both A and B",
+        "Neither"
+      ],
+      "correctIndex": 2,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-288",
+      "question": "Why do some long-range pilots use Li-Ion (Lithium Ion) instead of LiPo?",
+      "options": [
+        "Li-Ion has higher energy density (more mAh for same weight) but lower discharge amps",
+        "Li-Ion is more powerful",
+        "Li-Ion charges instantly",
+        "Li-Ion is square"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-289",
+      "question": "A \"Choked\" flow in a rocket nozzle means:",
+      "options": [
+        "The gas speed has reached Mach 1 at the throat",
+        "The nozzle is clogged with dirt",
+        "The rocket is coughing",
+        "The flow stopped"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-290",
+      "question": "If you increase the nozzle throat size too much in a solid rocket:",
+      "options": [
+        "The chamber pressure drops, and the fuel might not burn fast enough to generate lift",
+        "The rocket explodes",
+        "The rocket goes faster",
+        "Nothing changes"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-291",
+      "question": "If the nozzle throat is too small (CATO):",
+      "options": [
+        "Pressure builds up too high and the motor casing explodes",
+        "The rocket flies perfectly",
+        "The fuel stops burning",
+        "The rocket whistles"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-292",
+      "question": "Why do we heat-shrink the connections between Motor and ESC?",
+      "options": [
+        "To prevent shorting against the carbon fiber frame",
+        "To make them waterproof",
+        "To hold them together physically",
+        "Just for looks"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-293",
+      "question": "Why are \"Silver\" windings on motors (rare) better than Copper?",
+      "options": [
+        "Silver conducts electricity better (lower resistance)",
+        "Silver is cheaper",
+        "Silver is lighter",
+        "Silver is magnetic"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-294",
+      "question": "\"Throttle Linearization\" in software helps to:",
+      "options": [
+        "Make the thrust output feel linear to your stick movement (since thrust is naturally",
+        "Make the drone faster",
+        "Limit the throttle",
+        "Turn off the drone"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-295",
+      "question": "A \"Current Limiter\" in Betaflight helps to:",
+      "options": [
+        "Protect the battery/ESC by capping the max amps",
+        "Make the drone faster",
+        "Drain the battery",
+        "Stop the GPS"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-296",
+      "question": "Why does a warm LiPo perform better than a freezing cold one?",
+      "options": [
+        "Chemical reactions slow down in cold (Internal Resistance rises)",
+        "Cold makes electricity heavy",
+        "Warm batteries weigh less",
+        "It doesn't matter"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-297",
+      "question": "If your charger says \"Connection Break\":",
+      "options": [
+        "A wire is broken or the plug is loose",
+        "The battery is full",
+        "The charger is broken",
+        "The battery is empty"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-298",
+      "question": "\"Parallel Charging\" is dangerous because:",
+      "options": [
+        "If you plug in batteries of different voltages, huge current flows between them",
+        "It is too fast",
+        "It uses too many wires",
+        "It confuses the charger"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-299",
+      "question": "Why do we use \"Loctite\" (Threadlocker) on motor screws?",
+      "options": [
+        "Vibrations will unscrew them over time",
+        "To glue the motor permanently",
+        "To conduct electricity",
+        "To lubricate the threads"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "propulsion-300",
+      "question": "If a prop nut has a \"Nylon Insert\" (Nyloc), it:",
+      "options": [
+        "Resists loosening from vibration",
+        "Melts easily",
+        "Is single use only",
+        "Is made of plastic entirely"
+      ],
+      "correctIndex": 0,
+      "division": "Propulsion",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-301",
+      "question": "Which material is black, extremely strong, and very light?",
+      "options": [
+        "Carbon Fiber",
+        "Steel",
+        "Lead",
+        "Paper"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-302",
+      "question": "What is \"Balsa Wood\" famous for?",
+      "options": [
+        "Being very heavy and hard",
+        "Being very light and easy to cut",
+        "Being fireproof",
+        "Being made of plastic"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-303",
+      "question": "What is a \"3D Printer\" used for in this hobby?",
+      "options": [
+        "To print paper manuals",
+        "To create plastic parts (like mounts and cases) from a digital file",
+        "To charge batteries",
+        "To cut wood"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-304",
+      "question": "Which glue heats up and is applied with a gun?",
+      "options": [
+        "Super Glue (CA)",
+        "Wood Glue",
+        "Hot Glue",
+        "Epoxy"
+      ],
+      "correctIndex": 2,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-305",
+      "question": "What tool do you use to tighten the screws on most drones (Hex head)?",
+      "options": [
+        "A Hammer",
+        "An Allen Key / Hex Driver",
+        "A Knife",
+        "A Spoon"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-306",
+      "question": "\"Styrofoam\" or \"Depron\" is used to build:",
+      "options": [
+        "Heavy duty landing gear",
+        "Lightweight wings and fuselages",
+        "Motor shafts",
+        "Propellers"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-307",
+      "question": "Which part of the plane holds everything together?",
+      "options": [
+        "The Wing",
+        "The Fuselage (Body)",
+        "The Tail",
+        "The Propeller"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-308",
+      "question": "What is \"CA Glue\" commonly called?",
+      "options": [
+        "Super Glue / Cyanoacrylate",
+        "Hot Glue",
+        "Paste",
+        "Cement"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-309",
+      "question": "Why do we wear safety glasses when cutting carbon fiber?",
+      "options": [
+        "To look cool",
+        "Because carbon dust/shards are dangerous to eyes",
+        "To see better",
+        "To protect from the sun"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-310",
+      "question": "What is a \"Zip Tie\" (Cable Tie) used for?",
+      "options": [
+        "To hold wires or parts securely",
+        "To fly the drone",
+        "As a propeller",
+        "As a battery"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-311",
+      "question": "\"Velcro\" is commonly used to:",
+      "options": [
+        "Hold the battery in place so it can be removed later",
+        "Glue the wings permanently",
+        "Insulate wires",
+        "Make the drone faster"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-312",
+      "question": "Which tape is very strong and often reinforced with fibers?",
+      "options": [
+        "Scotch Tape",
+        "Duct Tape / Fiber Tape",
+        "Masking Tape",
+        "Video Tape"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-313",
+      "question": "A \"Heat Gun\" is used to:",
+      "options": [
+        "Shrink \"Heat Shrink\" tubing over wires",
+        "Dry your hair",
+        "Melt the drone",
+        "Solder wires"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-314",
+      "question": "What is \"Play\" in a mechanism?",
+      "options": [
+        "When it is fun to use",
+        "Unwanted looseness or wiggling in a part",
+        "When it is tight",
+        "When it is broken"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-315",
+      "question": "\"Landing Gear\" can be made of:",
+      "options": [
+        "Spring Steel or Carbon Fiber",
+        "Paper",
+        "Glass",
+        "Water"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-316",
+      "question": "If you drill a hole in a carbon fiber arm, it becomes:",
+      "options": [
+        "Stronger",
+        "Weaker at that point",
+        "Heavier",
+        "Faster"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-317",
+      "question": "\"Epoxy\" usually comes in how many bottles/tubes?",
+      "options": [
+        "1",
+        "2 (Resin and Hardener)",
+        "10",
+        "0"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-318",
+      "question": "What is a \"Work Mat\" or \"Cutting Mat\"?",
+      "options": [
+        "A surface to protect the table while building",
+        "A flying carpet",
+        "A part of the drone",
+        "A type of glue"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-319",
+      "question": "\"Sandpaper\" is used to:",
+      "options": [
+        "Smooth rough edges",
+        "Cut metal",
+        "Glue parts",
+        "Paint parts"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-320",
+      "question": "Which is heavier?",
+      "options": [
+        "A block of Steel",
+        "A block of Foam (same size)",
+        "They weigh the same",
+        "Foam is heavier"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-321",
+      "question": "A \"Soldering Iron\" gets very:",
+      "options": [
+        "Cold",
+        "Hot (300\u00b0C+)",
+        "Wet",
+        "Soft"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-322",
+      "question": "\"Plywood\" is made of:",
+      "options": [
+        "Layers of wood glued together",
+        "Solid plastic",
+        "Metal sheets",
+        "Stone"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-323",
+      "question": "What is the \"Frame\" of a quadcopter?",
+      "options": [
+        "The structural skeleton that holds motors and electronics",
+        "The camera lens",
+        "The box it comes in",
+        "The remote control"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-324",
+      "question": "Why do we use \"Blue Loctite\" on screws?",
+      "options": [
+        "To glue them forever (Permanent)",
+        "To stop them from vibrating loose, but allow removal with tools",
+        "To lubricate them",
+        "To paint them blue"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-325",
+      "question": "\"Red Loctite\" is:",
+      "options": [
+        "Permanent / Very hard to remove (Requires heat)",
+        "Easy to remove",
+        "For plastic only",
+        "A drink"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-326",
+      "question": "\"Heat Shrink\" tubing starts out:",
+      "options": [
+        "Large, then shrinks when heated",
+        "Small, then grows when heated",
+        "Hard, then melts",
+        "Invisible"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-327",
+      "question": "Which tool cuts wires?",
+      "options": [
+        "Hammer",
+        "Wire Cutters / Snips",
+        "Screwdriver",
+        "Wrench"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-328",
+      "question": "A \"Prop Nut\" usually tightens:",
+      "options": [
+        "Opposite to the rotation of the motor (Self-tightening)",
+        "With the rotation",
+        "It doesn't matter",
+        "With glue"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-329",
+      "question": "\"Double Sided Tape\" is sticky on:",
+      "options": [
+        "One side",
+        "Both sides",
+        "No sides",
+        "The edges only"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-330",
+      "question": "\"Flexible\" filament for 3D printing is called:",
+      "options": [
+        "TPU",
+        "PLA (Rigid)",
+        "Wood",
+        "Metal"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-331",
+      "question": "\"PLA\" is the most common 3D printing plastic because:",
+      "options": [
+        "It is easy to print and biodegradable",
+        "It is indestructible",
+        "It is flexible like rubber",
+        "It glows in the dark"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-332",
+      "question": "\"ABS\" plastic is used when you need:",
+      "options": [
+        "Heat resistance and strength",
+        "Something to melt easily",
+        "A clear part",
+        "A soft part"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-333",
+      "question": "What is a \"Spacer\" or \"Standoff\"?",
+      "options": [
+        "A column used to separate two plates (e.g., top and bottom plate of a drone)",
+        "A landing leg",
+        "A propeller",
+        "A switch"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-334",
+      "question": "\"Carbon Fiber\" conducts electricity.",
+      "options": [
+        "True",
+        "False",
+        "Only on Tuesdays",
+        "Only when wet"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-335",
+      "question": "If a bare wire touches the Carbon Fiber frame:",
+      "options": [
+        "It creates a Short Circuit (Bad)",
+        "It charges the battery",
+        "It makes the frame stronger",
+        "Nothing happens"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "easy"
+    },
+    {
+      "id": "structure-336",
+      "question": "In a wing, the \"Ribs\" give the wing its:",
+      "options": [
+        "Length",
+        "Airfoil Shape",
+        "Color",
+        "Smell"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-337",
+      "question": "In a wing, the \"Spar\" (long beam) provides:",
+      "options": [
+        "Bending strength (prevents snapping)",
+        "The shape",
+        "The aerodynamics",
+        "The weight"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-338",
+      "question": "\"Monokote\" or \"Covering Film\" is used to:",
+      "options": [
+        "Wrap balsa wings to create a smooth, airtight skin",
+        "Glue wood together",
+        "Make windows",
+        "Stop the motor"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-339",
+      "question": "\"Infill\" in 3D printing refers to:",
+      "options": [
+        "The solid outer shell",
+        "The internal pattern (density) inside the part",
+        "The color",
+        "The support material"
+      ],
+      "correctIndex": 1,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-340",
+      "question": "Higher Infill percentage makes the part:",
+      "options": [
+        "Stronger and Heavier",
+        "Weaker and Lighter",
+        "Faster to print",
+        "Transparent"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-341",
+      "question": "\"EPO Foam\" is better than \"Styrofoam\" for RC planes because:",
+      "options": [
+        "It is durable and can bounce back after a crash",
+        "It crumbles instantly",
+        "It is heavier",
+        "It is edible"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-342",
+      "question": "\"Activator\" or \"Kicker\" spray is used to:",
+      "options": [
+        "Make CA glue cure (harden) instantly",
+        "Clean the glue",
+        "Remove the glue",
+        "Make the glue flexible"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-343",
+      "question": "When 3D printing, \"Supports\" are needed for:",
+      "options": [
+        "Parts that hang in mid-air (Overhangs)",
+        "Every part",
+        "The bottom layer only",
+        "Making the printer quiet"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-344",
+      "question": "A \"Fillet\" (curved corner) in a 3D design helps to:",
+      "options": [
+        "Reduce stress concentration (prevent cracking)",
+        "Increase stress",
+        "Use more material",
+        "Look sharp"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-345",
+      "question": "\"Chamfer\" is:",
+      "options": [
+        "A 45-degree angled edge",
+        "A round edge",
+        "A hole",
+        "A screw"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-346",
+      "question": "Why do we \"Tin\" the soldering iron tip?",
+      "options": [
+        "Covering it in solder helps heat transfer and prevents rust",
+        "To make it look shiny",
+        "To cool it down",
+        "To waste solder"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-347",
+      "question": "\"Cold Solder Joint\" (Bad connection) usually looks:",
+      "options": [
+        "Dull and blobby",
+        "Shiny and smooth",
+        "Clear",
+        "Red"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-348",
+      "question": "A good Solder Joint looks:",
+      "options": [
+        "Shiny and smooth",
+        "Dull and cracked",
+        "Like a ball",
+        "Like powder"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-349",
+      "question": "\"XT60\" connectors have a flat side to:",
+      "options": [
+        "Prevent plugging them in backwards (Polarity protection)",
+        "Look cool",
+        "Save plastic",
+        "Make them aerodynamic"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-350",
+      "question": "\"Fiberglass\" is _____ than Carbon Fiber.",
+      "options": [
+        "Heavier and more flexible (and cheaper)",
+        "Lighter and stiffer",
+        "Stronger",
+        "More expensive"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-351",
+      "question": "To cut a \"Thread\" into a plastic hole, you use a:",
+      "options": [
+        "Tap (or just the screw itself)",
+        "Hammer",
+        "Drill bit",
+        "Saw"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-352",
+      "question": "\"CNC\" stands for:",
+      "options": [
+        "Computer Numerical Control (Automated cutting)",
+        "Carbon N-fiber Cut",
+        "Cool New Cutter",
+        "Computer No Control"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-353",
+      "question": "Most drone frames are cut from Carbon Fiber sheets using:",
+      "options": [
+        "A CNC Router / Mill",
+        "Scissors",
+        "A Laser (Lasers burn carbon fiber badly)",
+        "A Knife"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-354",
+      "question": "\"Leading Edge\" protection (tape) is used to:",
+      "options": [
+        "Prevent grass/twigs from denting the foam wing",
+        "Add drag",
+        "Make the wing heavier",
+        "Change the color"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-355",
+      "question": "A \"Control Horn\" is the part on the aileron where:",
+      "options": [
+        "The pushrod connects",
+        "The hinge is",
+        "The light goes",
+        "The sound comes out"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-356",
+      "question": "A \"Clevis\" is used to:",
+      "options": [
+        "Connect the pushrod to the control horn",
+        "Mount the motor",
+        "Hold the propeller",
+        "Land the plane"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-357",
+      "question": "\"Pushrods\" are usually made of:",
+      "options": [
+        "Steel wire",
+        "String",
+        "Rubber",
+        "Paper"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-358",
+      "question": "If a pushrod bends under pressure, the control surface:",
+      "options": [
+        "Won't move correctly (Slop)",
+        "Moves faster",
+        "Works perfectly",
+        "Breaks"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-359",
+      "question": "To stiffen a long pushrod, we use a:",
+      "options": [
+        "Guide tube / Sleeve",
+        "Heavier wire",
+        "Glue",
+        "Magnet"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-360",
+      "question": "\"Z-Bend\" is a way to:",
+      "options": [
+        "Connect a wire to a servo arm without a clevis",
+        "Bend the wing",
+        "Crash the plane",
+        "Bend the propeller"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-361",
+      "question": "\"Hinges\" allow the control surfaces to:",
+      "options": [
+        "Move up and down",
+        "Fall off",
+        "Stay rigid",
+        "Spin"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-362",
+      "question": "Tape Hinges are commonly used on:",
+      "options": [
+        "Foam planes",
+        "Giant scale gas planes",
+        "Real jets",
+        "Rockets"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-363",
+      "question": "\"Propeller Balancer\" is a tool to:",
+      "options": [
+        "Find the heavy side of a prop so you can sand it down",
+        "Spin the prop",
+        "Paint the prop",
+        "Sharpen the prop"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-364",
+      "question": "If you use \"Regular CA\" on \"Styrofoam\":",
+      "options": [
+        "It melts the foam (eats it)",
+        "It glues it perfectly",
+        "It freezes it",
+        "It colors it"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-365",
+      "question": "For Styrofoam, you must use:",
+      "options": [
+        "\"Foam Safe\" CA or Epoxy",
+        "Regular CA",
+        "Acid",
+        "Gasoline"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-366",
+      "question": "\"Hot Glue\" is heavy, so use it:",
+      "options": [
+        "Sparingly (only where needed)",
+        "Everywhere",
+        "To fill hollow wings",
+        "To make the whole plane"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-367",
+      "question": "A \"Launch Lug\" on a rocket is:",
+      "options": [
+        "A small tube that guides the rocket along the launch rod",
+        "The engine mount",
+        "The nose cone",
+        "The handle"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-368",
+      "question": "\"Shock Cord\" mount must be attached to:",
+      "options": [
+        "A strong point on the body tube",
+        "The fins",
+        "The nozzle",
+        "The outside of the rocket"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-369",
+      "question": "\"Recovery Wadding\" (fireproof paper) is put between the engine and parachute to:",
+      "options": [
+        "Protect the parachute from burning gases",
+        "Make the rocket heavier",
+        "Add color",
+        "Pack it tight"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-370",
+      "question": "\"PETG\" filament is often used for drone parts because:",
+      "options": [
+        "It is stronger/more flexible than PLA and heat resistant",
+        "It is cheaper",
+        "It is softer",
+        "It is invisible"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "medium"
+    },
+    {
+      "id": "structure-371",
+      "question": "\"Triangulation\" in a truss structure (like a bridge or fuselage) makes it:",
+      "options": [
+        "Rigid and strong",
+        "Flexible and weak",
+        "Heavier",
+        "Bouncy"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-372",
+      "question": "A \"Monocoque\" structure relies on:",
+      "options": [
+        "The outer skin to carry all the load (like an egg)",
+        "An internal skeleton",
+        "Magic",
+        "Heavy glue"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-373",
+      "question": "A \"Semi-Monocoque\" structure (like most real planes) has:",
+      "options": [
+        "An internal skeleton (Ribs/Bulkheads) AND a stress-bearing skin",
+        "Only skin",
+        "Only skeleton",
+        "Solid wood"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-374",
+      "question": "Why do we align the grain of Balsa wood along the span of the wing?",
+      "options": [
+        "Because wood is strongest along the grain",
+        "Because it looks better",
+        "Because it is easier to cut",
+        "No reason"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-375",
+      "question": "If you print a drone arm vertically (standing up) on a 3D printer:",
+      "options": [
+        "It will likely snap easily between the layers (Layer Delamination)",
+        "It will be super strong",
+        "It will be faster",
+        "It will be flexible"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-376",
+      "question": "The strongest orientation to print a 3D part is:",
+      "options": [
+        "Lying flat (so layers run along the length of the stress)",
+        "Standing up",
+        "On its side",
+        "Diagonally"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-377",
+      "question": "\"Stress Concentration\" happens at:",
+      "options": [
+        "Sharp corners (90 degrees)",
+        "Smooth curves",
+        "Flat surfaces",
+        "Thick areas"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-378",
+      "question": "To fix Stress Concentration, you should:",
+      "options": [
+        "Add a radius/curve to the corner",
+        "Make the corner sharper",
+        "Use thinner material",
+        "Drill a hole"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-379",
+      "question": "\"Torsion\" refers to:",
+      "options": [
+        "Twisting force",
+        "Pulling force (Tension)",
+        "Crushing force (Compression)",
+        "Cutting force (Shear)"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-380",
+      "question": "\"D-Box\" construction in a wing helps primarily with:",
+      "options": [
+        "Torsional stiffness (preventing wing twist)",
+        "Weight reduction",
+        "Lift generation",
+        "Drag reduction"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-381",
+      "question": "A \"Shear Web\" connects the top and bottom spar caps to prevent:",
+      "options": [
+        "The spars from sliding past each other (Buckling)",
+        "The wing from twisting",
+        "The wing from flying",
+        "The glue from drying"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-382",
+      "question": "\"Carbon Fiber\" is strongest in:",
+      "options": [
+        "Tension (Pulling)",
+        "Compression (Pushing)",
+        "Impact (Hitting)",
+        "Bending"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-383",
+      "question": "Why is Carbon Fiber weak against impact (crashing)?",
+      "options": [
+        "It is brittle and shatters",
+        "It is too soft",
+        "It is liquid",
+        "It is heavy"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-384",
+      "question": "\"TPU\" parts (Flexible) are used for camera mounts to:",
+      "options": [
+        "Absorb vibration and protect the camera in a crash",
+        "Make the camera wobble",
+        "Save weight",
+        "Conduct electricity"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-385",
+      "question": "If you overtighten a screw into 3D printed plastic:",
+      "options": [
+        "You will strip the threads",
+        "It holds better",
+        "It becomes metal",
+        "It melts"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-386",
+      "question": "\"Heat Creep\" in a 3D printer causes:",
+      "options": [
+        "A clog in the hotend",
+        "The print to look nice",
+        "The bed to heat up",
+        "Faster printing"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-387",
+      "question": "Why do we sand the surface of a material before gluing?",
+      "options": [
+        "To increase surface area and mechanical grip for the glue",
+        "To make it smooth",
+        "To clean it",
+        "To heat it up"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-388",
+      "question": "A \"Gusset\" is a small triangular piece used to:",
+      "options": [
+        "Reinforce a corner joint",
+        "Decorate the plane",
+        "Add drag",
+        "Cut wood"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-389",
+      "question": "\"Pre-preg\" Carbon Fiber means:",
+      "options": [
+        "The resin is already impregnated into the fabric (needs heat to cure)",
+        "It is raw fabric",
+        "It is painted",
+        "It is fake"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-390",
+      "question": "\"Vacuum Bagging\" is used to:",
+      "options": [
+        "Squeeze out excess resin and air bubbles for a lighter, stronger part",
+        "Keep the part clean",
+        "Store the part",
+        "Dry the glue"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-391",
+      "question": "If you cut a \"Square\" hole in a fuselage, cracks will start at:",
+      "options": [
+        "The corners",
+        "The center",
+        "The edges",
+        "Nowhere"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-392",
+      "question": "A \"Bulkhead\" separates the fuselage into:",
+      "options": [
+        "Sections / Bays",
+        "Wings",
+        "Motors",
+        "Pilots"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-393",
+      "question": "Why is \"End-Grain\" balsa used in composite sandwich panels?",
+      "options": [
+        "It resists compression (crushing) very well",
+        "It is cheap",
+        "It is heavy",
+        "It bends easily"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-394",
+      "question": "\"Cantilever\" wing means:",
+      "options": [
+        "It has no external struts/bracing (internal strength only)",
+        "It has wires holding it",
+        "It has struts",
+        "It is made of canvas"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-395",
+      "question": "\"Filament\" is the raw material for:",
+      "options": [
+        "FDM 3D Printers",
+        "Resin Printers",
+        "CNC Machines",
+        "Laser Cutters"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-396",
+      "question": "\"Resin\" printers (SLA) use _____ instead of filament.",
+      "options": [
+        "Liquid UV-curing resin",
+        "Powder",
+        "Wire",
+        "Gas"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-397",
+      "question": "Why is \"Titanium\" used for screws sometimes?",
+      "options": [
+        "It is lighter than steel and doesn't rust",
+        "It is magnetic",
+        "It is cheaper",
+        "It is soft"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-398",
+      "question": "\"Anodizing\" is a process to:",
+      "options": [
+        "Coat aluminum with a protective/colored oxide layer",
+        "Melt aluminum",
+        "Glue aluminum",
+        "Bend aluminum"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-399",
+      "question": "\"Fatigue\" in metal means:",
+      "options": [
+        "Weakening caused by repeated stress cycles (vibration)",
+        "The metal is tired",
+        "The metal is hot",
+        "The metal is heavy"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "structure-400",
+      "question": "The \"Neutral Axis\" of a beam (spar) is where:",
+      "options": [
+        "There is zero stress (neither tension nor compression)",
+        "Maximum stress occurs",
+        "The glue is applied",
+        "The break happens"
+      ],
+      "correctIndex": 0,
+      "division": "Structure",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-001",
+      "question": "Bernoulli's Principle states that as the speed of a fluid (air) increases, its pressure:",
+      "options": [
+        "Increases",
+        "Decreases",
+        "Stays the same",
+        "Becomes zero"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-002",
+      "question": "\"Induced Drag\" is primarily caused by:",
+      "options": [
+        "Friction of air on the skin",
+        "The production of Lift (wingtip vortices)",
+        "The landing gear",
+        "Flying too slow"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-003",
+      "question": "Ideally, for a stable rocket, the Center of Pressure (CP) must be:",
+      "options": [
+        "Ahead of the Center of Gravity (CG)",
+        "Behind the Center of Gravity (CG)",
+        "Exactly at the CG",
+        "It does not matter"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-004",
+      "question": "\"Adverse Yaw\" means:",
+      "options": [
+        "When banking left, the nose tries to turn right",
+        "When banking left, the nose turns left perfectly",
+        "The plane refuses to turn",
+        "The plane stalls"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-005",
+      "question": "A \"Washout\" in wing design (twisting wingtips down) is used to:",
+      "options": [
+        "Increase speed",
+        "Prevent tip stalls by ensuring the root stalls first",
+        "Make the wing look twisted",
+        "Increase drag"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-006",
+      "question": "If you balance your plane on your fingers and the tail drops down, the plane is:",
+      "options": [
+        "Nose Heavy",
+        "Tail Heavy",
+        "Balanced",
+        "Perfect"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-007",
+      "question": "\"Wave Drag\" becomes significant when:",
+      "options": [
+        "Flying very slow",
+        "Approaching the speed of sound (Transonic/Supersonic)",
+        "Flying in rain",
+        "Landing"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-008",
+      "question": "The \"Area Rule\" (Coke bottle shape fuselage) is used to reduce:",
+      "options": [
+        "Friction drag",
+        "Wave drag at transonic speeds",
+        "Lift induced drag",
+        "Weight"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-009",
+      "question": "\"Fin Flutter\" is caused by:",
+      "options": [
+        "Aeroelastic instability (resonance)",
+        "Weak glue",
+        "Too much paint",
+        "Slow speeds"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-010",
+      "question": "If a plane enters a \"Spin\" (aggravated stall with rotation), the recovery generally requires:",
+      "options": [
+        "Pulling back on the stick",
+        "Reducing throttle and applying opposite rudder",
+        "Full throttle and ailerons",
+        "Screaming"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-011",
+      "question": "Which flight mode uses the Accelerometer to limit the bank angle and self-level the drone?",
+      "options": [
+        "Acro / Rate Mode",
+        "Angle / Stabilize Mode",
+        "Turbo Mode",
+        "Manual Mode"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-012",
+      "question": "A \"BEC\" (Battery Elimination Circuit) is used to:",
+      "options": [
+        "Destroy the battery",
+        "Step down high battery voltage to 5V for powering electronics",
+        "Increase voltage to the motors",
+        "Cool the ESCs"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-013",
+      "question": "The \"UART\" ports on a Flight Controller are used for:",
+      "options": [
+        "Connecting serial peripherals like GPS, Receiver, or VTX",
+        "Plugging in motors directly",
+        "Charging the battery",
+        "Audio output"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-014",
+      "question": "If your drone flips over instantly upon takeoff, the most common cause is:",
+      "options": [
+        "A motor spinning the wrong way OR a propeller on the wrong motor",
+        "The battery is too heavy",
+        "GPS is not locked",
+        "The wind is too strong"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-015",
+      "question": "Why do we never power on a VTX (Video Transmitter) without the antenna?",
+      "options": [
+        "It will overheat and burn out the amplifier",
+        "It will fly away",
+        "It will drain the battery instantly",
+        "It makes a loud noise"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-016",
+      "question": "If your drone oscillates (shakes) quickly during flight, your PID \"P-Gain\" is likely:",
+      "options": [
+        "Too High",
+        "Too Low",
+        "Just right",
+        "Zero"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-017",
+      "question": "Why do high-power drones use a Capacitor on the battery pads?",
+      "options": [
+        "To filter out voltage spikes (noise) that can damage electronics",
+        "To give extra flight time",
+        "To start the motors",
+        "As a backup battery"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-018",
+      "question": "\"Crossfire\" and \"ELRS\" are protocols used for:",
+      "options": [
+        "Long Range Radio Control links (900MHz / 2.4GHz LoRa)",
+        "Video transmission",
+        "Battery charging",
+        "GPS communication"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-019",
+      "question": "\"Soft Mounting\" the Flight Controller helps to:",
+      "options": [
+        "Reduce vibration noise reaching the Gyro",
+        "Keep it warm",
+        "Make it waterproof",
+        "Improve GPS lock"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-020",
+      "question": "If your OSD shows \"Land Now\", it is usually triggered by:",
+      "options": [
+        "Low Battery Voltage",
+        "High Altitude",
+        "Low Speed",
+        "Boring flight"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-021",
+      "question": "The \"Kv\" rating on a motor refers to:",
+      "options": [
+        "Max Voltage",
+        "RPM per Volt (Velocity Constant)",
+        "Max Thrust",
+        "Max Amps"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-022",
+      "question": "A higher pitch propeller (e.g., 5050 vs 5040) generally:",
+      "options": [
+        "Increases top speed but draws more amps and has less low-end torque",
+        "Increases acceleration and efficiency",
+        "Uses less power",
+        "Makes the drone quieter"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-023",
+      "question": "The \"C-Rating\" on a battery indicates:",
+      "options": [
+        "Capacity in mAh",
+        "The maximum safe continuous discharge rate",
+        "Charge time",
+        "Coolness factor"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-024",
+      "question": "\"Voltage Sag\" is when:",
+      "options": [
+        "Battery voltage drops temporarily under heavy load",
+        "The battery falls out",
+        "Voltage increases under load",
+        "The drone flies slow"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-025",
+      "question": "If you switch from a 3S to a 4S battery on the SAME motor/prop setup:",
+      "options": [
+        "The motor spins faster, draws significantly MORE current, and might burn",
+        "The motor spins slower",
+        "The current draw decreases",
+        "Nothing changes"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-026",
+      "question": "If you put a BIG propeller on a High KV motor:",
+      "options": [
+        "You get massive torque",
+        "The motor will likely overheat and burn out (Over-propped)",
+        "It is the most efficient setup",
+        "It flies silently"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-027",
+      "question": "\"Choked Flow\" in a rocket nozzle means:",
+      "options": [
+        "The gas velocity has reached Mach 1 at the throat",
+        "The nozzle is clogged",
+        "The rocket is stalling",
+        "The fuel is wet"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-028",
+      "question": "A \"CATO\" (Catastrophe at Take Off) where the motor explodes is often caused by:",
+      "options": [
+        "The nozzle throat being too small (Pressure over-pressurization)",
+        "The fins being too large",
+        "The parachute opening early",
+        "The paint being too thick"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-029",
+      "question": "Why do we \"Balance\" LiPo batteries?",
+      "options": [
+        "To ensure every cell is at the exact same voltage",
+        "To make sure the weight is centered",
+        "To make them charge faster",
+        "To make them fireproof"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-030",
+      "question": "\"Desync\" in a drone motor occurs when:",
+      "options": [
+        "The ESC loses track of the motor's magnetic position during rapid acceleration",
+        "The propeller falls off",
+        "The video disconnects",
+        "The battery is low"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-031",
+      "question": "In a wing, the \"Spar\" is designed to handle which force?",
+      "options": [
+        "Bending loads",
+        "Aerodynamic shape",
+        "Color",
+        "Waterproofing"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-032",
+      "question": "\"Infill\" in 3D printing refers to:",
+      "options": [
+        "The internal density/pattern of the part",
+        "The outer shell",
+        "The support material",
+        "The raft"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-033",
+      "question": "\"Supports\" in 3D printing are required for:",
+      "options": [
+        "Overhangs (parts printing in mid-air)",
+        "Every print",
+        "Flat surfaces",
+        "Making the print faster"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-034",
+      "question": "A \"Fillet\" (curved corner) is used in CAD design to:",
+      "options": [
+        "Reduce stress concentration",
+        "Make the part sharper",
+        "Save material",
+        "Increase print time"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-035",
+      "question": "The strongest orientation to print a 3D part is:",
+      "options": [
+        "Lying flat (so stress runs along the filament lines, not across layers)",
+        "Standing vertically",
+        "Diagonally",
+        "It does not matter"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-036",
+      "question": "A \"Monocoque\" structure relies on:",
+      "options": [
+        "The outer skin carrying the structural load",
+        "An internal heavy frame",
+        "Solid filling",
+        "Tape"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-037",
+      "question": "Carbon Fiber is strongest in:",
+      "options": [
+        "Tension (Pulling)",
+        "Compression (Crushing)",
+        "Impact (Sudden hit)",
+        "Shear"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-038",
+      "question": "\"Triangulation\" in a fuselage frame design creates:",
+      "options": [
+        "Rigidity and strength",
+        "Flexibility",
+        "Extra weight",
+        "Bounciness"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-039",
+      "question": "\"D-Box\" construction in a wing is primarily used to increase:",
+      "options": [
+        "Torsional stiffness (Resistance to twisting)",
+        "Drag",
+        "Lift",
+        "Weight"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-040",
+      "question": "Why is \"End-Grain\" balsa used in composite sandwich panels?",
+      "options": [
+        "It has high compression strength",
+        "It is flexible",
+        "It is heavy",
+        "It is waterproof"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    }
+  ]
+}
