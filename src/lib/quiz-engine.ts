@@ -60,25 +60,25 @@ export function getQuestionsForDivision(division: Division): Question[] {
     const allQuestions = quizData.questions as Question[];
 
     if (division === 'Elite') {
-        const eliteQuestions = allQuestions.filter((q) => q.division === 'Elite');
-
-        if (eliteQuestions.length > 0) {
-            // If we have explicit Elite questions (the 40 added), use them.
-            // We shuffle them to randomize order, but since there are only 40 and we need 40, user gets all of them.
-            return shuffleArray(eliteQuestions).slice(0, 40);
-        }
-
-        // Fallback (for backward compatibility if Elite questions missing): 10 from each category
         const categories = ['Aerodynamics', 'Avionics', 'Propulsion', 'Structure'];
         let generatedEliteQuestions: Question[] = [];
 
         categories.forEach((cat) => {
+            // Strictly select 'hard' questions
             const catQuestions = allQuestions.filter(
-                (q) => q.division === cat && (q.difficulty === 'medium' || q.difficulty === 'hard')
+                (q) => q.division === cat && q.difficulty === 'hard'
             );
+
+            // If not enough hard questions, fallback to medium? 
+            // Prompt said "questions which need to be asked in the elite section to be 'hard' difficulty questions"
+            // So we prioritize HARD. 
+            // If we have < 10 hard, we take all of them. Ideally we should have enough.
             generatedEliteQuestions = [...generatedEliteQuestions, ...shuffleArray(catQuestions).slice(0, 10)];
         });
 
+        // If for some reason we end up with fewer than 40 (e.g. division has only 5 hard qs), 
+        // the user will just get a shorter quiz or we could fallback. 
+        // For now, adhering strictly to 'hard'.
         return shuffleArray(generatedEliteQuestions);
     } else {
         // Standard Division: Random set from that division (any difficulty)

@@ -5199,6 +5199,526 @@
       "correctIndex": 0,
       "division": "Structure",
       "difficulty": "hard"
+    },
+    {
+      "id": "elite-001",
+      "question": "Bernoulli's Principle states that as the speed of a fluid (air) increases, its pressure:",
+      "options": [
+        "Increases",
+        "Decreases",
+        "Stays the same",
+        "Becomes zero"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-002",
+      "question": "\"Induced Drag\" is primarily caused by:",
+      "options": [
+        "Friction of air on the skin",
+        "The production of Lift (wingtip vortices)",
+        "The landing gear",
+        "Flying too slow"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-003",
+      "question": "Ideally, for a stable rocket, the Center of Pressure (CP) must be:",
+      "options": [
+        "Ahead of the Center of Gravity (CG)",
+        "Behind the Center of Gravity (CG)",
+        "Exactly at the CG",
+        "It does not matter"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-004",
+      "question": "\"Adverse Yaw\" means:",
+      "options": [
+        "When banking left, the nose tries to turn right",
+        "When banking left, the nose turns left perfectly",
+        "The plane refuses to turn",
+        "The plane stalls"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-005",
+      "question": "A \"Washout\" in wing design (twisting wingtips down) is used to:",
+      "options": [
+        "Increase speed",
+        "Prevent tip stalls by ensuring the root stalls first",
+        "Make the wing look twisted",
+        "Increase drag"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-006",
+      "question": "If you balance your plane on your fingers and the tail drops down, the plane is:",
+      "options": [
+        "Nose Heavy",
+        "Tail Heavy",
+        "Balanced",
+        "Perfect"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-007",
+      "question": "\"Wave Drag\" becomes significant when:",
+      "options": [
+        "Flying very slow",
+        "Approaching the speed of sound (Transonic/Supersonic)",
+        "Flying in rain",
+        "Landing"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-008",
+      "question": "The \"Area Rule\" (Coke bottle shape fuselage) is used to reduce:",
+      "options": [
+        "Friction drag",
+        "Wave drag at transonic speeds",
+        "Lift induced drag",
+        "Weight"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-009",
+      "question": "\"Fin Flutter\" is caused by:",
+      "options": [
+        "Aeroelastic instability (resonance)",
+        "Weak glue",
+        "Too much paint",
+        "Slow speeds"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-010",
+      "question": "If a plane enters a \"Spin\" (aggravated stall with rotation), the recovery generally requires:",
+      "options": [
+        "Pulling back on the stick",
+        "Reducing throttle and applying opposite rudder",
+        "Full throttle and ailerons",
+        "Screaming"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-011",
+      "question": "Which flight mode uses the Accelerometer to limit the bank angle and self-level the drone?",
+      "options": [
+        "Acro / Rate Mode",
+        "Angle / Stabilize Mode",
+        "Turbo Mode",
+        "Manual Mode"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-012",
+      "question": "A \"BEC\" (Battery Elimination Circuit) is used to:",
+      "options": [
+        "Destroy the battery",
+        "Step down high battery voltage to 5V for powering electronics",
+        "Increase voltage to the motors",
+        "Cool the ESCs"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-013",
+      "question": "The \"UART\" ports on a Flight Controller are used for:",
+      "options": [
+        "Connecting serial peripherals like GPS, Receiver, or VTX",
+        "Plugging in motors directly",
+        "Charging the battery",
+        "Audio output"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-014",
+      "question": "If your drone flips over instantly upon takeoff, the most common cause is:",
+      "options": [
+        "A motor spinning the wrong way OR a propeller on the wrong motor",
+        "The battery is too heavy",
+        "GPS is not locked",
+        "The wind is too strong"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-015",
+      "question": "Why do we never power on a VTX (Video Transmitter) without the antenna?",
+      "options": [
+        "It will overheat and burn out the amplifier",
+        "It will fly away",
+        "It will drain the battery instantly",
+        "It makes a loud noise"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-016",
+      "question": "If your drone oscillates (shakes) quickly during flight, your PID \"P-Gain\" is likely:",
+      "options": [
+        "Too High",
+        "Too Low",
+        "Just right",
+        "Zero"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-017",
+      "question": "Why do high-power drones use a Capacitor on the battery pads?",
+      "options": [
+        "To filter out voltage spikes (noise) that can damage electronics",
+        "To give extra flight time",
+        "To start the motors",
+        "As a backup battery"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-018",
+      "question": "\"Crossfire\" and \"ELRS\" are protocols used for:",
+      "options": [
+        "Long Range Radio Control links (900MHz / 2.4GHz LoRa)",
+        "Video transmission",
+        "Battery charging",
+        "GPS communication"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-019",
+      "question": "\"Soft Mounting\" the Flight Controller helps to:",
+      "options": [
+        "Reduce vibration noise reaching the Gyro",
+        "Keep it warm",
+        "Make it waterproof",
+        "Improve GPS lock"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-020",
+      "question": "If your OSD shows \"Land Now\", it is usually triggered by:",
+      "options": [
+        "Low Battery Voltage",
+        "High Altitude",
+        "Low Speed",
+        "Boring flight"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-021",
+      "question": "The \"Kv\" rating on a motor refers to:",
+      "options": [
+        "Max Voltage",
+        "RPM per Volt (Velocity Constant)",
+        "Max Thrust",
+        "Max Amps"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-022",
+      "question": "A higher pitch propeller (e.g., 5050 vs 5040) generally:",
+      "options": [
+        "Increases top speed but draws more amps and has less low-end torque",
+        "Increases acceleration and efficiency",
+        "Uses less power",
+        "Makes the drone quieter"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-023",
+      "question": "The \"C-Rating\" on a battery indicates:",
+      "options": [
+        "Capacity in mAh",
+        "The maximum safe continuous discharge rate",
+        "Charge time",
+        "Coolness factor"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-024",
+      "question": "\"Voltage Sag\" is when:",
+      "options": [
+        "Battery voltage drops temporarily under heavy load",
+        "The battery falls out",
+        "Voltage increases under load",
+        "The drone flies slow"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-025",
+      "question": "If you switch from a 3S to a 4S battery on the SAME motor/prop setup:",
+      "options": [
+        "The motor spins faster, draws significantly MORE current, and might burn",
+        "The motor spins slower",
+        "The current draw decreases",
+        "Nothing changes"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-026",
+      "question": "If you put a BIG propeller on a High KV motor:",
+      "options": [
+        "You get massive torque",
+        "The motor will likely overheat and burn out (Over-propped)",
+        "It is the most efficient setup",
+        "It flies silently"
+      ],
+      "correctIndex": 1,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-027",
+      "question": "\"Choked Flow\" in a rocket nozzle means:",
+      "options": [
+        "The gas velocity has reached Mach 1 at the throat",
+        "The nozzle is clogged",
+        "The rocket is stalling",
+        "The fuel is wet"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-028",
+      "question": "A \"CATO\" (Catastrophe at Take Off) where the motor explodes is often caused by:",
+      "options": [
+        "The nozzle throat being too small (Pressure over-pressurization)",
+        "The fins being too large",
+        "The parachute opening early",
+        "The paint being too thick"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-029",
+      "question": "Why do we \"Balance\" LiPo batteries?",
+      "options": [
+        "To ensure every cell is at the exact same voltage",
+        "To make sure the weight is centered",
+        "To make them charge faster",
+        "To make them fireproof"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-030",
+      "question": "\"Desync\" in a drone motor occurs when:",
+      "options": [
+        "The ESC loses track of the motor's magnetic position during rapid acceleration",
+        "The propeller falls off",
+        "The video disconnects",
+        "The battery is low"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-031",
+      "question": "In a wing, the \"Spar\" is designed to handle which force?",
+      "options": [
+        "Bending loads",
+        "Aerodynamic shape",
+        "Color",
+        "Waterproofing"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-032",
+      "question": "\"Infill\" in 3D printing refers to:",
+      "options": [
+        "The internal density/pattern of the part",
+        "The outer shell",
+        "The support material",
+        "The raft"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-033",
+      "question": "\"Supports\" in 3D printing are required for:",
+      "options": [
+        "Overhangs (parts printing in mid-air)",
+        "Every print",
+        "Flat surfaces",
+        "Making the print faster"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-034",
+      "question": "A \"Fillet\" (curved corner) is used in CAD design to:",
+      "options": [
+        "Reduce stress concentration",
+        "Make the part sharper",
+        "Save material",
+        "Increase print time"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elite-035",
+      "question": "The strongest orientation to print a 3D part is:",
+      "options": [
+        "Lying flat (so stress runs along the filament lines, not across layers)",
+        "Standing vertically",
+        "Diagonally",
+        "It does not matter"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-036",
+      "question": "A \"Monocoque\" structure relies on:",
+      "options": [
+        "The outer skin carrying the structural load",
+        "An internal heavy frame",
+        "Solid filling",
+        "Tape"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-037",
+      "question": "Carbon Fiber is strongest in:",
+      "options": [
+        "Tension (Pulling)",
+        "Compression (Crushing)",
+        "Impact (Sudden hit)",
+        "Shear"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-038",
+      "question": "\"Triangulation\" in a fuselage frame design creates:",
+      "options": [
+        "Rigidity and strength",
+        "Flexibility",
+        "Extra weight",
+        "Bounciness"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-039",
+      "question": "\"D-Box\" construction in a wing is primarily used to increase:",
+      "options": [
+        "Torsional stiffness (Resistance to twisting)",
+        "Drag",
+        "Lift",
+        "Weight"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
+    },
+    {
+      "id": "elite-040",
+      "question": "Why is \"End-Grain\" balsa used in composite sandwich panels?",
+      "options": [
+        "It has high compression strength",
+        "It is flexible",
+        "It is heavy",
+        "It is waterproof"
+      ],
+      "correctIndex": 0,
+      "division": "Elite",
+      "difficulty": "hard"
     }
   ]
 }
