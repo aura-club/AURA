@@ -9,7 +9,7 @@ import { CreateAnnouncementForm } from "@/components/create-announcement-form";
 
 export default function DashboardPage() {
   const { user, announcements } = useAuth();
-  const isAdmin = user?.role === 'admin';
+  const isAdmin = user?.role === 'admin' || user?.role === 'super_admin';
   const isPending = user?.status === 'pending';
   const canUpload = user?.canUpload && !isAdmin;
   const displayName = user?.displayName || 'User';
@@ -63,7 +63,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       )}
-      
+
       {isAdmin && (
         <Card>
           <CardHeader>
