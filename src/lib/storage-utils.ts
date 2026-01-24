@@ -15,11 +15,23 @@ export async function uploadFile(file: File, folder: string): Promise<string> {
     const formData = new FormData();
     formData.append("image", file);
 
+    console.log("Starting ImgBB upload for:", file.name);
+
     try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s timeout
+
         const response = await fetch(`https://api.imgbb.com/1/upload?key=${ALUMNI_KEY}`, {
             method: "POST",
             body: formData,
+            signal: controller.signal,
         });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+            throw new Error(`Upload failed with status: ${response.status}`);
+        }
 
         const result = await response.json();
 
@@ -27,9 +39,13 @@ export async function uploadFile(file: File, folder: string): Promise<string> {
             throw new Error(result.error?.message || "Upload failed");
         }
 
+        console.log("ImgBB upload success:", result.data.url);
         return result.data.url;
-    } catch (error) {
+    } catch (error: any) {
         console.error("ImgBB Upload Error:", error);
-        throw error;
+        if (error.name === 'AbortError') {
+            throw new Error("Upload timed out. Please check your internet connection.");
+        }
+        throw new Error(error.message || "Upload failed");
     }
 }
