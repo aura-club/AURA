@@ -42,138 +42,138 @@ export type SubmissionStatus = 'pending' | 'approved' | 'rejected';
 
 // Project type definition, matches Firestore structure
 export interface Project {
-    id: string;
-    title: string;
-    excerpt: string;
-    thumbnailImage: string;
-    description: string;
-    objectives: string[];
-    methodology: string;
-    outcomes: string;
-    teamMembers: string[];
-    galleryImages?: string[];
-    externalLinks?: { label: string; url: string }[];
-    status: SubmissionStatus;
-    createdAt: Timestamp;
-    authorEmail: string;
-    authorName: string;
-    rejectionReason?: string;
+  id: string;
+  title: string;
+  excerpt: string;
+  thumbnailImage: string;
+  description: string;
+  objectives: string[];
+  methodology: string;
+  outcomes: string;
+  teamMembers: string[];
+  galleryImages?: string[];
+  externalLinks?: { label: string; url: string }[];
+  status: SubmissionStatus;
+  createdAt: Timestamp;
+  authorEmail: string;
+  authorName: string;
+  rejectionReason?: string;
 }
 
 export type ResourceCategory = "Plug-ins" | "Research Papers" | "3D Designs" | "Blueprints";
 
 export interface Resource {
-    id: string;
-    title: string;
-    description: string;
-    category: ResourceCategory;
-    link: string;
-    tags?: string[];
-    image?: string;
-    status: SubmissionStatus;
-    createdAt: Timestamp;
-    authorEmail: string;
-    authorName: string;
-    rejectionReason?: string;
+  id: string;
+  title: string;
+  description: string;
+  category: ResourceCategory;
+  link: string;
+  tags?: string[];
+  image?: string;
+  status: SubmissionStatus;
+  createdAt: Timestamp;
+  authorEmail: string;
+  authorName: string;
+  rejectionReason?: string;
 }
 
-export type OpportunityCategory = "event" | "session" | "external";
+export type OpportunityCategory = "event" | "session" | "external" | "alumni";
 export type EventType = "Talk" | "Competition" | "Workshop";
 export type ExternalType = "Research" | "Internship" | "Project Team" | "Competition";
 
 // Base interface for all opportunities
 interface OpportunityBase {
-    id: string;
-    title: string;
-    description: string;
-    category: OpportunityCategory;
-    status: SubmissionStatus;
-    createdAt: Timestamp;
-    authorEmail: string;
-    authorName: string;
-    rejectionReason?: string;
+  id: string;
+  title: string;
+  description: string;
+  category: OpportunityCategory;
+  status: SubmissionStatus;
+  createdAt: Timestamp;
+  authorEmail: string;
+  authorName: string;
+  rejectionReason?: string;
 }
 
 export interface EventOpportunity extends OpportunityBase {
-    category: "event";
-    eventType: EventType;
-    date: string; // ISO string
-    time: string;
-    location: string;
-    image?: string;
-    host?: string;
+  category: "event";
+  eventType: EventType;
+  date: string; // ISO string
+  time: string;
+  location: string;
+  image?: string;
+  host?: string;
 }
 
 export interface SessionOpportunity extends OpportunityBase {
-    category: "session";
-    venue: string;
-    time: string;
+  category: "session";
+  venue: string;
+  time: string;
 }
 
 export interface ExternalOpportunity extends OpportunityBase {
-    category: "external";
-    externalType: ExternalType;
-    organization: string;
-    eligibility: string;
-    deadline: string; // ISO string
-    applicationInstructions: string;
+  category: "external";
+  externalType: ExternalType;
+  organization: string;
+  eligibility: string;
+  deadline: string; // ISO string
+  applicationInstructions: string;
 }
 
 export type Opportunity = EventOpportunity | SessionOpportunity | ExternalOpportunity;
 
 export interface BlogPost {
-    id: string;
-    title: string;
-    excerpt: string;
-    content: string; // Markdown content
-    imageUrl?: string;
-    tags: string[];
-    status: SubmissionStatus;
-    createdAt: Timestamp;
-    authorEmail: string;
-    authorName: string;
-    rejectionReason?: string;
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string; // Markdown content
+  imageUrl?: string;
+  tags: string[];
+  status: SubmissionStatus;
+  createdAt: Timestamp;
+  authorEmail: string;
+  authorName: string;
+  rejectionReason?: string;
 }
 
 export interface Announcement {
-    id: string;
-    title: string;
-    content: string;
-    expiresAt: Timestamp;
-    createdAt: Timestamp;
+  id: string;
+  title: string;
+  content: string;
+  expiresAt: Timestamp;
+  createdAt: Timestamp;
 }
 
 export interface LeadershipMember {
-    id: string;
-    name: string;
-    role: string;
-    bio: string;
-    imageUrl: string;
-    order: number;
-    isVisible: boolean;
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  imageUrl: string;
+  order: number;
+  isVisible: boolean;
 }
 
 export interface Alumnus {
-    id: string;
-    name: string;
-    email: string;
-    graduationYear: number;
-    company: string;
-    bio: string;
-    photoURL: string;
-    socialLinks?: { platform: string; url: string; }[];
+  id: string;
+  name: string;
+  email: string;
+  graduationYear: number;
+  company: string;
+  bio: string;
+  photoURL: string;
+  socialLinks?: { platform: string; url: string; }[];
 }
 
 export interface AlumniOpportunity extends OpportunityBase {
-    category: "alumni";
-    link: string;  // Added link field
+  category: "alumni";
+  link: string;  // Added link field
 }
 
 // This is our App's user type, which merges Firebase's User with our custom fields.
-type AppUser = (User & { role: UserRole; canUpload: boolean; status: UserStatus; }) | null;
+type AppUser = (User & { role: UserRole; canUpload: boolean; status: UserStatus; permissions?: any; }) | null;
 
 type AddProjectPayload = Omit<Project, 'id' | 'createdAt' | 'status' | 'authorEmail' | 'authorName' | 'rejectionReason'>;
-type AddResourcePayload = Omit<Resource, 'id' | 'createdAt' | 'status' | 'authorEmail' | 'authorName' | 'rejectionReason'> & { authorName?: string; tags?: string; imageFile?: any; imageType?: 'upload' | 'url'; imageUrl?: string; };
+type AddResourcePayload = Omit<Resource, 'id' | 'createdAt' | 'status' | 'authorEmail' | 'authorName' | 'rejectionReason'> & { authorName?: string; tags?: string | string[]; imageFile?: any; imageType?: 'upload' | 'url'; imageUrl?: string; };
 type AddOpportunityPayload = Omit<EventOpportunity, 'id' | 'createdAt' | 'status' | 'authorEmail' | 'authorName' | 'rejectionReason' | 'category'> | Omit<SessionOpportunity, 'id' | 'createdAt' | 'status' | 'authorEmail' | 'authorName' | 'rejectionReason' | 'category'> | Omit<ExternalOpportunity, 'id' | 'createdAt' | 'status' | 'authorEmail' | 'authorName' | 'rejectionReason' | 'category'> & { category: OpportunityCategory };
 type AddBlogPostPayload = Omit<BlogPost, 'id' | 'createdAt' | 'status' | 'authorEmail' | 'authorName' | 'rejectionReason' | 'tags'> & { tags?: string };
 export type AddAnnouncementPayload = Omit<Announcement, 'id' | 'createdAt'>;
@@ -265,192 +265,196 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const leadershipCollection = collection(db, 'leadership');
 
     const sortData = <T extends { createdAt: Timestamp }>(data: T[]): T[] => {
-        return data.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+      return data.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
     };
-    
+
     // Generic error handler for snapshot listeners
     const handleSnapshotError = (error: Error) => {
-        if ((error as any).code === "permission-denied") {
-            console.warn("Permission denied for a Firestore query. This is expected for non-admin users and can be ignored.");
-        } else {
-            console.error("Firestore snapshot listener error:", error);
-        }
+      if ((error as any).code === "permission-denied") {
+        console.warn("Permission denied for a Firestore query. This is expected for non-admin users and can be ignored.");
+      } else {
+        console.error("Firestore snapshot listener error:", error);
+      }
     };
-    
+
     // Clear previous listeners
     const cleanup = () => unsubscribes.forEach(unsub => unsub());
 
     if (loading) {
-        return;
+      return;
     }
 
     const fetchPublicData = () => {
-        const approvedProjectsQuery = query(projectsCollection, where('status', '==', 'approved'));
-        unsubscribes.push(onSnapshot(approvedProjectsQuery, (snapshot) => {
-            const approvedProjects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project));
-            setProjects(prev => sortData(Array.from(new Map([...prev, ...approvedProjects].map(p => [p.id, p])).values())));
-        }, handleSnapshotError));
+      const approvedProjectsQuery = query(projectsCollection, where('status', '==', 'approved'));
+      unsubscribes.push(onSnapshot(approvedProjectsQuery, (snapshot) => {
+        const approvedProjects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project));
+        setProjects(prev => sortData(Array.from(new Map([...prev, ...approvedProjects].map(p => [p.id, p])).values())));
+      }, handleSnapshotError));
 
-        const approvedResourcesQuery = query(resourcesCollection, where('status', '==', 'approved'));
-        unsubscribes.push(onSnapshot(approvedResourcesQuery, (snapshot) => {
-            const firestoreResources = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Resource));
-            setResources(sortData(Array.from(new Map([...preloadedResources, ...firestoreResources].map(item => [item.id, item])).values())));
-        }, handleSnapshotError));
-        
-        const approvedOppsQuery = query(opportunitiesCollection, where('status', '==', 'approved'));
-        unsubscribes.push(onSnapshot(approvedOppsQuery, (snapshot) => {
-            const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Opportunity));
-            setOpportunities(sortData([...preloadedOpportunities, ...firestoreOpps]));
-        }, handleSnapshotError));
-        
-        const approvedBlogPostsQuery = query(blogPostsCollection, where('status', '==', 'approved'));
-        unsubscribes.push(onSnapshot(approvedBlogPostsQuery, snapshot => {
-            const approvedPosts = snapshot.docs.map(d => ({...d.data(), id: d.id} as BlogPost));
-            setBlogPosts(prev => sortData(Array.from(new Map([...prev, ...approvedPosts].map(p => [p.id, p])).values())));
-        }, handleSnapshotError));
+      const approvedResourcesQuery = query(resourcesCollection, where('status', '==', 'approved'));
+      unsubscribes.push(onSnapshot(approvedResourcesQuery, (snapshot) => {
+        const firestoreResources = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Resource));
+        setResources(sortData(Array.from(new Map([...preloadedResources, ...firestoreResources].map(item => [item.id, item])).values())));
+      }, handleSnapshotError));
 
-        unsubscribes.push(onSnapshot(query(leadershipCollection, orderBy('order')), 
-            (snapshot) => setLeadership(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as LeadershipMember))),
-            handleSnapshotError
-        ));
+      const approvedOppsQuery = query(opportunitiesCollection, where('status', '==', 'approved'));
+      unsubscribes.push(onSnapshot(approvedOppsQuery, (snapshot) => {
+        const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Opportunity));
+        setOpportunities(sortData([...preloadedOpportunities, ...firestoreOpps]));
+      }, handleSnapshotError));
 
-        const approvedMembersQuery = query(usersCollection, where('status', '==', 'approved'));
-        unsubscribes.push(onSnapshot(approvedMembersQuery, (snapshot) => {
-            const approvedUsers = snapshot.docs.map(doc => doc.data() as AppDbUser);
-            setUsers(prev => Array.from(new Map([...prev, ...approvedUsers].map(u => [u.uid, u])).values()));
-        }, handleSnapshotError));
+      const approvedBlogPostsQuery = query(blogPostsCollection, where('status', '==', 'approved'));
+      unsubscribes.push(onSnapshot(approvedBlogPostsQuery, snapshot => {
+        const approvedPosts = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as BlogPost));
+        setBlogPosts(prev => sortData(Array.from(new Map([...prev, ...approvedPosts].map(p => [p.id, p])).values())));
+      }, handleSnapshotError));
 
-        const alumniOppsCollection = collection(db, 'alumniOpportunities');
-        unsubscribes.push(onSnapshot(alumniOppsCollection, snapshot => {
-            const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AlumniOpportunity));
-            setAlumniOpportunities(sortData(firestoreOpps));
-        }, handleSnapshotError));
+      unsubscribes.push(onSnapshot(query(leadershipCollection, orderBy('order')),
+        (snapshot) => setLeadership(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as LeadershipMember))),
+        handleSnapshotError
+      ));
+
+      const approvedMembersQuery = query(usersCollection, where('status', '==', 'approved'));
+      unsubscribes.push(onSnapshot(approvedMembersQuery, (snapshot) => {
+        const approvedUsers = snapshot.docs.map(doc => doc.data() as AppDbUser);
+        setUsers(prev => Array.from(new Map([...prev, ...approvedUsers].map(u => [u.uid, u])).values()));
+      }, handleSnapshotError));
+
+      const alumniOppsCollection = collection(db, 'alumniOpportunities');
+      unsubscribes.push(onSnapshot(alumniOppsCollection, snapshot => {
+        const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AlumniOpportunity));
+        setAlumniOpportunities(sortData(firestoreOpps));
+      }, handleSnapshotError));
     };
 
     const fetchUserData = () => {
-        if (!user || !user.email) return;
+      if (!user || !user.email) return;
 
-        const announcementsQuery = query(announcementsCollection, where('expiresAt', '>', Timestamp.now()));
-        unsubscribes.push(onSnapshot(announcementsQuery, (snapshot) => {
-            setAnnouncements(sortData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Announcement))));
-        }, handleSnapshotError));
+      const announcementsQuery = query(announcementsCollection, where('expiresAt', '>', Timestamp.now()));
+      unsubscribes.push(onSnapshot(announcementsQuery, (snapshot) => {
+        setAnnouncements(sortData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Announcement))));
+      }, handleSnapshotError));
 
-        const myProjectsQuery = query(projectsCollection, where('authorEmail', '==', user.email));
-        unsubscribes.push(onSnapshot(myProjectsQuery, snapshot => {
-            const myProjects = snapshot.docs.map(d => ({...d.data(), id: d.id} as Project));
-            setProjects(prev => sortData(Array.from(new Map([...prev, ...myProjects].map(p => [p.id, p])).values())));
-        }, handleSnapshotError));
+      const myProjectsQuery = query(projectsCollection, where('authorEmail', '==', user.email));
+      unsubscribes.push(onSnapshot(myProjectsQuery, snapshot => {
+        const myProjects = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Project));
+        setProjects(prev => sortData(Array.from(new Map([...prev, ...myProjects].map(p => [p.id, p])).values())));
+      }, handleSnapshotError));
 
-        const myResourcesQuery = query(resourcesCollection, where('authorEmail', '==', user.email));
-        unsubscribes.push(onSnapshot(myResourcesQuery, snapshot => {
-            const myResources = snapshot.docs.map(d => ({...d.data(), id: d.id} as Resource));
-            setResources(prev => sortData(Array.from(new Map([...prev, ...myResources].map(r => [r.id, r])).values())));
-        }, handleSnapshotError));
-        
-        const myOpportunitiesQuery = query(opportunitiesCollection, where('authorEmail', '==', user.email));
-        unsubscribes.push(onSnapshot(myOpportunitiesQuery, snapshot => {
-            const myOpps = snapshot.docs.map(d => ({...d.data(), id: d.id} as Opportunity));
-            setOpportunities(prev => sortData(Array.from(new Map([...prev, ...myOpps].map(o => [o.id, o])).values())));
-        }, handleSnapshotError));
-        
-        const myBlogPostsQuery = query(blogPostsCollection, where('authorEmail', '==', user.email));
-        unsubscribes.push(onSnapshot(myBlogPostsQuery, snapshot => {
-            const myPosts = snapshot.docs.map(d => ({...d.data(), id: d.id} as BlogPost));
-            setBlogPosts(prev => sortData(Array.from(new Map([...prev, ...myPosts].map(p => [p.id, p])).values())));
-        }, handleSnapshotError));
+      const myResourcesQuery = query(resourcesCollection, where('authorEmail', '==', user.email));
+      unsubscribes.push(onSnapshot(myResourcesQuery, snapshot => {
+        const myResources = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Resource));
+        setResources(prev => sortData(Array.from(new Map([...prev, ...myResources].map(r => [r.id, r])).values())));
+      }, handleSnapshotError));
+
+      const myOpportunitiesQuery = query(opportunitiesCollection, where('authorEmail', '==', user.email));
+      unsubscribes.push(onSnapshot(myOpportunitiesQuery, snapshot => {
+        const myOpps = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Opportunity));
+        setOpportunities(prev => sortData(Array.from(new Map([...prev, ...myOpps].map(o => [o.id, o])).values())));
+      }, handleSnapshotError));
+
+      const myBlogPostsQuery = query(blogPostsCollection, where('authorEmail', '==', user.email));
+      unsubscribes.push(onSnapshot(myBlogPostsQuery, snapshot => {
+        const myPosts = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as BlogPost));
+        setBlogPosts(prev => sortData(Array.from(new Map([...prev, ...myPosts].map(p => [p.id, p])).values())));
+      }, handleSnapshotError));
     };
 
     const fetchAdminData = () => {
-        if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) return;
-        
-        unsubscribes.push(onSnapshot(usersCollection, (snapshot) => {
-            setUsers(snapshot.docs.map(doc => doc.data() as AppDbUser));
-        }, handleSnapshotError));
-        
-        unsubscribes.push(onSnapshot(projectsCollection, snapshot => {
-            setProjects(sortData(snapshot.docs.map(d => ({...d.data(), id: d.id} as Project))));
-        }, handleSnapshotError));
-        
-        unsubscribes.push(onSnapshot(resourcesCollection, snapshot => {
-            const firestoreResources = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Resource));
-            setResources(sortData(Array.from(new Map([...preloadedResources, ...firestoreResources].map(item => [item.id, item])).values())));
-        }, handleSnapshotError));
-        
-        unsubscribes.push(onSnapshot(opportunitiesCollection, snapshot => {
-            const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Opportunity));
-            setOpportunities(sortData([...preloadedOpportunities, ...firestoreOpps]));
-        }, handleSnapshotError));
-        
-        unsubscribes.push(onSnapshot(blogPostsCollection, snapshot => {
-            setBlogPosts(sortData(snapshot.docs.map(d => ({...d.data(), id: d.id} as BlogPost))));
-        }, handleSnapshotError));
-        
-        const alumniCollection = collection(db, 'alumni');
-        unsubscribes.push(onSnapshot(alumniCollection, snapshot => {
-            setAlumni(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Alumnus)));
-        }, handleSnapshotError));
+      if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) return;
+
+      unsubscribes.push(onSnapshot(usersCollection, (snapshot) => {
+        setUsers(snapshot.docs.map(doc => doc.data() as AppDbUser));
+      }, handleSnapshotError));
+
+      unsubscribes.push(onSnapshot(projectsCollection, snapshot => {
+        setProjects(sortData(snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Project))));
+      }, handleSnapshotError));
+
+      unsubscribes.push(onSnapshot(resourcesCollection, snapshot => {
+        const firestoreResources = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Resource));
+        setResources(sortData(Array.from(new Map([...preloadedResources, ...firestoreResources].map(item => [item.id, item])).values())));
+      }, handleSnapshotError));
+
+      unsubscribes.push(onSnapshot(opportunitiesCollection, snapshot => {
+        const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Opportunity));
+        setOpportunities(sortData([...preloadedOpportunities, ...firestoreOpps]));
+      }, handleSnapshotError));
+
+      unsubscribes.push(onSnapshot(blogPostsCollection, snapshot => {
+        setBlogPosts(sortData(snapshot.docs.map(d => ({ ...d.data(), id: d.id } as BlogPost))));
+      }, handleSnapshotError));
+
+      const alumniCollection = collection(db, 'alumni');
+      unsubscribes.push(onSnapshot(alumniCollection, snapshot => {
+        setAlumni(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Alumnus)));
+      }, handleSnapshotError));
     };
-    
+
     cleanup();
     fetchPublicData();
-    
+
     if (user) {
-        fetchUserData();
-        fetchAdminData();
+      fetchUserData();
+      fetchAdminData();
     }
-    
+
     return cleanup;
   }, [loading, user]);
 
   const handleUser = async (firebaseUser: User | null): Promise<AppUser> => {
-  if (!firebaseUser || !firebaseUser.email) return null;
-  
-  const userDocRef = doc(db, 'users', firebaseUser.email);
-  let dbUser: AppDbUser | undefined;
-  
-  const docSnap = await getDoc(userDocRef);
-  if (docSnap.exists()) {
+    if (!firebaseUser || !firebaseUser.email) return null;
+
+    const userDocRef = doc(db, 'users', firebaseUser.email);
+    let dbUser: AppDbUser | undefined;
+
+    const docSnap = await getDoc(userDocRef);
+    if (docSnap.exists()) {
       dbUser = docSnap.data() as AppDbUser;
-      
+
       // CRITICAL: Check if user is denied or failed quiz BEFORE proceeding
       if (dbUser.status === 'denied') {
-          await firebaseSignOut(auth);
-          throw new Error("Access denied. Your membership application was not approved. Please contact an administrator.");
+        await firebaseSignOut(auth);
+        throw new Error("Access denied. Your membership application was not approved. Please contact an administrator.");
       }
-      
+
       // Block users who failed all quiz attempts (quizScore < 10)
       if (dbUser.quizScore !== undefined && dbUser.quizScore < 10) {
-          await firebaseSignOut(auth);
-          throw new Error("You did not pass the screening quiz. You cannot access this account.");
+        await firebaseSignOut(auth);
+        throw new Error("You did not pass the screening quiz. You cannot access this account.");
       }
-      
-  } else {
+
+    } else {
       // New user from Google sign-in - create approved account
       const newUser: any = {
-          uid: firebaseUser.uid,
-          email: firebaseUser.email,
-          name: firebaseUser.displayName || 'New User',
-          role: 'user',
-          canUpload: false,
-          status: 'approved',
+        uid: firebaseUser.uid,
+        email: firebaseUser.email,
+        name: firebaseUser.displayName || 'New User',
+        role: 'user',
+        canUpload: false,
+        status: 'approved',
       };
       if (firebaseUser.photoURL) {
-          newUser.photoURL = firebaseUser.photoURL;
+        newUser.photoURL = firebaseUser.photoURL;
       }
       await setDoc(userDocRef, newUser);
       dbUser = newUser;
-  }
-  
-  // Sync Firebase Auth profile with our DB profile if needed
-  if (firebaseUser.displayName !== dbUser.name || (firebaseUser.photoURL && dbUser.photoURL && firebaseUser.photoURL !== dbUser.photoURL)) {
-      if (dbUser.name && dbUser.photoURL) {
-          await updateProfile(firebaseUser, { displayName: dbUser.name, photoURL: dbUser.photoURL });
-      } else if (dbUser.name) {
-           await updateProfile(firebaseUser, { displayName: dbUser.name });
-      }
-  }
+    }
 
-  return {
+    if (!dbUser) {
+      throw new Error("Failed to initialize user record.");
+    }
+
+    // Sync Firebase Auth profile with our DB profile if needed
+    if (firebaseUser.displayName !== dbUser.name || (firebaseUser.photoURL && dbUser.photoURL && firebaseUser.photoURL !== dbUser.photoURL)) {
+      if (dbUser.name && dbUser.photoURL) {
+        await updateProfile(firebaseUser, { displayName: dbUser.name, photoURL: dbUser.photoURL });
+      } else if (dbUser.name) {
+        await updateProfile(firebaseUser, { displayName: dbUser.name });
+      }
+    }
+
+    return {
       ...firebaseUser,
       displayName: dbUser.name,
       photoURL: dbUser.photoURL || firebaseUser.photoURL,
@@ -458,8 +462,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       canUpload: dbUser.canUpload || dbUser.role === 'admin' || dbUser.role === 'super_admin',
       status: dbUser.status,
       permissions: (dbUser as any).permissions || {},
-  };
-}
+    };
+  }
 
 
 
@@ -468,8 +472,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       try {
         const appUser = await handleUser(firebaseUser);
         setUser(appUser);
-      } catch (error: any)
-      {
+      } catch (error: any) {
         console.error(error.message);
         setUser(null);
       } finally {
@@ -477,15 +480,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
     });
     return () => unsubscribe();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const signIn = async (email: string, pass: string): Promise<User> => {
     const userCredential = await signInWithEmailAndPassword(auth, email, pass);
     const appUser = await handleUser(userCredential.user);
     if (!appUser) {
-        await firebaseSignOut(auth);
-        throw new Error("Login failed: could not retrieve user data.");
+      await firebaseSignOut(auth);
+      throw new Error("Login failed: could not retrieve user data.");
     }
     setUser(appUser);
     return userCredential.user;
@@ -496,8 +499,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const result = await signInWithPopup(auth, provider);
     const appUser = await handleUser(result.user);
     if (!appUser) {
-        await firebaseSignOut(auth);
-        throw new Error("Login failed: could not retrieve user data.");
+      await firebaseSignOut(auth);
+      throw new Error("Login failed: could not retrieve user data.");
     }
     setUser(appUser);
     return result.user;
@@ -505,110 +508,110 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // UPDATED: signUp function with quiz parameters
   const signUp = async (
-  email: string, 
-  pass: string, 
-  displayName: string, 
-  usn?: string, 
-  phone?: string, 
-  reason?: string,
-  quizScore?: number,
-  quizAnswers?: number[]
-) => {
-  const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-  await updateProfile(userCredential.user, { displayName });
+    email: string,
+    pass: string,
+    displayName: string,
+    usn?: string,
+    phone?: string,
+    reason?: string,
+    quizScore?: number,
+    quizAnswers?: number[]
+  ) => {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(userCredential.user, { displayName });
 
-  // Build user object dynamically - only include defined fields
-  const newUser: any = {
-    uid: userCredential.user.uid,
-    email,
-    name: displayName,
-    role: 'user',
-    canUpload: false,
-    status: 'pending',
+    // Build user object dynamically - only include defined fields
+    const newUser: any = {
+      uid: userCredential.user.uid,
+      email,
+      name: displayName,
+      role: 'user',
+      canUpload: false,
+      status: 'pending',
+    };
+
+    // Only add optional fields if they exist
+    if (usn) newUser.usn = usn;
+    if (phone) newUser.phone = phone;
+    if (reason) newUser.reason = reason;
+    if (quizScore !== undefined) newUser.quizScore = quizScore;
+    if (quizScore !== undefined) newUser.attemptCount = 1;
+    if (userCredential.user.photoURL) newUser.photoURL = userCredential.user.photoURL;
+
+    await setDoc(doc(db, 'users', email), newUser);
+
+    // Store quiz attempt
+    if (quizScore !== undefined && quizAnswers) {
+      await addDoc(collection(db, 'quizAttempts'), {
+        userId: userCredential.user.uid,
+        userEmail: email,
+        attemptNumber: 1,
+        answers: quizAnswers,
+        score: quizScore,
+        passed: quizScore >= 10,
+        timestamp: Timestamp.now(),
+      });
+    }
+
+    await firebaseSignOut(auth);
+    setUser(null);
+
+    return userCredential;
   };
-  
-  // Only add optional fields if they exist
-  if (usn) newUser.usn = usn;
-  if (phone) newUser.phone = phone;
-  if (reason) newUser.reason = reason;
-  if (quizScore !== undefined) newUser.quizScore = quizScore;
-  if (quizScore !== undefined) newUser.attemptCount = 1;
-  if (userCredential.user.photoURL) newUser.photoURL = userCredential.user.photoURL;
-  
-  await setDoc(doc(db, 'users', email), newUser);
-
-  // Store quiz attempt
-  if (quizScore !== undefined && quizAnswers) {
-    await addDoc(collection(db, 'quizAttempts'), {
-      userId: userCredential.user.uid,
-      userEmail: email,
-      attemptNumber: 1,
-      answers: quizAnswers,
-      score: quizScore,
-      passed: quizScore >= 10,
-      timestamp: Timestamp.now(),
-    });
-  }
-
-  await firebaseSignOut(auth);
-  setUser(null);
-
-  return userCredential;
-};
 
 
   const requestMembership = async (email: string, reason: string) => {
     const userDocRef = doc(db, 'users', email);
     await updateDoc(userDocRef, {
-        status: 'pending',
-        reason: reason,
+      status: 'pending',
+      reason: reason,
     });
-    if(user && user.email === email) {
-      setUser({...user, status: 'pending'});
+    if (user && user.email === email) {
+      setUser({ ...user, status: 'pending' });
     }
   }
-  
+
   const updateUserProfile = async (displayName: string, photoURL?: string | null, photoFile?: File | null) => {
     const currentUser = auth.currentUser;
     if (!currentUser || !currentUser.email) {
-        throw new Error("No user is currently signed in.");
+      throw new Error("No user is currently signed in.");
     }
 
     let finalPhotoURL = photoURL;
 
     if (photoFile) {
-        const storage = getStorage();
-        const storageRef = ref(storage, `profile-pictures/${currentUser.uid}/${photoFile.name}`);
-        const snapshot = await uploadBytes(storageRef, photoFile);
-        finalPhotoURL = await getDownloadURL(snapshot.ref);
+      const storage = getStorage();
+      const storageRef = ref(storage, `profile-pictures/${currentUser.uid}/${photoFile.name}`);
+      const snapshot = await uploadBytes(storageRef, photoFile);
+      finalPhotoURL = await getDownloadURL(snapshot.ref);
     }
 
     const profileUpdates: { displayName?: string, photoURL?: string | null } = {};
     const firestoreUpdates: { name?: string, photoURL?: string } = {};
 
     if (displayName !== currentUser.displayName) {
-        profileUpdates.displayName = displayName;
-        firestoreUpdates.name = displayName;
+      profileUpdates.displayName = displayName;
+      firestoreUpdates.name = displayName;
     }
 
     if (finalPhotoURL && finalPhotoURL !== currentUser.photoURL) {
-        profileUpdates.photoURL = finalPhotoURL;
-        firestoreUpdates.photoURL = finalPhotoURL;
+      profileUpdates.photoURL = finalPhotoURL;
+      firestoreUpdates.photoURL = finalPhotoURL;
     }
 
     if (Object.keys(profileUpdates).length > 0) {
-        await updateProfile(currentUser, profileUpdates);
+      await updateProfile(currentUser, profileUpdates);
     }
-    
+
     if (Object.keys(firestoreUpdates).length > 0) {
-        const userDocRef = doc(db, 'users', currentUser.email);
-        await updateDoc(userDocRef, firestoreUpdates);
+      const userDocRef = doc(db, 'users', currentUser.email);
+      await updateDoc(userDocRef, firestoreUpdates);
     }
-    
+
     const updatedUser = await handleUser(currentUser);
     setUser(updatedUser);
   };
-  
+
   const approveUser = async (email: string) => {
     try {
       const userDocRef = doc(db, 'users', email);
@@ -633,11 +636,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) {
       throw new Error("Only admins can delete users.");
     }
-    
+
     if (user.email === email) {
       throw new Error("You cannot delete your own account.");
     }
-    
+
     try {
       const userDocRef = doc(db, 'users', email);
       await deleteDoc(userDocRef);
@@ -646,58 +649,58 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       throw error;
     }
   };
-  
+
   const updateUserRole = async (email: string, role: UserRole) => {
-  if (!user) throw new Error("Authentication required.");
+    if (!user) throw new Error("Authentication required.");
 
-  if (user.email === email) {
-    throw new Error("You cannot change your own role.");
-  }
+    if (user.email === email) {
+      throw new Error("You cannot change your own role.");
+    }
 
-  if (user.role !== 'super_admin') {
+    if (user.role !== 'super_admin') {
       const canUpdate = user.role === 'admin' && role !== 'admin' && role !== 'super_admin';
       if (!canUpdate) {
-          throw new Error("You do not have permission to perform this action.");
+        throw new Error("You do not have permission to perform this action.");
       }
-  }
-  
-  const userDocRef = doc(db, "users", email);
-  const canUpload = role === 'member' || role === 'admin' || role === 'super_admin';
-  
-  // Initialize default permissions for new admins
-  const updates: any = { role, canUpload };
-  
-  if (role === 'admin') {
-    // Set default permissions to true for new admins
-    updates.permissions = {
-      canUpload: true,
-      canDelete: true,
-      canManageMembers: true,
-      canManageShop: true,
-      canApproveSubmissions: true,
-      canManageOrders: true,
-    };
-  }
-  
-  await updateDoc(userDocRef, updates);
-};
+    }
+
+    const userDocRef = doc(db, "users", email);
+    const canUpload = role === 'member' || role === 'admin' || role === 'super_admin';
+
+    // Initialize default permissions for new admins
+    const updates: any = { role, canUpload };
+
+    if (role === 'admin') {
+      // Set default permissions to true for new admins
+      updates.permissions = {
+        canUpload: true,
+        canDelete: true,
+        canManageMembers: true,
+        canManageShop: true,
+        canApproveSubmissions: true,
+        canManageOrders: true,
+      };
+    }
+
+    await updateDoc(userDocRef, updates);
+  };
 
   const toggleUploadPermission = async (email: string, canUpload: boolean) => {
     const userDocRef = doc(db, 'users', email);
     const userToUpdate = users.find(u => u.email === email);
-    if(userToUpdate && userToUpdate.role !== 'admin' && userToUpdate.role !== 'super_admin'){
-        await updateDoc(userDocRef, { canUpload: canUpload });
+    if (userToUpdate && userToUpdate.role !== 'admin' && userToUpdate.role !== 'super_admin') {
+      await updateDoc(userDocRef, { canUpload: canUpload });
     }
   };
 
   const addProject = async (project: AddProjectPayload) => {
     if (!user || !user.email) throw new Error("User must be logged in to add a project.");
     await addDoc(collection(db, 'projects'), {
-        ...project,
-        status: 'pending',
-        createdAt: Timestamp.now(),
-        authorEmail: user.email,
-        authorName: user.displayName || 'Unknown',
+      ...project,
+      status: 'pending',
+      createdAt: Timestamp.now(),
+      authorEmail: user.email,
+      authorName: user.displayName || 'Unknown',
     });
   };
 
@@ -719,33 +722,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const addResource = async (resource: AddResourcePayload) => {
     if (!user || !user.email) throw new Error("User must be logged in to add a resource.");
-    
+
     const getImage = () => {
-        if(resource.imageType === 'url' && resource.imageUrl) {
-          return resource.imageUrl;
-        }
-        if(resource.imageType === 'upload' && resource.imageFile?.length > 0) {
-          // In a real app, upload and get URL. Here, use a placeholder.
-          return `https://placehold.co/400/225.png`;
-        }
-        return undefined;
+      if (resource.imageType === 'url' && resource.imageUrl) {
+        return resource.imageUrl;
+      }
+      if (resource.imageType === 'upload' && resource.imageFile?.length > 0) {
+        // In a real app, upload and get URL. Here, use a placeholder.
+        return `https://placehold.co/400/225.png`;
+      }
+      return undefined;
     }
 
     const processedTags = typeof resource.tags === 'string'
-    ? resource.tags.split(',').map(tag => tag.trim()).filter(Boolean)
-    : [];
+      ? resource.tags.split(',').map(tag => tag.trim()).filter(Boolean)
+      : [];
 
     await addDoc(collection(db, 'resources'), {
-        title: resource.title,
-        category: resource.category,
-        description: resource.description,
-        link: resource.link,
-        authorName: resource.authorName || user.displayName || 'Unknown',
-        image: getImage(),
-        tags: processedTags,
-        status: 'pending',
-        createdAt: Timestamp.now(),
-        authorEmail: user.email,
+      title: resource.title,
+      category: resource.category,
+      description: resource.description,
+      link: resource.link,
+      authorName: resource.authorName || user.displayName || 'Unknown',
+      image: getImage(),
+      tags: processedTags,
+      status: 'pending',
+      createdAt: Timestamp.now(),
+      authorEmail: user.email,
     });
   };
 
@@ -768,11 +771,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const addOpportunity = async (opportunity: AddOpportunityPayload) => {
     if (!user || !user.email) throw new Error("User must be logged in to add an opportunity.");
     await addDoc(collection(db, 'opportunities'), {
-        ...opportunity,
-        status: 'pending',
-        createdAt: Timestamp.now(),
-        authorEmail: user.email,
-        authorName: user.displayName || 'Unknown',
+      ...opportunity,
+      status: 'pending',
+      createdAt: Timestamp.now(),
+      authorEmail: user.email,
+      authorName: user.displayName || 'Unknown',
     });
   }
 
@@ -794,21 +797,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const addBlogPost = async (post: AddBlogPostPayload) => {
     if (!user || !user.email) throw new Error("User must be logged in to add a blog post.");
-    
+
     const processedTags = typeof post.tags === 'string'
-        ? post.tags.split(',').map(tag => tag.trim()).filter(Boolean)
-        : [];
-        
+      ? post.tags.split(',').map(tag => tag.trim()).filter(Boolean)
+      : [];
+
     await addDoc(collection(db, 'blogPosts'), {
-        title: post.title,
-        excerpt: post.excerpt,
-        content: post.content,
-        imageUrl: post.imageUrl || `https://placehold.co/1200x600.png`,
-        tags: processedTags,
-        status: 'pending',
-        createdAt: Timestamp.now(),
-        authorEmail: user.email,
-        authorName: user.displayName || 'Unknown',
+      title: post.title,
+      excerpt: post.excerpt,
+      content: post.content,
+      imageUrl: post.imageUrl || `https://placehold.co/1200x600.png`,
+      tags: processedTags,
+      status: 'pending',
+      createdAt: Timestamp.now(),
+      authorEmail: user.email,
+      authorName: user.displayName || 'Unknown',
     });
   };
 
@@ -829,11 +832,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const addAnnouncement = async (announcement: AddAnnouncementPayload) => {
-      if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can create announcements.");
-      await addDoc(collection(db, 'announcements'), {
-          ...announcement,
-          createdAt: Timestamp.now(),
-      });
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can create announcements.");
+    await addDoc(collection(db, 'announcements'), {
+      ...announcement,
+      createdAt: Timestamp.now(),
+    });
   };
 
   const addLeader = async (leader: AddLeaderPayload) => {
@@ -857,9 +860,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const toggleLeaderVisibility = async (leaderId: string, isVisible: boolean) => {
-      if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can change leader visibility.");
-      const leaderDocRef = doc(db, 'leadership', leaderId);
-      await updateDoc(leaderDocRef, { isVisible: isVisible });
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can change leader visibility.");
+    const leaderDocRef = doc(db, 'leadership', leaderId);
+    await updateDoc(leaderDocRef, { isVisible: isVisible });
   }
 
   const addAlumnus = async (alumnus: AddAlumnusPayload) => {
@@ -884,11 +887,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const addAlumniOpportunity = async (opportunity: AddAlumniOpportunityPayload) => {
     if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can add alumni opportunities.");
     await addDoc(collection(db, 'alumniOpportunities'), {
-        ...opportunity,
-        status: 'approved',
-        createdAt: Timestamp.now(),
-        authorEmail: user.email,
-        authorName: user.displayName || 'Unknown',
+      ...opportunity,
+      status: 'approved',
+      createdAt: Timestamp.now(),
+      authorEmail: user.email,
+      authorName: user.displayName || 'Unknown',
     });
   }
 
@@ -974,7 +977,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     rejectAlumniOpportunity,
     deleteAlumniOpportunity,
   };
-  
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

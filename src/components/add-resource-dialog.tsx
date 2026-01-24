@@ -1,6 +1,8 @@
 
 "use client";
 
+import { uploadFile } from "@/lib/storage-utils";
+
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -51,10 +53,10 @@ type ResourceFormValues = z.infer<typeof resourceFormSchema>;
 const categories = ["Plug-ins", "Research Papers", "3D Designs", "Blueprints"];
 
 interface AddResourceDialogProps {
-    children: React.ReactNode;
-    open?: boolean;
-    setOpen?: (open: boolean) => void;
-    isPage?: boolean;
+  children: React.ReactNode;
+  open?: boolean;
+  setOpen?: (open: boolean) => void;
+  isPage?: boolean;
 }
 
 export function AddResourceDialog({ children, open: controlledOpen, setOpen: setControlledOpen, isPage = false }: AddResourceDialogProps) {
@@ -66,16 +68,16 @@ export function AddResourceDialog({ children, open: controlledOpen, setOpen: set
   const open = controlledOpen ?? internalOpen;
   const setOpen = (isOpen: boolean) => {
     if (isPage && !isOpen) {
-        router.push('/dashboard/add');
+      router.push('/dashboard/add');
     } else if (setControlledOpen) {
-        setControlledOpen(isOpen);
+      setControlledOpen(isOpen);
     } else {
-        setInternalOpen(isOpen);
+      setInternalOpen(isOpen);
     }
   }
 
   const { toast } = useToast();
-  
+
   const form = useForm<ResourceFormValues>({
     resolver: zodResolver(resourceFormSchema),
     defaultValues: {
@@ -91,7 +93,7 @@ export function AddResourceDialog({ children, open: controlledOpen, setOpen: set
 
   useEffect(() => {
     if (user?.displayName && !form.getValues('authorName')) {
-        form.setValue('authorName', user.displayName);
+      form.setValue('authorName', user.displayName);
     }
   }, [user, form]);
 
@@ -103,42 +105,52 @@ export function AddResourceDialog({ children, open: controlledOpen, setOpen: set
     let fileUrl: string | null = null;
 
     if (imageType === 'upload' && imageFile && imageFile.length > 0) {
-        fileUrl = URL.createObjectURL(imageFile[0]);
-        setImagePreview(fileUrl);
+      fileUrl = URL.createObjectURL(imageFile[0]);
+      setImagePreview(fileUrl);
     } else if (imageType === 'url' && imageUrl) {
-        try {
-            new URL(imageUrl);
-            setImagePreview(imageUrl);
-        } catch (e) {
-            setImagePreview(null);
-        }
-    } else {
+      try {
+        new URL(imageUrl);
+        setImagePreview(imageUrl);
+      } catch (e) {
         setImagePreview(null);
+      }
+    } else {
+      setImagePreview(null);
     }
 
     return () => {
-        if (fileUrl) {
-            URL.revokeObjectURL(fileUrl);
-        }
+      if (fileUrl) {
+        URL.revokeObjectURL(fileUrl);
+      }
     };
   }, [imageFile, imageUrl, imageType]);
 
   async function onSubmit(data: ResourceFormValues) {
     try {
-        await addResource({
-            ...data,
-            category: data.category as any
-        });
-      
-        toast({
-            title: "Resource Submitted!",
-            description: "Your resource is now pending review by an admin.",
-        });
-        form.reset();
-        setOpen(false);
+      let finalImageUrl = "";
+
+      if (data.imageType === 'url' && data.imageUrl) {
+        finalImageUrl = data.imageUrl;
+      } else if (data.imageType === 'upload' && data.imageFile && data.imageFile.length > 0) {
+        finalImageUrl = await uploadFile(data.imageFile[0], 'resources');
+      }
+
+      await addResource({
+        ...data,
+        imageUrl: finalImageUrl,
+        tags: data.tags ? data.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
+        category: data.category as any
+      });
+
+      toast({
+        title: "Resource Submitted!",
+        description: "Your resource is now pending review by an admin.",
+      });
+      form.reset();
+      setOpen(false);
 
     } catch (error) {
-       toast({
+      toast({
         variant: "destructive",
         title: "Submission Failed",
         description: "Could not submit your resource. Please try again.",
@@ -147,7 +159,7 @@ export function AddResourceDialog({ children, open: controlledOpen, setOpen: set
   }
 
   const imageFileRef = useRef<HTMLInputElement>(null);
-  
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {!isPage && <DialogTrigger asChild>{children}</DialogTrigger>}
@@ -160,7 +172,7 @@ export function AddResourceDialog({ children, open: controlledOpen, setOpen: set
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pt-4">
-             <FormField
+            <FormField
               control={form.control}
               name="category"
               render={({ field }) => (
@@ -191,7 +203,7 @@ export function AddResourceDialog({ children, open: controlledOpen, setOpen: set
                 </FormItem>
               )}
             />
-             <FormField
+            <FormField
               control={form.control}
               name="description"
               render={({ field }) => (
@@ -214,7 +226,7 @@ export function AddResourceDialog({ children, open: controlledOpen, setOpen: set
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="authorName"
@@ -233,91 +245,91 @@ export function AddResourceDialog({ children, open: controlledOpen, setOpen: set
               name="imageType"
               render={({ field }) => (
                 <FormItem>
-                   <FormLabel>Image (Optional)</FormLabel>
-                   <FormDescription>Add a visual for your resource.</FormDescription>
-                   <FormControl>
+                  <FormLabel>Image (Optional)</FormLabel>
+                  <FormDescription>Add a visual for your resource.</FormDescription>
+                  <FormControl>
                     <Tabs value={field.value} onValueChange={(value) => field.onChange(value as 'upload' | 'url')} className="w-full">
-                        <TabsList className="grid w-full grid-cols-2">
-                            <TabsTrigger value="upload"><Upload className="mr-2 h-4 w-4"/>Upload</TabsTrigger>
-                            <TabsTrigger value="url"><LinkIcon className="mr-2 h-4 w-4"/>Link</TabsTrigger>
-                        </TabsList>
-                        <TabsContent value="upload" className="mt-4">
-                            <FormField
-                                control={form.control}
-                                name="imageFile"
-                                render={() => (
-                                  <FormItem>
-                                    <div className="flex items-center gap-4">
-                                       <Button type="button" variant="outline" onClick={() => imageFileRef.current?.click()}>
-                                         <Upload className="mr-2 h-4 w-4" />
-                                         Upload Image
-                                       </Button>
-                                       <Input
-                                          {...form.register("imageFile")}
-                                          ref={imageFileRef}
-                                          type="file"
-                                          accept="image/png, image/jpeg, image/gif"
-                                          className="hidden"
-                                       />
-                                       <span className="text-sm text-muted-foreground">
-                                         {imageFile?.[0]?.name || "No file selected."}
-                                       </span>
-                                    </div>
-                                    <FormDescription>Accepted formats: PNG, JPG, GIF.</FormDescription>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                             />
-                        </TabsContent>
-                        <TabsContent value="url" className="mt-4">
-                             <FormField
-                                control={form.control}
-                                name="imageUrl"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormControl><Input placeholder="https://example.com/image.png" {...field} /></FormControl>
-                                    <FormDescription>Paste a direct link to an image.</FormDescription>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-                        </TabsContent>
-                    </Tabs>
-                   </FormControl>
-                   {imagePreview && (
-                     <div className="mt-4 p-2 border border-dashed rounded-lg">
-                        <Image 
-                            src={imagePreview} 
-                            alt="Image preview"
-                            width={200}
-                            height={112} 
-                            className="rounded-md w-full max-w-xs object-cover aspect-video"
-                            unoptimized
+                      <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="upload"><Upload className="mr-2 h-4 w-4" />Upload</TabsTrigger>
+                        <TabsTrigger value="url"><LinkIcon className="mr-2 h-4 w-4" />Link</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="upload" className="mt-4">
+                        <FormField
+                          control={form.control}
+                          name="imageFile"
+                          render={() => (
+                            <FormItem>
+                              <div className="flex items-center gap-4">
+                                <Button type="button" variant="outline" onClick={() => imageFileRef.current?.click()}>
+                                  <Upload className="mr-2 h-4 w-4" />
+                                  Upload Image
+                                </Button>
+                                <Input
+                                  {...form.register("imageFile")}
+                                  ref={imageFileRef}
+                                  type="file"
+                                  accept="image/png, image/jpeg, image/gif"
+                                  className="hidden"
+                                />
+                                <span className="text-sm text-muted-foreground">
+                                  {imageFile?.[0]?.name || "No file selected."}
+                                </span>
+                              </div>
+                              <FormDescription>Accepted formats: PNG, JPG, GIF.</FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
                         />
-                     </div>
-                   )}
+                      </TabsContent>
+                      <TabsContent value="url" className="mt-4">
+                        <FormField
+                          control={form.control}
+                          name="imageUrl"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl><Input placeholder="https://example.com/image.png" {...field} /></FormControl>
+                              <FormDescription>Paste a direct link to an image.</FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </TabsContent>
+                    </Tabs>
+                  </FormControl>
+                  {imagePreview && (
+                    <div className="mt-4 p-2 border border-dashed rounded-lg">
+                      <Image
+                        src={imagePreview}
+                        alt="Image preview"
+                        width={200}
+                        height={112}
+                        className="rounded-md w-full max-w-xs object-cover aspect-video"
+                        unoptimized
+                      />
+                    </div>
+                  )}
                 </FormItem>
               )}
             />
 
-             <FormField
+            <FormField
               control={form.control}
               name="tags"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Tags (Optional)</FormLabel>
                   <FormControl><Input placeholder="Simulation, CAD, Aerodynamics" {...field} /></FormControl>
-                   <FormDescription>Comma-separated list of tags.</FormDescription>
+                  <FormDescription>Comma-separated list of tags.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            
+
             <DialogFooter>
-                <Button type="button" variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
-                <Button type="submit" disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? "Submitting..." : "Submit for Review"}
-                </Button>
+              <Button type="button" variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting ? "Submitting..." : "Submit for Review"}
+              </Button>
             </DialogFooter>
           </form>
         </Form>
