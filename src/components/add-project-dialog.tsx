@@ -49,7 +49,7 @@ const projectFormSchema = z.object({
   teamMembers: z.array(z.object({ value: z.string().min(1, "Team member name cannot be empty.") })).min(1, "At least one team member is required."),
   galleryType: z.enum(['upload', 'url']).default('upload'),
   galleryImages: z.any().optional(),
-  galleryImageUrls: z.array(z.object({ value: z.string().url("Must be a valid URL.") })).optional(),
+  galleryImageUrls: z.array(z.object({ value: z.string().url("Must be a valid URL.").or(z.literal('')) })).optional(),
   externalLinks: z.array(z.object({
     label: z.string().min(1, "Link label cannot be empty."),
     url: z.string().url("Must be a valid URL."),
