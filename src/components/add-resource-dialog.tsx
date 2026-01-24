@@ -266,7 +266,11 @@ export function AddResourceDialog({ children, open: controlledOpen, setOpen: set
                                 </Button>
                                 <Input
                                   {...form.register("imageFile")}
-                                  ref={imageFileRef}
+                                  ref={(e) => {
+                                    form.register("imageFile").ref(e);
+                                    // @ts-ignore
+                                    if (imageFileRef) imageFileRef.current = e;
+                                  }}
                                   type="file"
                                   accept="image/png, image/jpeg, image/gif"
                                   className="hidden"

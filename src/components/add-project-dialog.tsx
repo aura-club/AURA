@@ -285,7 +285,10 @@ export function AddProjectDialog({ children, open: controlledOpen, setOpen: setC
                                 </Button>
                                 <Input
                                   {...form.register("thumbnailImage")}
-                                  ref={thumbnailRef}
+                                  ref={(e) => {
+                                    form.register("thumbnailImage").ref(e);
+                                    if (thumbnailRef) thumbnailRef.current = e;
+                                  }}
                                   type="file"
                                   accept="image/png, image/jpeg, image/gif"
                                   className="hidden"
