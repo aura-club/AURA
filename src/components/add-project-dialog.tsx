@@ -246,7 +246,7 @@ export function AddProjectDialog({ children, open: controlledOpen, setOpen: setC
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.log("Form Errors:", errors))} className="space-y-8">
             <FormField
               control={form.control}
               name="title"
@@ -449,7 +449,11 @@ export function AddProjectDialog({ children, open: controlledOpen, setOpen: setC
                                 </Button>
                                 <Input
                                   {...form.register("galleryImages")}
-                                  ref={galleryRef}
+                                  ref={(e) => {
+                                    form.register("galleryImages").ref(e);
+                                    // @ts-ignore
+                                    if (galleryRef) galleryRef.current = e;
+                                  }}
                                   type="file"
                                   accept="image/png, image/jpeg, image/gif"
                                   multiple
