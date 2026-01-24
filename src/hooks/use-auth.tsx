@@ -724,11 +724,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (!user || !user.email) throw new Error("User must be logged in to add a resource.");
 
     const getImage = () => {
+      if (resource.imageUrl) {
+        return resource.imageUrl;
+      }
       if (resource.imageType === 'url' && resource.imageUrl) {
         return resource.imageUrl;
       }
       if (resource.imageType === 'upload' && resource.imageFile?.length > 0) {
-        // In a real app, upload and get URL. Here, use a placeholder.
         return `https://placehold.co/400/225.png`;
       }
       return undefined;
