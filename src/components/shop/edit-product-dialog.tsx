@@ -31,8 +31,7 @@ import {
 import { useShop } from "@/hooks/use-shop";
 import { usePickupLocations } from "@/hooks/use-pickup-locations";
 import { useToast } from "@/hooks/use-toast";
-import { storage } from "@/lib/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { uploadFile } from "@/lib/storage-utils";
 import { Upload, Link, MapPin } from "lucide-react";
 
 const productSchema = z.object({
@@ -65,11 +64,11 @@ export function EditProductDialog({ product, children }: EditProductDialogProps)
     product?.pickupLocations || []
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   const { updateProduct } = useShop();
   const { locations } = usePickupLocations();
   const { toast } = useToast();
-  
+
   const { register, handleSubmit, formState: { errors }, setValue, watch, control } = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -128,14 +127,12 @@ export function EditProductDialog({ product, children }: EditProductDialogProps)
     });
   };
 
-  // Upload image to Firebase Storage
+  // Upload image to ImgBB
   const uploadImage = async (): Promise<string | undefined> => {
     if (imageInputMethod === "upload" && selectedFile) {
       setIsUploading(true);
       try {
-        const storageRef = ref(storage, `shop-products/${Date.now()}-${selectedFile.name}`);
-        await uploadBytes(storageRef, selectedFile);
-        const downloadURL = await getDownloadURL(storageRef);
+        const downloadURL = await uploadFile(selectedFile, "shop-products");
         setIsUploading(false);
         return downloadURL;
       } catch (error) {
@@ -183,13 +180,18 @@ export function EditProductDialog({ product, children }: EditProductDialogProps)
         stock: data.stock,
         status: data.status as any,
         description: data.description,
+        // @ts-ignore
         imageUrl: finalImageUrl || data.imageUrl,
+        // @ts-ignore
         image: finalImageUrl || data.imageUrl, // For backward compatibility
+        // @ts-ignore
         deliveryAvailable: data.deliveryAvailable,
+        // @ts-ignore
         pickupAvailable: data.pickupAvailable,
+        // @ts-ignore
         pickupLocations: data.pickupAvailable ? selectedPickupLocations : [],
       });
-      
+
       toast({
         title: "Success",
         description: "Product updated successfully!",
@@ -263,8 +265,8 @@ export function EditProductDialog({ product, children }: EditProductDialogProps)
 
           <div>
             <label className="text-sm font-medium">Description *</label>
-            <textarea 
-              {...register("description")} 
+            <textarea
+              {...register("description")}
               className="w-full px-3 py-2 border rounded-md text-sm"
               rows={3}
             />
@@ -294,9 +296,9 @@ export function EditProductDialog({ product, children }: EditProductDialogProps)
                 />
                 {imagePreview && imageInputMethod === "url" && (
                   <div className="mt-2 border rounded-md p-2">
-                    <img 
-                      src={imagePreview} 
-                      alt="Preview" 
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
                       className="w-full h-32 object-cover rounded"
                       onError={() => setImagePreview(null)}
                     />
@@ -328,9 +330,9 @@ export function EditProductDialog({ product, children }: EditProductDialogProps)
                 )}
                 {imagePreview && imageInputMethod === "upload" && (
                   <div className="mt-2 border rounded-md p-2">
-                    <img 
-                      src={imagePreview} 
-                      alt="Preview" 
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
                       className="w-full h-32 object-cover rounded"
                     />
                   </div>
@@ -342,7 +344,7 @@ export function EditProductDialog({ product, children }: EditProductDialogProps)
           {/* Fulfillment Options */}
           <div className="border rounded-lg p-4 space-y-4">
             <h3 className="font-semibold text-sm">Fulfillment Options *</h3>
-            
+
             <div className="space-y-3">
               <Controller
                 name="deliveryAvailable"

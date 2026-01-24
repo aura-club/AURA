@@ -3,8 +3,28 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { onAuthStateChanged, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut as firebaseSignOut, updateProfile, signInWithPopup } from 'firebase/auth';
 import { auth, db, GoogleAuthProvider } from '@/lib/firebase';
-import { collection, onSnapshot, addDoc, doc, updateDoc, Timestamp, setDoc, getDoc, query, where, Unsubscribe, getDocs, writeBatch, deleteDoc, orderBy } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  collection, getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  addDoc,
+  query,
+  where,
+  onSnapshot,
+  deleteDoc,
+  orderBy,
+  limit,
+  Timestamp,
+  arrayUnion,
+  arrayRemove,
+  Unsubscribe,
+  getDocs,
+  writeBatch
+} from "firebase/firestore";
+import { uploadFile } from "@/lib/storage-utils";
+import { app } from "@/lib/firebase";
 import { preloadedOpportunities } from '@/lib/opportunities-data';
 import { preloadedResources } from '@/lib/resources-data';
 
@@ -580,10 +600,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     let finalPhotoURL = photoURL;
 
     if (photoFile) {
-      const storage = getStorage();
-      const storageRef = ref(storage, `profile-pictures/${currentUser.uid}/${photoFile.name}`);
-      const snapshot = await uploadBytes(storageRef, photoFile);
-      finalPhotoURL = await getDownloadURL(snapshot.ref);
+      finalPhotoURL = await uploadFile(photoFile, `profile-pictures`);
     }
 
     const profileUpdates: { displayName?: string, photoURL?: string | null } = {};
