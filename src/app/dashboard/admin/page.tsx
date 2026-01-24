@@ -42,12 +42,12 @@ export default function AdminPage() {
   // Page-level protection - check if user has ANY admin permission
   useEffect(() => {
     if (!authLoading && currentUser) {
-      const hasAnyAdminPermission = 
-        permissions.canManageMembers || 
-        permissions.canApproveSubmissions || 
+      const hasAnyAdminPermission =
+        permissions.canManageMembers ||
+        permissions.canApproveSubmissions ||
         permissions.canManageShop ||
         permissions.canDelete;
-      
+
       if (!hasAnyAdminPermission) {
         router.push('/dashboard/access-denied');
       }
@@ -97,9 +97,9 @@ export default function AdminPage() {
       setUserToDelete(null);
       return;
     }
-    
+
     if (!userToDelete) return;
-    
+
     try {
       await deleteUser(userToDelete.email);
       toast({ title: "User Deleted", description: "The user has been removed from the system." });
@@ -246,9 +246,9 @@ export default function AdminPage() {
       setAlumnusToDelete(null);
       return;
     }
-    
+
     if (!alumnusToDelete) return;
-    
+
     try {
       await deleteAlumnus(alumnusToDelete.id);
       toast({ title: "Alumnus Deleted", description: "The alumnus has been removed." });
@@ -264,7 +264,7 @@ export default function AdminPage() {
       toast(showPermissionError());
       return;
     }
-    
+
     try {
       await deleteAlumniOpportunity(id);
       toast({ title: "Opportunity Deleted", description: "The opportunity has been removed." });
@@ -286,25 +286,25 @@ export default function AdminPage() {
   }
 
   // Show nothing if no permission (prevents flash before redirect)
-  const hasAnyAdminPermission = 
-    permissions.canManageMembers || 
-    permissions.canApproveSubmissions || 
+  const hasAnyAdminPermission =
+    permissions.canManageMembers ||
+    permissions.canApproveSubmissions ||
     permissions.canManageShop ||
     permissions.canDelete;
-    
+
   if (!hasAnyAdminPermission) {
     return null;
   }
 
   const tabConfig = [
-    { id: 'requests', label: 'Join Requests', icon: <GitPullRequest className="h-4 w-4"/>, count: pendingRequests.length, show: permissions.canManageMembers },
-    { id: 'members', label: 'Members', icon: <Users className="h-4 w-4"/>, count: approvedMembers.length, show: permissions.canManageMembers },
-    { id: 'projects', label: 'Projects', icon: <FolderKanban className="h-4 w-4"/>, count: pendingProjects.length, show: permissions.canApproveSubmissions },
-    { id: 'resources', label: 'Resources', icon: <Library className="h-4 w-4"/>, count: pendingResources.length, show: permissions.canApproveSubmissions },
-    { id: 'opportunities', label: 'Opportunities', icon: <Calendar className="h-4 w-4"/>, count: pendingOpportunities.length, show: permissions.canApproveSubmissions },
-    { id: 'blog', label: 'Blog Posts', icon: <Newspaper className="h-4 w-4"/>, count: pendingBlogPosts.length, show: permissions.canApproveSubmissions },
-    { id: 'leadership', label: 'Leadership', icon: <UserCog className="h-4 w-4"/>, count: leadership.length, show: permissions.canManageMembers },
-    { id: 'alumni', label: 'Alumni', icon: <Users className="h-4 w-4"/>, count: alumni.length, show: permissions.canManageMembers },
+    { id: 'requests', label: 'Join Requests', icon: <GitPullRequest className="h-4 w-4" />, count: pendingRequests.length, show: permissions.canManageMembers },
+    { id: 'members', label: 'Members', icon: <Users className="h-4 w-4" />, count: approvedMembers.length, show: permissions.canManageMembers },
+    { id: 'projects', label: 'Projects', icon: <FolderKanban className="h-4 w-4" />, count: pendingProjects.length, show: permissions.canApproveSubmissions },
+    { id: 'resources', label: 'Resources', icon: <Library className="h-4 w-4" />, count: pendingResources.length, show: permissions.canApproveSubmissions },
+    { id: 'opportunities', label: 'Opportunities', icon: <Calendar className="h-4 w-4" />, count: pendingOpportunities.length, show: permissions.canApproveSubmissions },
+    { id: 'blog', label: 'Blog Posts', icon: <Newspaper className="h-4 w-4" />, count: pendingBlogPosts.length, show: permissions.canApproveSubmissions },
+    { id: 'leadership', label: 'Leadership', icon: <UserCog className="h-4 w-4" />, count: leadership.length, show: permissions.canManageMembers },
+    { id: 'alumni', label: 'Alumni', icon: <Users className="h-4 w-4" />, count: alumni.length, show: permissions.canManageMembers },
   ].filter(tab => tab.show);
 
   return (
@@ -458,7 +458,9 @@ export default function AdminPage() {
                               project={project}
                               onApprove={handleApproveProject}
                               onReject={handleRejectProject}
-                            />
+                            >
+                              <Button size="sm" variant="outline">Review</Button>
+                            </ProjectReviewDialog>
                           </div>
                         </div>
                       </CardContent>
@@ -490,7 +492,9 @@ export default function AdminPage() {
                             project={project}
                             onApprove={handleApproveProject}
                             onReject={handleRejectProject}
-                          />
+                          >
+                            <Button size="sm" variant="outline">Review</Button>
+                          </ProjectReviewDialog>
                         </div>
                       </CardContent>
                     </Card>
@@ -532,7 +536,9 @@ export default function AdminPage() {
                               resource={resource}
                               onApprove={handleApproveResource}
                               onReject={handleRejectResource}
-                            />
+                            >
+                              <Button size="sm" variant="outline">Review</Button>
+                            </ResourceReviewDialog>
                           </div>
                         </div>
                       </CardContent>
@@ -564,7 +570,9 @@ export default function AdminPage() {
                             resource={resource}
                             onApprove={handleApproveResource}
                             onReject={handleRejectResource}
-                          />
+                          >
+                            <Button size="sm" variant="outline">Review</Button>
+                          </ResourceReviewDialog>
                         </div>
                       </CardContent>
                     </Card>
@@ -606,7 +614,9 @@ export default function AdminPage() {
                               opportunity={opportunity}
                               onApprove={handleApproveOpportunity}
                               onReject={handleRejectOpportunity}
-                            />
+                            >
+                              <Button size="sm" variant="outline">Review</Button>
+                            </OpportunityReviewDialog>
                           </div>
                         </div>
                       </CardContent>
@@ -638,7 +648,9 @@ export default function AdminPage() {
                             opportunity={opportunity}
                             onApprove={handleApproveOpportunity}
                             onReject={handleRejectOpportunity}
-                          />
+                          >
+                            <Button size="sm" variant="outline">Review</Button>
+                          </OpportunityReviewDialog>
                         </div>
                       </CardContent>
                     </Card>
@@ -681,11 +693,11 @@ export default function AdminPage() {
                           </div>
                           <div className="flex gap-2 ml-4">
                             <BlogPostReviewDialog post={post} onApprove={handleApproveBlogPost} onReject={handleRejectBlogPost}>
-  <Button size="sm" variant="outline">
-    <Newspaper className="h-4 w-4 mr-2"/>
-    Review
-  </Button>
-</BlogPostReviewDialog>
+                              <Button size="sm" variant="outline">
+                                <Newspaper className="h-4 w-4 mr-2" />
+                                Review
+                              </Button>
+                            </BlogPostReviewDialog>
 
                           </div>
                         </div>
@@ -715,11 +727,11 @@ export default function AdminPage() {
                             <p className="text-xs text-destructive mt-2">Reason: {post.rejectionReason}</p>
                           </div>
                           <BlogPostReviewDialog post={post} onApprove={handleApproveBlogPost} onReject={handleRejectBlogPost}>
-  <Button size="sm" variant="outline">
-    <Newspaper className="h-4 w-4 mr-2"/>
-    Review
-  </Button>
-</BlogPostReviewDialog>
+                            <Button size="sm" variant="outline">
+                              <Newspaper className="h-4 w-4 mr-2" />
+                              Review
+                            </Button>
+                          </BlogPostReviewDialog>
 
                         </div>
                       </CardContent>
