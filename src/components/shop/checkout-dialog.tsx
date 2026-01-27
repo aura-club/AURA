@@ -17,11 +17,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ArrowLeft, Truck, MapPin } from "lucide-react";
+import { sendEmail } from "@/actions/send-email";
+import { Check, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useOrders } from "@/hooks/use-orders";
 import { usePickupLocations } from "@/hooks/use-pickup-locations";
 import { useShop } from "@/hooks/use-shop";
 import { useToast } from "@/hooks/use-toast";
+
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -64,6 +67,12 @@ export function CheckoutDialog({
   const { products } = useShop();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+
+  // OTP State
+  const [otp, setOtp] = useState<string | null>(null);
+  const [userOtp, setUserOtp] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
+  const [sendingOtp, setSendingOtp] = useState(false);
 
   // Check which delivery methods are available for ALL items in cart
   const availableDeliveryMethods = useMemo(() => {
@@ -108,8 +117,8 @@ export function CheckoutDialog({
 
   // Determine default delivery method
   const defaultDeliveryMethod = availableDeliveryMethods.delivery ? "delivery" : "pickup";
-  
-  const { register, handleSubmit, watch, control, formState: { errors }, setValue } = useForm<CheckoutData>({
+
+  const { register, handleSubmit, watch, control, formState: { errors }, setValue, getValues } = useForm<CheckoutData>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
       email: user?.email || "",
@@ -120,73 +129,126 @@ export function CheckoutDialog({
   const deliveryMethod = watch("deliveryMethod");
   const selectedPickupId = watch("pickupLocationId");
   const selectedLocation = availablePickupLocations.find(loc => loc.id === selectedPickupId);
+  const emailValue = watch("email");
+
+  // Generate and Send OTP
+  const sendVerifyEmail = async () => {
+    const email = getValues("email");
+    if (!email || !z.string().email().safeParse(email).success) {
+      toast({ title: "Invalid Email", description: "Please enter a valid email to verify.", variant: "destructive" });
+      return;
+    }
+
+    setSendingOtp(true);
+    try {
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      setOtp(code);
+      console.log("Generated OTP:", code); // Debug log (server will also verify)
+
+      const html = `
+        <div style="font-family: sans-serif; padding: 20px;">
+          <h2 style="color: #6d28d9;">Verify Your Email</h2>
+          <p>Your verification code for AIREINO Shop is:</p>
+          <h1 style="background: #f3f4f6; padding: 10px; display: inline-block; letter-spacing: 5px; border-radius: 5px;">${code}</h1>
+          <p>This code expires in 10 minutes.</p>
+        </div>
+      `;
+
+      const result = await sendEmail({ to: email, subject: "Your Verification Code", html });
+
+      if (result.success) {
+        toast({ title: "OTP Sent", description: "Please check your email for the verification code." });
+      } else {
+        throw new Error(result.error || "Failed to send email");
+      }
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to send verification email.", variant: "destructive" });
+    } finally {
+      setSendingOtp(false);
+    }
+  };
+
+  const handleVerifyOtp = () => {
+    if (userOtp === otp) {
+      setIsVerified(true);
+      toast({ title: "Verified", description: "Email verified successfully!" });
+    } else {
+      toast({ title: "Invalid Code", description: "The code you entered is incorrect.", variant: "destructive" });
+    }
+  };
 
   const onSubmit = async (data: CheckoutData) => {
-  if (!user) {
-    toast({
-      title: "Error",
-      description: "Please login to place an order",
-      variant: "destructive",
-    });
-    return;
-  }
-
-  setLoading(true);
-  try {
-    // Build order data object conditionally
-    const orderData: any = {
-      userId: user.uid,
-      userEmail: data.email,
-      userName: data.name,
-      userPhone: data.phone,
-      items: cartItems.map(item => ({
-        productId: item.productId,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-      })),
-      totalPrice,
-      status: 'pending',
-      deliveryMethod: data.deliveryMethod,
-    };
-
-    // Only add deliveryAddress if delivery method is selected
-    if (data.deliveryMethod === 'delivery' && data.address) {
-      orderData.deliveryAddress = data.address;
+    if (!isVerified) {
+      toast({ title: "Verification Required", description: "Please verify your email before placing the order.", variant: "destructive" });
+      return;
     }
 
-    // Only add pickupLocation if pickup method is selected
-    if (data.deliveryMethod === 'pickup' && selectedLocation) {
-      orderData.pickupLocation = {
-        id: selectedLocation.id,
-        name: selectedLocation.name,
-        address: selectedLocation.address,
-        contactNumber: selectedLocation.contactNumber,
+    // ... existing onSubmit logic (unchanged)
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "Please login to place an order",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Build order data object conditionally
+      const orderData: any = {
+        userId: user.uid,
+        userEmail: data.email,
+        userName: data.name,
+        userPhone: data.phone,
+        items: cartItems.map(item => ({
+          productId: item.productId,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        totalPrice,
+        status: 'pending',
+        deliveryMethod: data.deliveryMethod,
       };
+
+      // Only add deliveryAddress if delivery method is selected
+      if (data.deliveryMethod === 'delivery' && data.address) {
+        orderData.deliveryAddress = data.address;
+      }
+
+      // Only add pickupLocation if pickup method is selected
+      if (data.deliveryMethod === 'pickup' && selectedLocation) {
+        orderData.pickupLocation = {
+          id: selectedLocation.id,
+          name: selectedLocation.name,
+          address: selectedLocation.address,
+          contactNumber: selectedLocation.contactNumber,
+        };
+      }
+
+      const orderId = await createOrder(orderData);
+
+      toast({
+        title: "Order Placed Successfully! 🎉",
+        description: `Your order #${orderId?.slice(0, 8)} has been placed. ${data.deliveryMethod === 'pickup' ? 'We will notify you when ready for pickup.' : 'Admin will contact you soon.'}`,
+      });
+
+      onSuccess();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to place order",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
-
-    const orderId = await createOrder(orderData);
-
-    toast({
-      title: "Order Placed Successfully! 🎉",
-      description: `Your order #${orderId?.slice(0, 8)} has been placed. ${data.deliveryMethod === 'pickup' ? 'We will notify you when ready for pickup.' : 'Admin will contact you soon.'}`,
-    });
-
-    onSuccess();
-  } catch (error) {
-    toast({
-      title: "Error",
-      description: error instanceof Error ? error.message : "Failed to place order",
-      variant: "destructive",
-    });
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
     <div className="max-w-5xl mx-auto px-4">
+      {/* ... (Back button and Summary Card unchanged) */}
       <Button variant="ghost" onClick={onClose} className="mb-4">
         <ArrowLeft className="h-4 w-4 mr-2" />
         Back to Cart
@@ -228,6 +290,7 @@ export function CheckoutDialog({
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
+                {/* Name and Phone fields (unchanged) */}
                 <div>
                   <label className="text-sm font-medium">Full Name *</label>
                   <Input {...register("name")} placeholder="Your full name" className="mt-1" />
@@ -241,13 +304,52 @@ export function CheckoutDialog({
                 </div>
               </div>
 
-              <div>
-                <label className="text-sm font-medium">Email *</label>
-                <Input {...register("email")} placeholder="your@email.com" className="mt-1" />
-                {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>}
+              {/* Email & OTP Section */}
+              <div className="space-y-3 p-4 bg-muted/30 rounded-lg border border-border/50">
+                <div>
+                  <label className="text-sm font-medium flex items-center justify-between">
+                    <span>Email * {isVerified && <span className="text-green-600 text-xs ml-2 flex items-center inline-flex"><Check className="h-3 w-3 mr-1" />Verified</span>}</span>
+                  </label>
+                  <div className="flex gap-2 mt-1">
+                    <Input
+                      {...register("email")}
+                      placeholder="your@email.com"
+                      disabled={isVerified}
+                      className={isVerified ? "bg-green-50 border-green-200" : ""}
+                    />
+                    {!isVerified && (
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={sendVerifyEmail}
+                        disabled={sendingOtp || !emailValue}
+                      >
+                        {sendingOtp ? <Loader2 className="h-4 w-4 animate-spin" /> : "Verify"}
+                      </Button>
+                    )}
+                  </div>
+                  {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>}
+                </div>
+
+                {/* OTP Input Field (Shows only when OTP is sent but not verified) */}
+                {otp && !isVerified && (
+                  <div className="flex gap-2 items-end animate-in fade-in slide-in-from-top-2">
+                    <div className="flex-1">
+                      <label className="text-xs font-medium text-muted-foreground">Enter Code</label>
+                      <Input
+                        value={userOtp}
+                        onChange={(e) => setUserOtp(e.target.value)}
+                        placeholder="123456"
+                        className="mt-1 tracking-widest text-center font-mono"
+                        maxLength={6}
+                      />
+                    </div>
+                    <Button type="button" onClick={handleVerifyOtp} size="sm">Confirm</Button>
+                  </div>
+                )}
               </div>
 
-              {/* Delivery Method Selection - Only show if at least one method is available */}
+              {/* ... (Delivery Method logic unchanged) */}
               {(availableDeliveryMethods.delivery || availableDeliveryMethods.pickup) && (
                 <div>
                   <label className="text-sm font-medium mb-3 block">Delivery Method *</label>
@@ -255,9 +357,9 @@ export function CheckoutDialog({
                     name="deliveryMethod"
                     control={control}
                     render={({ field }) => (
-                      <RadioGroup 
-                        value={field.value} 
-                        onValueChange={field.onChange} 
+                      <RadioGroup
+                        value={field.value}
+                        onValueChange={field.onChange}
                         className="space-y-3"
                       >
                         {availableDeliveryMethods.delivery && (
@@ -272,7 +374,7 @@ export function CheckoutDialog({
                             </Label>
                           </div>
                         )}
-                        
+
                         {availableDeliveryMethods.pickup && (
                           <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-accent/50 cursor-pointer">
                             <RadioGroupItem value="pickup" id="pickup" />
@@ -292,7 +394,7 @@ export function CheckoutDialog({
                 </div>
               )}
 
-              {/* Conditional Fields */}
+              {/* ... (Conditional Fields unchanged) */}
               {deliveryMethod === "delivery" && availableDeliveryMethods.delivery && (
                 <div>
                   <label className="text-sm font-medium">Delivery Address *</label>
@@ -331,7 +433,7 @@ export function CheckoutDialog({
                     )}
                   />
                   {errors.pickupLocationId && <p className="text-xs text-red-500 mt-1">{errors.pickupLocationId.message}</p>}
-                  
+
                   {selectedLocation && (
                     <div className="mt-2 p-3 bg-muted rounded-lg text-sm">
                       <p className="font-medium flex items-center gap-2">
@@ -347,8 +449,13 @@ export function CheckoutDialog({
                 </div>
               )}
 
-              <Button type="submit" disabled={loading} className="w-full" size="lg">
-                {loading ? "Processing..." : `Place Order (${deliveryMethod === 'pickup' ? 'Pickup' : 'COD'})`}
+              <Button
+                type="submit"
+                disabled={loading || !isVerified}
+                className="w-full"
+                size="lg"
+              >
+                {loading ? "Processing..." : (!isVerified ? "Verify Email to Continue" : `Place Order (${deliveryMethod === 'pickup' ? 'Pickup' : 'COD'})`)}
               </Button>
             </form>
           </CardContent>
