@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, updateDoc, doc, getDocs, onSnapshot, query, where, orderBy } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, getDocs, onSnapshot, query, where, orderBy, getDoc } from 'firebase/firestore';
 import { useAuth } from './use-auth';
+import { sendEmail } from '@/actions/send-email';
 
 export interface Order {
   id: string;
@@ -94,6 +95,11 @@ export function useOrders() {
     }
   }, [user]);
 
+  // Helper for sending email
+  const sendOrderEmail = async (to: string | string[], subject: string, html: string) => {
+    await sendEmail({ to, subject, html });
+  };
+
   const createOrder = async (orderData: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
       const docRef = await addDoc(collection(db, 'orders'), {
@@ -102,6 +108,28 @@ export function useOrders() {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
+
+
+
+      // Send Confirmation Email
+      const itemsList = orderData.items.map(p => `<li>${p.name} (x${p.quantity}) - ₹${(p.price * p.quantity).toLocaleString('en-IN')}</li>`).join('');
+      const emailHtml = `
+        <div style="font-family: sans-serif; padding: 20px;">
+          <h1 style="color: #6d28d9;">Order Confirmed!</h1>
+          <p>Hi ${orderData.userName},</p>
+          <p>Thank you for your order. We have received it and are processing it.</p>
+          <h3>Order Details (Order #${docRef.id.slice(0, 8)})</h3>
+          <ul>${itemsList}</ul>
+          <p><strong>Total Amount: ₹${orderData.totalPrice.toLocaleString('en-IN')}</strong></p>
+          ${orderData.deliveryAddress ? `<p>Shipping to: ${orderData.deliveryAddress}</p>` : ''}
+          ${orderData.pickupLocation ? `<p>Pickup at: ${orderData.pickupLocation.name}</p>` : ''}
+          <hr/>
+          <p style="font-size: 12px; color: #666;">This is an automated email from AIREINO Shop.</p>
+        </div>
+      `;
+
+      await sendOrderEmail(orderData.userEmail, `Order Confirmation: #${docRef.id.slice(0, 8)}`, emailHtml);
+
       return docRef.id;
     } catch (err) {
       throw new Error(err instanceof Error ? err.message : 'Failed to create order');
@@ -116,6 +144,29 @@ export function useOrders() {
         updatedAt: new Date(),
         ...(notes && { notes }),
       });
+
+      // Fetch order to get user email
+      const orderSnap = await getDoc(orderRef);
+      if (orderSnap.exists()) {
+        const orderData = orderSnap.data() as Order; // Partial data
+        const userEmail = orderData.userEmail;
+        const userName = orderData.userName;
+
+        if (userEmail) {
+          const emailHtml = `
+                <div style="font-family: sans-serif; padding: 20px;">
+                    <h1 style="color: #6d28d9;">Order Update</h1>
+                    <p>Hi ${userName},</p>
+                    <p>Your order <strong>#${orderId.slice(0, 8)}</strong> status has been updated to:</p>
+                    <h2 style="background: #f3f4f6; padding: 10px; display: inline-block; border-radius: 5px;">${status.toUpperCase()}</h2>
+                    <p>You can view more details in your dashboard.</p>
+                    ${notes ? `<p><strong>Note from Admin:</strong> ${notes}</p>` : ''}
+                </div>
+                `;
+          await sendOrderEmail(userEmail, `Order Update: #${orderId.slice(0, 8)} is ${status}`, emailHtml);
+        }
+      }
+
     } catch (err) {
       throw new Error(err instanceof Error ? err.message : 'Failed to update order');
     }
@@ -144,13 +195,13 @@ export function useOrders() {
     try {
       const ordersRef = collection(db, 'orders');
       const q = query(
-        ordersRef, 
+        ordersRef,
         where('userId', '==', userId),
         orderBy('createdAt', 'desc')
       );
-      
+
       const snapshot = await getDocs(q);
-      
+
       return snapshot.docs.map(doc => {
         const data = doc.data();
         return {
@@ -173,6 +224,6 @@ export function useOrders() {
     createOrder,
     updateOrderStatus,
     getAllOrders,
-    getUserOrders, // Added this new function
+    getUserOrders,
   };
 }

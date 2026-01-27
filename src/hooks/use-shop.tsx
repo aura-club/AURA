@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useAuth } from './use-auth';
+import { sendEmail } from '@/actions/send-email';
 
 export type StockStatus = 'in-stock' | 'pre-order' | 'low-stock' | 'out-of-stock';
 export type ProductCategory = 'electrical' | 'airframe' | 'mechanical' | 'drone';
@@ -143,7 +144,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) {
         throw new Error('Only admins can add products');
       }
-      
+
       await addDoc(collection(db, 'products'), {
         ...product,
         createdAt: Timestamp.now(),
@@ -189,13 +190,42 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+
+
+  const sendOrderEmail = async (to: string | string[], subject: string, html: string) => {
+    // Call Server Action
+    await sendEmail({ to, subject, html });
+  };
+
   const createOrder = async (order: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
-      await addDoc(collection(db, 'shop_orders'), {
+      const docRef = await addDoc(collection(db, 'shop_orders'), {
         ...order,
         createdAt: Timestamp.now(),
         updatedAt: Timestamp.now(),
       });
+      console.log("🛒 Client: createOrder successful, triggering email..."); // Debug Log
+      // Send Confirmation Email
+      const itemsList = order.products.map(p => `<li>${p.name} (x${p.quantity}) - ₹${p.price * p.quantity}</li>`).join('');
+      const emailHtml = `
+        <div style="font-family: sans-serif; padding: 20px;">
+          <h1 style="color: #6d28d9;">Order Confirmed!</h1>
+          <p>Hi ${order.userName},</p>
+          <p>Thank you for your order. We have received it and are processing it.</p>
+          <h3>Order Details (Order #${docRef.id.slice(0, 8)})</h3>
+          <ul>${itemsList}</ul>
+          <p><strong>Total Amount: ₹${order.totalAmount}</strong></p>
+          <p>Shipping to:<br/>${order.shippingAddress?.street}, ${order.shippingAddress?.city}, ${order.shippingAddress?.zipCode}</p>
+          <hr/>
+          <p style="font-size: 12px; color: #666;">This is an automated email from AIREINO Shop.</p>
+        </div>
+      `;
+
+      await sendOrderEmail(order.userEmail, `Order Confirmation: #${docRef.id.slice(0, 8)}`, emailHtml);
+
+      // Notify Admins (Optional: hardcoded list or fetch admins)
+      // await sendOrderEmail('admin@aireino.net', 'New Order Received', `New order from ${order.userName} for ₹${order.totalAmount}`);
+
       setError(null);
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Failed to create order';
@@ -214,6 +244,22 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         status,
         updatedAt: Timestamp.now(),
       });
+
+      // Find order to get email
+      const order = orders.find(o => o.id === orderId);
+      if (order) {
+        const emailHtml = `
+           <div style="font-family: sans-serif; padding: 20px;">
+            <h1 style="color: #6d28d9;">Order Update</h1>
+            <p>Hi ${order.userName},</p>
+            <p>Your order <strong>#${orderId.slice(0, 8)}</strong> status has been updated to:</p>
+            <h2 style="background: #f3f4f6; padding: 10px; display: inline-block; border-radius: 5px;">${status.toUpperCase()}</h2>
+            <p>You can view more details in your dashboard.</p>
+          </div>
+        `;
+        await sendOrderEmail(order.userEmail, `Order Update: #${orderId.slice(0, 8)} is ${status}`, emailHtml);
+      }
+
       setError(null);
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Failed to update order';
