@@ -21,6 +21,7 @@ export default function JoinPage() {
     reason: string;
     quizScore: number;
     quizAnswers: number[];
+    division: string;
   }) => {
     setIsSubmitting(true);
     try {
@@ -32,7 +33,8 @@ export default function JoinPage() {
         data.phone,
         data.reason,
         data.quizScore,
-        data.quizAnswers
+        data.quizAnswers,
+        data.division
       );
 
       toast({

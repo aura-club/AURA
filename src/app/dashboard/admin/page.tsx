@@ -27,6 +27,8 @@ import { UpdateRoleSelect } from "@/components/update-role-select";
 import { EditLeaderDialog } from "@/components/edit-leader-dialog";
 import { EditAlumnusDialog } from "@/components/edit-alumnus-dialog";
 import { EditAlumniOpportunityDialog } from "@/components/edit-alumni-opportunity-dialog";
+import { EditAlumniOpportunityDialog } from "@/components/edit-alumni-opportunity-dialog";
+import { MarksCardDialog } from "@/components/marks-card-dialog";
 import Link from "next/link";
 
 export default function AdminPage() {
@@ -356,12 +358,11 @@ export default function AdminPage() {
                       <TableCell>{user.email}</TableCell>
                       <TableCell className="max-w-md truncate">{user.reason || 'No reason provided'}</TableCell>
                       <TableCell className="text-right space-x-2">
-                        <Button size="sm" onClick={() => handleApprove(user.email)}>
-                          <Check className="h-4 w-4 mr-1" /> Approve
-                        </Button>
-                        <Button size="sm" variant="destructive" onClick={() => handleDeny(user.email)}>
-                          <X className="h-4 w-4 mr-1" /> Deny
-                        </Button>
+                        <MarksCardDialog
+                          user={user}
+                          onApprove={handleApprove}
+                          onDeny={handleDeny}
+                        />
                       </TableCell>
                     </TableRow>
                   ))}
