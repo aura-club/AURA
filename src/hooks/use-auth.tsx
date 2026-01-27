@@ -27,6 +27,7 @@ import { uploadFile } from "@/lib/storage-utils";
 import { app } from "@/lib/firebase";
 import { preloadedOpportunities } from '@/lib/opportunities-data';
 import { preloadedResources } from '@/lib/resources-data';
+import { LoadingScreen } from '@/components/ui/loading-screen';
 
 export type UserRole = 'super_admin' | 'admin' | 'member' | 'user';
 export type UserStatus = 'approved' | 'pending' | 'denied';
@@ -988,6 +989,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     rejectAlumniOpportunity,
     deleteAlumniOpportunity,
   };
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
