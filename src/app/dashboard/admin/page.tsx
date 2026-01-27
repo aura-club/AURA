@@ -27,7 +27,12 @@ import { UpdateRoleSelect } from "@/components/update-role-select";
 import { EditLeaderDialog } from "@/components/edit-leader-dialog";
 import { EditAlumnusDialog } from "@/components/edit-alumnus-dialog";
 import { EditAlumniOpportunityDialog } from "@/components/edit-alumni-opportunity-dialog";
+
 import { MarksCardDialog } from "@/components/marks-card-dialog";
+import { AddProjectDialog } from "@/components/add-project-dialog";
+import { AddResourceDialog } from "@/components/add-resource-dialog";
+import { AddOpportunityDialog } from "@/components/add-opportunity-dialog";
+import { AddBlogPostDialog } from "@/components/add-blog-post-dialog";
 import Link from "next/link";
 
 export default function AdminPage() {
@@ -433,8 +438,18 @@ export default function AdminPage() {
       {activeTab === 'projects' && permissions.canApproveSubmissions && (
         <Card>
           <CardHeader>
-            <CardTitle>Project Submissions</CardTitle>
-            <CardDescription>Review pending and rejected projects</CardDescription>
+            <div className="flex justify-between items-center">
+              <div className="space-y-1">
+                <CardTitle>Project Submissions</CardTitle>
+                <CardDescription>Review pending and rejected projects</CardDescription>
+              </div>
+              <AddProjectDialog>
+                <Button>
+                  <PlusCircle className="mr-2 h-4 w-4" />
+                  Create Project
+                </Button>
+              </AddProjectDialog>
+            </div>
           </CardHeader>
           <CardContent className="space-y-6">
             <div>
@@ -510,8 +525,18 @@ export default function AdminPage() {
       {activeTab === 'resources' && permissions.canApproveSubmissions && (
         <Card>
           <CardHeader>
-            <CardTitle>Resource Submissions</CardTitle>
-            <CardDescription>Review pending and rejected resources</CardDescription>
+            <div className="flex justify-between items-center">
+              <div className="space-y-1">
+                <CardTitle>Resource Submissions</CardTitle>
+                <CardDescription>Review pending and rejected resources</CardDescription>
+              </div>
+              <AddResourceDialog>
+                <Button>
+                  <PlusCircle className="mr-2 h-4 w-4" />
+                  Add Resource
+                </Button>
+              </AddResourceDialog>
+            </div>
           </CardHeader>
           <CardContent className="space-y-6">
             <div>
@@ -588,8 +613,18 @@ export default function AdminPage() {
       {activeTab === 'opportunities' && permissions.canApproveSubmissions && (
         <Card>
           <CardHeader>
-            <CardTitle>Opportunity Submissions</CardTitle>
-            <CardDescription>Review pending and rejected opportunities</CardDescription>
+            <div className="flex justify-between items-center">
+              <div className="space-y-1">
+                <CardTitle>Opportunity Submissions</CardTitle>
+                <CardDescription>Review pending and rejected opportunities</CardDescription>
+              </div>
+              <AddOpportunityDialog>
+                <Button>
+                  <PlusCircle className="mr-2 h-4 w-4" />
+                  Add Opportunity
+                </Button>
+              </AddOpportunityDialog>
+            </div>
           </CardHeader>
           <CardContent className="space-y-6">
             <div>
@@ -666,8 +701,18 @@ export default function AdminPage() {
       {activeTab === 'blog' && permissions.canApproveSubmissions && (
         <Card>
           <CardHeader>
-            <CardTitle>Blog Post Submissions</CardTitle>
-            <CardDescription>Review pending and rejected blog posts</CardDescription>
+            <div className="flex justify-between items-center">
+              <div className="space-y-1">
+                <CardTitle>Blog Post Submissions</CardTitle>
+                <CardDescription>Review pending and rejected blog posts</CardDescription>
+              </div>
+              <AddBlogPostDialog>
+                <Button>
+                  <PlusCircle className="mr-2 h-4 w-4" />
+                  New Post
+                </Button>
+              </AddBlogPostDialog>
+            </div>
           </CardHeader>
           <CardContent className="space-y-6">
             <div>
@@ -786,7 +831,9 @@ export default function AdminPage() {
                         />
                       </TableCell>
                       <TableCell className="text-right">
-                        <EditLeaderDialog leader={leader} />
+                        <EditLeaderDialog leader={leader}>
+                          <Button size="sm" variant="ghost"><Edit className="h-4 w-4" /></Button>
+                        </EditLeaderDialog>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -839,7 +886,9 @@ export default function AdminPage() {
                         <TableCell>{alumnus.company}</TableCell>
                         <TableCell>{alumnus.graduationYear}</TableCell>
                         <TableCell className="text-right space-x-2">
-                          <EditAlumnusDialog alumnus={alumnus} />
+                          <EditAlumnusDialog alumnus={alumnus}>
+                            <Button size="sm" variant="ghost"><Edit className="h-4 w-4" /></Button>
+                          </EditAlumnusDialog>
                           {permissions.canDelete && (
                             <Button
                               size="sm"
@@ -883,8 +932,10 @@ export default function AdminPage() {
                               View Opportunity →
                             </a>
                           </div>
-                          <div className="flex gap-2 ml-4">
-                            <EditAlumniOpportunityDialog opportunity={opp} />
+                          <div className="flex gap-2 mt-4 justify-end">
+                            <EditAlumniOpportunityDialog opportunity={opp}>
+                              <Button size="sm" variant="outline">Edit</Button>
+                            </EditAlumniOpportunityDialog>
                             {permissions.canDelete && (
                               <Button
                                 size="sm"
@@ -910,17 +961,19 @@ export default function AdminPage() {
 
       {/* Delete Confirmation Dialogs */}
       <DeleteConfirmationDialog
-        isOpen={!!userToDelete}
+        open={!!userToDelete}
         onOpenChange={(open) => !open && setUserToDelete(null)}
         onConfirm={handleDeleteUser}
+        onCancel={() => setUserToDelete(null)}
         title="Delete User"
         description={`Are you sure you want to delete ${userToDelete?.name}? This action cannot be undone.`}
       />
 
       <DeleteConfirmationDialog
-        isOpen={!!alumnusToDelete}
+        open={!!alumnusToDelete}
         onOpenChange={(open) => !open && setAlumnusToDelete(null)}
         onConfirm={handleDeleteAlumnus}
+        onCancel={() => setAlumnusToDelete(null)}
         title="Delete Alumnus"
         description={`Are you sure you want to delete ${alumnusToDelete?.name}? This action cannot be undone.`}
       />

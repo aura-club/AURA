@@ -707,7 +707,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (!user || !user.email) throw new Error("User must be logged in to add a project.");
     await addDoc(collection(db, 'projects'), {
       ...project,
-      status: 'pending',
+      status: (user.role === 'admin' || user.role === 'super_admin') ? 'approved' : 'pending',
       createdAt: Timestamp.now(),
       authorEmail: user.email,
       authorName: user.displayName || 'Unknown',
@@ -784,7 +784,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (!user || !user.email) throw new Error("User must be logged in to add an opportunity.");
     await addDoc(collection(db, 'opportunities'), {
       ...opportunity,
-      status: 'pending',
+      status: (user.role === 'admin' || user.role === 'super_admin') ? 'approved' : 'pending',
       createdAt: Timestamp.now(),
       authorEmail: user.email,
       authorName: user.displayName || 'Unknown',
