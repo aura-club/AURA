@@ -27,7 +27,6 @@ import { UpdateRoleSelect } from "@/components/update-role-select";
 import { EditLeaderDialog } from "@/components/edit-leader-dialog";
 import { EditAlumnusDialog } from "@/components/edit-alumnus-dialog";
 import { EditAlumniOpportunityDialog } from "@/components/edit-alumni-opportunity-dialog";
-import { EditAlumniOpportunityDialog } from "@/components/edit-alumni-opportunity-dialog";
 import { MarksCardDialog } from "@/components/marks-card-dialog";
 import Link from "next/link";
 

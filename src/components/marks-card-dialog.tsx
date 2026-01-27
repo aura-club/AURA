@@ -97,7 +97,7 @@ export function MarksCardDialog({ user, onApprove, onDeny }: MarksCardDialogProp
                             <div className="p-2 bg-background rounded-full">
                                 <Mail className="h-4 w-4" />
                             </div>
-                            <div>
+                            <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground">Email Address</p>
                                 <p className="font-medium text-sm truncate" title={user.email}>{user.email}</p>
                             </div>
