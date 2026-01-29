@@ -14,10 +14,12 @@ export default function ProjectsPage() {
 
   // Filter projects based on search query
   const filteredProjects = useMemo(() => {
-    if (!searchQuery.trim()) return projects;
-    
+    let filtered = projects.filter(p => p.status === 'approved');
+
+    if (!searchQuery.trim()) return filtered;
+
     const query = searchQuery.toLowerCase();
-    return projects.filter((project) =>
+    return filtered.filter((project) =>
       project.title.toLowerCase().includes(query) ||
       project.excerpt.toLowerCase().includes(query) ||
       project.description.toLowerCase().includes(query) ||

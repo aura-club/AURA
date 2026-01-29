@@ -3,6 +3,7 @@
 
 import { useAuth } from "@/hooks/use-auth";
 import { useParams } from 'next/navigation';
+import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,19 +11,26 @@ import { ExternalLink, Users, Target, FlaskConical, CheckCircle } from "lucide-r
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from "@/components/ui/carousel"
 import React from "react";
 
 
 export default function ProjectDetailPage() {
     const params = useParams();
-    const { projects } = useAuth();
+    const { projects, user } = useAuth();
     const projectData = projects.find(p => p.id === params.slug);
+
+    const canView = useMemo(() => {
+        if (!projectData) return false;
+        if (projectData.status === 'approved') return true;
+        if (!user) return false;
+        return user.role === 'admin' || user.role === 'super_admin' || user.email === projectData.authorEmail;
+    }, [projectData, user]);
 
     const renderDescription = (text: string) => {
         if (!text) return null;
@@ -33,15 +41,15 @@ export default function ProjectDetailPage() {
         ));
     };
 
-    if (!projectData) {
+    if (!projectData || !canView) {
         return (
-             <div className="container mx-auto px-4 py-16 max-w-5xl">
+            <div className="container mx-auto px-4 py-16 max-w-5xl">
                 <div className="mb-8">
                     <Button variant="ghost" asChild className="text-sm text-muted-foreground hover:text-foreground pl-0">
-                      <Link href="/projects">&larr; Back to Projects</Link>
+                        <Link href="/projects">&larr; Back to Projects</Link>
                     </Button>
                 </div>
-                 <Card className="bg-card border-border/60">
+                <Card className="bg-card border-border/60">
                     <CardHeader>
                         <CardTitle className="font-headline">Project Not Found</CardTitle>
                     </CardHeader>
@@ -59,7 +67,7 @@ export default function ProjectDetailPage() {
         <div className="container mx-auto px-4 py-16 max-w-5xl">
             <div className="mb-8">
                 <Button variant="ghost" asChild className="text-sm text-muted-foreground hover:text-foreground pl-0">
-                  <Link href="/projects">&larr; Back to Projects</Link>
+                    <Link href="/projects">&larr; Back to Projects</Link>
                 </Button>
             </div>
 
@@ -69,10 +77,10 @@ export default function ProjectDetailPage() {
                     <p className="mt-4 max-w-3xl mx-auto text-lg text-muted-foreground">{projectData.excerpt}</p>
                 </header>
 
-                <Image 
-                    src={projectData.thumbnailImage} 
+                <Image
+                    src={projectData.thumbnailImage}
                     alt={projectData.title}
-                    data-ai-hint={projectData.title.split(" ").slice(0,2).join(" ")}
+                    data-ai-hint={projectData.title.split(" ").slice(0, 2).join(" ")}
                     width={1200}
                     height={600}
                     className="w-full rounded-lg shadow-lg"
@@ -81,7 +89,7 @@ export default function ProjectDetailPage() {
                 <div className="prose prose-invert max-w-none space-y-4">
                     {renderDescription(projectData.description)}
                 </div>
-                
+
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
                         <CardHeader><CardTitle className="flex items-center gap-2 font-headline"><Target /> Objectives</CardTitle></CardHeader>
@@ -92,24 +100,24 @@ export default function ProjectDetailPage() {
                         </CardContent>
                     </Card>
                     <Card>
-                         <CardHeader><CardTitle className="flex items-center gap-2 font-headline"><Users /> Team Members</CardTitle></CardHeader>
+                        <CardHeader><CardTitle className="flex items-center gap-2 font-headline"><Users /> Team Members</CardTitle></CardHeader>
                         <CardContent>
                             <div className="flex flex-wrap gap-2">
-                                 {projectData.teamMembers.map((member, i) => <Badge key={i} variant="secondary">{member}</Badge>)}
+                                {projectData.teamMembers.map((member, i) => <Badge key={i} variant="secondary">{member}</Badge>)}
                             </div>
                         </CardContent>
                     </Card>
                 </div>
 
                 <Card>
-                    <CardHeader><CardTitle className="font-headline flex items-center gap-2"><FlaskConical/> Methodology</CardTitle></CardHeader>
+                    <CardHeader><CardTitle className="font-headline flex items-center gap-2"><FlaskConical /> Methodology</CardTitle></CardHeader>
                     <CardContent><p className="text-muted-foreground">{projectData.methodology}</p></CardContent>
                 </Card>
                 <Card>
-                    <CardHeader><CardTitle className="font-headline flex items-center gap-2"><CheckCircle/> Outcomes</CardTitle></CardHeader>
+                    <CardHeader><CardTitle className="font-headline flex items-center gap-2"><CheckCircle /> Outcomes</CardTitle></CardHeader>
                     <CardContent><p className="text-muted-foreground">{projectData.outcomes}</p></CardContent>
                 </Card>
-                
+
                 {projectData.galleryImages && projectData.galleryImages.length > 0 && (
                     <Card>
                         <CardHeader><CardTitle className="font-headline">Gallery</CardTitle></CardHeader>
@@ -118,7 +126,7 @@ export default function ProjectDetailPage() {
                                 <CarouselContent>
                                     {projectData.galleryImages.map((img, i) => (
                                         <CarouselItem key={i}>
-                                            <Image src={img} alt={`${projectData.title} gallery image ${i+1}`} width={1000} height={700} className="w-full rounded-md" data-ai-hint="project gallery" />
+                                            <Image src={img} alt={`${projectData.title} gallery image ${i + 1}`} width={1000} height={700} className="w-full rounded-md" data-ai-hint="project gallery" />
                                         </CarouselItem>
                                     ))}
                                 </CarouselContent>
@@ -130,7 +138,7 @@ export default function ProjectDetailPage() {
                 )}
 
                 {projectData.externalLinks && projectData.externalLinks.length > 0 && (
-                     <Card>
+                    <Card>
                         <CardHeader><CardTitle className="font-headline">Links & Resources</CardTitle></CardHeader>
                         <CardContent>
                             <div className="flex flex-col gap-3">
