@@ -91,28 +91,28 @@ service cloud.firestore {
     // Rules for the 'projects' collection
     match /projects/{docId} {
       allow read: if true;
-      allow create: if isMemberOrAdmin();
+      allow create: if isAuthenticated();
       allow update, delete: if isAdmin();
     }
 
     // Rules for the 'resources' collection
     match /resources/{docId} {
       allow read: if true;
-      allow create: if isMemberOrAdmin();
+      allow create: if isAuthenticated();
       allow update, delete: if isAdmin();
     }
 
     // Rules for the 'opportunities' collection
     match /opportunities/{docId} {
       allow read: if true;
-      allow create: if isMemberOrAdmin();
+      allow create: if isAuthenticated();
       allow update, delete: if isAdmin();
     }
 
     // Rules for the 'blogPosts' collection
     match /blogPosts/{docId} {
       allow read: if true;
-      allow create: if isMemberOrAdmin();
+      allow create: if isAuthenticated();
       allow update, delete: if isAdmin();
     }
 
