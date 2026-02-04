@@ -259,6 +259,7 @@ interface AuthContextType {
   approveAlumniOpportunity: (opportunityId: string) => void;
   rejectAlumniOpportunity: (opportunityId: string, reason: string) => void;
   deleteAlumniOpportunity: (opportunityId: string) => Promise<void>;
+  restoreDefaultContent: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -266,15 +267,66 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<AppUser>(null);
   const [users, setUsers] = useState<AppDbUser[]>([]);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [resources, setResources] = useState<Resource[]>([]);
-  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  // State split into segments to avoid merge conflicts and ghost data
+  const [publicProjects, setPublicProjects] = useState<Project[]>([]);
+  const [userProjects, setUserProjects] = useState<Project[]>([]);
+  const [adminProjects, setAdminProjects] = useState<Project[]>([]);
+
+  const [publicResources, setPublicResources] = useState<Resource[]>([]);
+  const [userResources, setUserResources] = useState<Resource[]>([]);
+  const [adminResources, setAdminResources] = useState<Resource[]>([]);
+
+  const [publicOpportunities, setPublicOpportunities] = useState<Opportunity[]>([]);
+  const [userOpportunities, setUserOpportunities] = useState<Opportunity[]>([]);
+  const [adminOpportunities, setAdminOpportunities] = useState<Opportunity[]>([]);
+
+  const [publicBlogPosts, setPublicBlogPosts] = useState<BlogPost[]>([]);
+  const [userBlogPosts, setUserBlogPosts] = useState<BlogPost[]>([]);
+  const [adminBlogPosts, setAdminBlogPosts] = useState<BlogPost[]>([]);
+
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [leadership, setLeadership] = useState<LeadershipMember[]>([]);
   const [alumni, setAlumni] = useState<Alumnus[]>([]);
   const [alumniOpportunities, setAlumniOpportunities] = useState<AlumniOpportunity[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Helper for sorting
+  const sortData = <T extends { createdAt: Timestamp }>(data: T[]): T[] => {
+    return data.sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+  };
+
+  // Derived state to merge segments based on role
+  const projects = React.useMemo(() => {
+    if (user?.role === 'admin' || user?.role === 'super_admin') return adminProjects;
+    const map = new Map();
+    publicProjects.forEach(p => map.set(p.id, p));
+    userProjects.forEach(p => map.set(p.id, p));
+    return sortData(Array.from(map.values()));
+  }, [user?.role, adminProjects, publicProjects, userProjects]);
+
+  const resources = React.useMemo(() => {
+    if (user?.role === 'admin' || user?.role === 'super_admin') return adminResources;
+    const map = new Map();
+    publicResources.forEach(p => map.set(p.id, p));
+    userResources.forEach(p => map.set(p.id, p));
+    return sortData(Array.from(map.values()));
+  }, [user?.role, adminResources, publicResources, userResources]);
+
+  const opportunities = React.useMemo(() => {
+    if (user?.role === 'admin' || user?.role === 'super_admin') return adminOpportunities;
+    const map = new Map();
+    publicOpportunities.forEach(p => map.set(p.id, p));
+    userOpportunities.forEach(p => map.set(p.id, p));
+    return sortData(Array.from(map.values()));
+  }, [user?.role, adminOpportunities, publicOpportunities, userOpportunities]);
+
+  const blogPosts = React.useMemo(() => {
+    if (user?.role === 'admin' || user?.role === 'super_admin') return adminBlogPosts;
+    const map = new Map();
+    publicBlogPosts.forEach(p => map.set(p.id, p));
+    userBlogPosts.forEach(p => map.set(p.id, p));
+    return sortData(Array.from(map.values()));
+  }, [user?.role, adminBlogPosts, publicBlogPosts, userBlogPosts]);
 
   // This effect handles fetching data based on the user's role.
   useEffect(() => {
@@ -308,30 +360,31 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     const fetchPublicData = () => {
+      // Projects
       const approvedProjectsQuery = query(projectsCollection, where('status', '==', 'approved'));
       unsubscribes.push(onSnapshot(approvedProjectsQuery, (snapshot) => {
-        const approvedProjects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project));
-        setProjects(prev => sortData(Array.from(new Map([...prev, ...approvedProjects].map(p => [p.id, p])).values())));
+        setPublicProjects(sortData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project))));
       }, handleSnapshotError));
 
+      // Resources
       const approvedResourcesQuery = query(resourcesCollection, where('status', '==', 'approved'));
       unsubscribes.push(onSnapshot(approvedResourcesQuery, (snapshot) => {
-        const firestoreResources = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Resource));
-        setResources(sortData(Array.from(new Map([...preloadedResources, ...firestoreResources].map(item => [item.id, item])).values())));
+        setPublicResources(sortData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Resource))));
       }, handleSnapshotError));
 
+      // Opportunities
       const approvedOppsQuery = query(opportunitiesCollection, where('status', '==', 'approved'));
       unsubscribes.push(onSnapshot(approvedOppsQuery, (snapshot) => {
-        const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Opportunity));
-        setOpportunities(sortData([...preloadedOpportunities, ...firestoreOpps]));
+        setPublicOpportunities(sortData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Opportunity))));
       }, handleSnapshotError));
 
+      // Blog
       const approvedBlogPostsQuery = query(blogPostsCollection, where('status', '==', 'approved'));
       unsubscribes.push(onSnapshot(approvedBlogPostsQuery, snapshot => {
-        const approvedPosts = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as BlogPost));
-        setBlogPosts(prev => sortData(Array.from(new Map([...prev, ...approvedPosts].map(p => [p.id, p])).values())));
+        setPublicBlogPosts(sortData(snapshot.docs.map(d => ({ ...d.data(), id: d.id } as BlogPost))));
       }, handleSnapshotError));
 
+      // Other public data
       unsubscribes.push(onSnapshot(query(leadershipCollection, orderBy('order')),
         (snapshot) => setLeadership(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as LeadershipMember))),
         handleSnapshotError
@@ -345,8 +398,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       const alumniOppsCollection = collection(db, 'alumniOpportunities');
       unsubscribes.push(onSnapshot(alumniOppsCollection, snapshot => {
-        const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AlumniOpportunity));
-        setAlumniOpportunities(sortData(firestoreOpps));
+        setAlumniOpportunities(sortData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AlumniOpportunity))));
       }, handleSnapshotError));
     };
 
@@ -360,52 +412,48 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       const myProjectsQuery = query(projectsCollection, where('authorEmail', '==', user.email));
       unsubscribes.push(onSnapshot(myProjectsQuery, snapshot => {
-        const myProjects = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Project));
-        setProjects(prev => sortData(Array.from(new Map([...prev, ...myProjects].map(p => [p.id, p])).values())));
+        setUserProjects(sortData(snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Project))));
       }, handleSnapshotError));
 
       const myResourcesQuery = query(resourcesCollection, where('authorEmail', '==', user.email));
       unsubscribes.push(onSnapshot(myResourcesQuery, snapshot => {
-        const myResources = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Resource));
-        setResources(prev => sortData(Array.from(new Map([...prev, ...myResources].map(r => [r.id, r])).values())));
+        setUserResources(sortData(snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Resource))));
       }, handleSnapshotError));
 
       const myOpportunitiesQuery = query(opportunitiesCollection, where('authorEmail', '==', user.email));
       unsubscribes.push(onSnapshot(myOpportunitiesQuery, snapshot => {
-        const myOpps = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Opportunity));
-        setOpportunities(prev => sortData(Array.from(new Map([...prev, ...myOpps].map(o => [o.id, o])).values())));
+        setUserOpportunities(sortData(snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Opportunity))));
       }, handleSnapshotError));
 
       const myBlogPostsQuery = query(blogPostsCollection, where('authorEmail', '==', user.email));
       unsubscribes.push(onSnapshot(myBlogPostsQuery, snapshot => {
-        const myPosts = snapshot.docs.map(d => ({ ...d.data(), id: d.id } as BlogPost));
-        setBlogPosts(prev => sortData(Array.from(new Map([...prev, ...myPosts].map(p => [p.id, p])).values())));
+        setUserBlogPosts(sortData(snapshot.docs.map(d => ({ ...d.data(), id: d.id } as BlogPost))));
       }, handleSnapshotError));
     };
 
     const fetchAdminData = () => {
       if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) return;
 
+      // When admin, we fetch EVERYTHING and put it in the admin buckets
+
       unsubscribes.push(onSnapshot(usersCollection, (snapshot) => {
         setUsers(snapshot.docs.map(doc => doc.data() as AppDbUser));
       }, handleSnapshotError));
 
       unsubscribes.push(onSnapshot(projectsCollection, snapshot => {
-        setProjects(sortData(snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Project))));
+        setAdminProjects(sortData(snapshot.docs.map(d => ({ ...d.data(), id: d.id } as Project))));
       }, handleSnapshotError));
 
       unsubscribes.push(onSnapshot(resourcesCollection, snapshot => {
-        const firestoreResources = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Resource));
-        setResources(sortData(Array.from(new Map([...preloadedResources, ...firestoreResources].map(item => [item.id, item])).values())));
+        setAdminResources(sortData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Resource))));
       }, handleSnapshotError));
 
       unsubscribes.push(onSnapshot(opportunitiesCollection, snapshot => {
-        const firestoreOpps = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Opportunity));
-        setOpportunities(sortData([...preloadedOpportunities, ...firestoreOpps]));
+        setAdminOpportunities(sortData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Opportunity))));
       }, handleSnapshotError));
 
       unsubscribes.push(onSnapshot(blogPostsCollection, snapshot => {
-        setBlogPosts(sortData(snapshot.docs.map(d => ({ ...d.data(), id: d.id } as BlogPost))));
+        setAdminBlogPosts(sortData(snapshot.docs.map(d => ({ ...d.data(), id: d.id } as BlogPost))));
       }, handleSnapshotError));
 
       const alumniCollection = collection(db, 'alumni');
@@ -807,6 +855,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     await deleteDoc(opportunityDocRef);
   };
 
+  const restoreDefaultContent = async () => {
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can restore content.");
+
+    const batch = writeBatch(db);
+
+    preloadedResources.forEach(resource => {
+      const docRef = doc(db, 'resources', resource.id);
+      batch.set(docRef, { ...resource, createdAt: Timestamp.now() });
+    });
+
+    preloadedOpportunities.forEach(opp => {
+      const docRef = doc(db, 'opportunities', opp.id);
+      batch.set(docRef, { ...opp, createdAt: Timestamp.now() });
+    });
+
+    await batch.commit();
+  };
+
+
+
   const addBlogPost = async (post: AddBlogPostPayload) => {
     if (!user || !user.email) throw new Error("User must be logged in to add a blog post.");
 
@@ -988,14 +1056,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     approveAlumniOpportunity,
     rejectAlumniOpportunity,
     deleteAlumniOpportunity,
+    restoreDefaultContent,
   };
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
+};
 
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
