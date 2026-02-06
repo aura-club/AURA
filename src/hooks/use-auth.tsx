@@ -461,9 +461,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setAlumni(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Alumnus)));
       }, handleSnapshotError));
 
-      // Trigger cleanup of old rejected content
-      cleanupRejectedContent();
     };
+
 
     cleanup();
     fetchPublicData();
@@ -475,6 +474,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     return cleanup;
   }, [loading, user]);
+
+  // Separate effect for background cleanup task to avoid conflicting with initial listeners
+  useEffect(() => {
+    if (user?.role === 'admin' || user?.role === 'super_admin') {
+      // Delay cleanup to allow initial data load to complete and stabilize Firestore state
+      const timer = setTimeout(() => {
+        cleanupRejectedContent();
+      }, 10000); // 10 second delay
+
+      return () => clearTimeout(timer);
+    }
+  }, [user?.role]);
 
   const handleUser = async (firebaseUser: User | null): Promise<AppUser> => {
     if (!firebaseUser || !firebaseUser.email) return null;

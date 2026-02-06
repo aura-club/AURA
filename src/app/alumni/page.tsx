@@ -6,9 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/hooks/use-auth';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { useEffect } from 'react';
 import { ViewAlumnusDetailsDialog } from "@/components/view-alumnus-details-dialog";
 import { ExternalLink } from 'lucide-react';
 
@@ -24,28 +21,12 @@ interface Alumnus {
 }
 
 const AlumniPage: FC = () => {
-  const { user, alumniOpportunities } = useAuth();
-  const [alumniData, setAlumniData] = useState<Alumnus[]>([]);
+  const { user, alumni, alumniOpportunities } = useAuth();
   const [selectedAlumnus, setSelectedAlumnus] = useState<Alumnus | null>(null);
 
   const handleViewMore = (alumnus: Alumnus) => {
     setSelectedAlumnus(alumnus);
   };
-
-  useEffect(() => {
-    const fetchAlumni = async () => {
-      try {
-        const alumniCollection = collection(db, 'alumni');
-        const alumniSnapshot = await getDocs(alumniCollection);
-        const alumniList = alumniSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }) as Alumnus);
-        setAlumniData(alumniList);
-      } catch (error) {
-        console.error('Error fetching alumni data: ', error);
-      }
-    };
-
-    fetchAlumni();
-  }, []);
 
   return (
     <>
@@ -66,7 +47,7 @@ const AlumniPage: FC = () => {
           {/* Alumni Profiles Tab */}
           <TabsContent value="profiles">
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-6xl mx-auto">
-              {alumniData.map((alumnus, index) => (
+              {alumni.map((alumnus, index) => (
                 <Card key={index} className="bg-card border-border/60">
                   <CardHeader className="items-center">
                     <Avatar className="h-24 w-24">
@@ -96,7 +77,7 @@ const AlumniPage: FC = () => {
               ))}
             </div>
 
-            {alumniData.length === 0 && (
+            {alumni.length === 0 && (
               <div className="text-center py-16">
                 <p className="text-muted-foreground">No alumni profiles available yet.</p>
               </div>
