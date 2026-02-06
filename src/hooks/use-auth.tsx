@@ -460,6 +460,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       unsubscribes.push(onSnapshot(alumniCollection, snapshot => {
         setAlumni(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Alumnus)));
       }, handleSnapshotError));
+
+      // Trigger cleanup of old rejected content
+      cleanupRejectedContent();
     };
 
     cleanup();
@@ -769,7 +772,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const rejectProject = async (projectId: string, reason: string) => {
     const projectDocRef = doc(db, 'projects', projectId);
-    await updateDoc(projectDocRef, { status: 'rejected', rejectionReason: reason });
+    await updateDoc(projectDocRef, {
+      status: 'rejected',
+      rejectionReason: reason,
+      rejectedAt: Timestamp.now()
+    });
   };
 
   const deleteProject = async (projectId: string) => {
@@ -819,7 +826,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const rejectResource = async (resourceId: string, reason: string) => {
     const resourceDocRef = doc(db, 'resources', resourceId);
-    await updateDoc(resourceDocRef, { status: 'rejected', rejectionReason: reason });
+    await updateDoc(resourceDocRef, {
+      status: 'rejected',
+      rejectionReason: reason,
+      rejectedAt: Timestamp.now()
+    });
   };
 
   const deleteResource = async (resourceId: string) => {
@@ -846,7 +857,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const rejectOpportunity = async (opportunityId: string, reason: string) => {
     const opportunityDocRef = doc(db, 'opportunities', opportunityId);
-    await updateDoc(opportunityDocRef, { status: 'rejected', rejectionReason: reason });
+    await updateDoc(opportunityDocRef, {
+      status: 'rejected',
+      rejectionReason: reason,
+      rejectedAt: Timestamp.now()
+    });
   };
 
   const deleteOpportunity = async (opportunityId: string) => {
@@ -871,6 +886,51 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     });
 
     await batch.commit();
+  };
+
+  const cleanupRejectedContent = async () => {
+    if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) return;
+
+    const collections = ['projects', 'resources', 'opportunities', 'blogPosts', 'alumniOpportunities'];
+    // 24 hours ago
+    const cutoffTime = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const cutoffTimestamp = Timestamp.fromDate(cutoffTime);
+
+    // Using batch for atomic cleanup per collection if needed, but simple loop is fine for background task
+    // Limiting query to status=rejected is first step
+
+    for (const collectionName of collections) {
+      try {
+        const q = query(
+          collection(db, collectionName),
+          where('status', '==', 'rejected')
+        );
+
+        const snapshot = await getDocs(q);
+        const batch = writeBatch(db);
+        let batchCount = 0;
+
+        snapshot.docs.forEach(doc => {
+          const data = doc.data();
+          // Check rejectedAt first, fallback to updatedAt or use caution
+          // If neither exists, we skip to prevent deleting legacy rejections unintentionally,
+          // OR we could assume if it's rejected and has no timestamp it IS old.
+          // Given the robust instruction, we should assume we only clean what we marked.
+
+          if (data.rejectedAt && data.rejectedAt.toMillis() < cutoffTimestamp.toMillis()) {
+            batch.delete(doc.ref);
+            batchCount++;
+          }
+        });
+
+        if (batchCount > 0) {
+          await batch.commit();
+          console.log(`Cleaned up ${batchCount} old rejected items from ${collectionName}`);
+        }
+      } catch (error) {
+        console.error(`Error cleaning up ${collectionName}:`, error);
+      }
+    }
   };
 
 
@@ -902,7 +962,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const rejectBlogPost = async (postId: string, reason: string) => {
     const postDocRef = doc(db, 'blogPosts', postId);
-    await updateDoc(postDocRef, { status: 'rejected', rejectionReason: reason });
+    await updateDoc(postDocRef, {
+      status: 'rejected',
+      rejectionReason: reason,
+      rejectedAt: Timestamp.now()
+    });
   };
 
   const deleteBlogPost = async (postId: string) => {
@@ -984,7 +1048,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const rejectAlumniOpportunity = async (opportunityId: string, reason: string) => {
     if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) throw new Error("Only admins can reject alumni opportunities.");
     const opportunityDocRef = doc(db, 'alumniOpportunities', opportunityId);
-    await updateDoc(opportunityDocRef, { status: 'rejected', rejectionReason: reason });
+    await updateDoc(opportunityDocRef, {
+      status: 'rejected',
+      rejectionReason: reason,
+      rejectedAt: Timestamp.now()
+    });
   };
 
   const deleteAlumniOpportunity = async (opportunityId: string) => {
