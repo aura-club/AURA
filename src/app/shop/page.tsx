@@ -90,7 +90,7 @@ export default function ShopPage() {
 
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-  const activeFiltersCount = 
+  const activeFiltersCount =
     (selectedCategory !== 'all' ? 1 : 0) +
     selectedBrands.length +
     selectedStatus.length +
@@ -282,7 +282,7 @@ export default function ShopPage() {
               <p className="text-xs sm:text-sm text-muted-foreground">
                 Showing <span className="font-semibold">{filteredProducts.length}</span> of {products.length} products
               </p>
-              
+
               {/* Mobile Filter Button */}
               <Sheet open={showMobileFilters} onOpenChange={setShowMobileFilters}>
                 <SheetTrigger asChild>
@@ -325,7 +325,7 @@ export default function ShopPage() {
                 {selectedBrands.map(brand => (
                   <span key={brand} className="inline-flex items-center gap-1 px-2.5 py-1 bg-primary/10 text-primary rounded-full text-xs">
                     {brand}
-                    <button 
+                    <button
                       onClick={() => setSelectedBrands(selectedBrands.filter(b => b !== brand))}
                       className="hover:bg-primary/20 rounded-full p-0.5"
                     >
@@ -336,7 +336,7 @@ export default function ShopPage() {
                 {selectedStatus.map(status => (
                   <span key={status} className="inline-flex items-center gap-1 px-2.5 py-1 bg-primary/10 text-primary rounded-full text-xs">
                     {STOCK_STATUS.find(s => s.value === status)?.label}
-                    <button 
+                    <button
                       onClick={() => setSelectedStatus(selectedStatus.filter(s => s !== status))}
                       className="hover:bg-primary/20 rounded-full p-0.5"
                     >
@@ -357,12 +357,12 @@ export default function ShopPage() {
                 {filteredProducts.map(product => (
                   <Card key={product.id} className="flex flex-col hover:shadow-lg transition-shadow">
                     {product.image && (
-                      <div className="relative h-32 sm:h-40 md:h-48 w-full overflow-hidden rounded-t-lg bg-muted">
+                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-lg bg-muted p-4">
                         <Image
                           src={product.image}
                           alt={product.name}
                           fill
-                          className="object-cover hover:scale-105 transition-transform"
+                          className="object-contain hover:scale-105 transition-transform"
                         />
                       </div>
                     )}
@@ -372,16 +372,15 @@ export default function ShopPage() {
                       </CardTitle>
                       <CardDescription className="text-xs sm:text-sm">{product.brand}</CardDescription>
                       <div className="mt-2">
-                        <span className={`text-xs px-2 py-0.5 sm:py-1 rounded-full font-medium ${
-                          product.status === 'in-stock' ? 'bg-green-500/20 text-green-700' :
+                        <span className={`text-xs px-2 py-0.5 sm:py-1 rounded-full font-medium ${product.status === 'in-stock' ? 'bg-green-500/20 text-green-700' :
                           product.status === 'low-stock' ? 'bg-yellow-500/20 text-yellow-700' :
-                          product.status === 'pre-order' ? 'bg-blue-500/20 text-blue-700' :
-                          'bg-red-500/20 text-red-700'
-                        }`}>
+                            product.status === 'pre-order' ? 'bg-blue-500/20 text-blue-700' :
+                              'bg-red-500/20 text-red-700'
+                          }`}>
                           {product.status === 'in-stock' ? 'In Stock' :
-                           product.status === 'low-stock' ? 'Low Stock' :
-                           product.status === 'pre-order' ? 'Pre-Order' :
-                           'Out of Stock'}
+                            product.status === 'low-stock' ? 'Low Stock' :
+                              product.status === 'pre-order' ? 'Pre-Order' :
+                                'Out of Stock'}
                         </span>
                       </div>
                     </CardHeader>

@@ -15,14 +15,13 @@ const ResourceListItem = ({ title, description, link, image, category }: Resourc
   <Card className="bg-card border-border/60 overflow-hidden">
     <div className="flex flex-col sm:flex-row">
       {image && (
-        <div className="sm:w-1/3">
+        <div className="sm:w-1/3 aspect-video relative bg-muted p-4">
           <Image
             src={image}
             alt={title}
             data-ai-hint={`${category} icon`}
-            width={400}
-            height={225}
-            className="w-full h-full object-cover"
+            fill
+            className="w-full h-full object-contain"
           />
         </div>
       )}

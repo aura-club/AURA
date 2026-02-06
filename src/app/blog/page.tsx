@@ -26,14 +26,13 @@ export default function BlogPage() {
         {approvedPosts.length > 0 ? approvedPosts.map((post) => (
           <Card key={post.id} className="bg-card border-border/60 flex flex-col md:flex-row overflow-hidden group">
             <Link href={`/blog/${post.id}`} className="md:w-1/3 block">
-              <div className="overflow-hidden">
+              <div className="overflow-hidden aspect-video relative bg-muted p-4">
                 <Image
                   src={post.imageUrl || "https://placehold.co/800x450.png"}
                   data-ai-hint="blog header"
                   alt={post.title}
-                  width={800}
-                  height={450}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  fill
+                  className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             </Link>
@@ -64,10 +63,10 @@ export default function BlogPage() {
             </div>
           </Card>
         )) : (
-           <div className="text-center py-12 border-2 border-dashed border-border rounded-lg">
-                <p className="text-lg font-medium text-muted-foreground">No blog posts have been published yet.</p>
-                <p className="mt-2 text-sm text-muted-foreground">Check back soon for stories and updates from our members!</p>
-            </div>
+          <div className="text-center py-12 border-2 border-dashed border-border rounded-lg">
+            <p className="text-lg font-medium text-muted-foreground">No blog posts have been published yet.</p>
+            <p className="mt-2 text-sm text-muted-foreground">Check back soon for stories and updates from our members!</p>
+          </div>
         )}
       </div>
     </div>

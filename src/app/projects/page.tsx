@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { useAuth } from '@/hooks/use-auth';
 import { Search, X } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ProjectsPage() {
   const { projects } = useAuth();
@@ -74,11 +75,12 @@ export default function ProjectsPage() {
           {filteredProjects.map((project) => (
             <Card key={project.id} className="bg-card border-border/60 hover:border-border transition-colors flex flex-col">
               {project.thumbnailImage && (
-                <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
-                  <img
+                <div className="relative aspect-video w-full overflow-hidden rounded-t-lg bg-muted p-4">
+                  <Image
                     src={project.thumbnailImage}
                     alt={project.title}
-                    className="h-full w-full object-cover hover:scale-105 transition-transform"
+                    fill
+                    className="object-contain hover:scale-105 transition-transform"
                   />
                 </div>
               )}
